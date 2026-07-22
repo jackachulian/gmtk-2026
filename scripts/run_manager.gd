@@ -11,8 +11,11 @@ func _enter_tree() -> void:
 	run = Run.new()
 	
 	## TEMP: add a testing upgarde to inventory
-	var sec30 := UpgradeManager.instantiate_upgrade("boosterI")
-	run.set_inventory_slot(0, sec30)
+	var sec30 := UpgradeManager.instantiate_upgrade("sec30")
+	run.set_shop_slot(0, sec30)
+	
+	var boosterI := UpgradeManager.instantiate_upgrade("boosterI")
+	run.set_shop_slot(1, boosterI)
 
 func _physics_process(delta: float) -> void:
 	run.process(delta)

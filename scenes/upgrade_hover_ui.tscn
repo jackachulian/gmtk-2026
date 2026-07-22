@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://bp2wnse5i0xj"]
+
+[ext_resource type="Script" uid="uid://cm0r4wfneefwg" path="res://scripts/upgrade_hover_ui.gd" id="1_y8acg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1tu5"]
+bg_color = Color(0.4751683, 0.39143732, 0.17404118, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.27385768, 0.16483253, 0.027506122, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xl51n"]
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_2l77h"]
+font_size = 20
+
+[node name="UpgradeHoverUI" type="Control" unique_id=747242511 node_paths=PackedStringArray("buy_button", "buy_cost_label", "sell_button", "sell_cost_label")]
+z_index = 1
+layout_mode = 3
+anchors_preset = 0
+offset_left = 298.0
+offset_top = 456.0
+offset_right = 426.0
+offset_bottom = 616.0
+mouse_filter = 2
+script = ExtResource("1_y8acg")
+buy_button = NodePath("BuyButton")
+buy_cost_label = NodePath("BuyButton/BuyCostLabel")
+sell_button = NodePath("SellButton")
+sell_cost_label = NodePath("SellButton/SellCostLabel")
+
+[node name="BuyButton" type="Button" parent="." unique_id=1169065480]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = 15.0
+offset_right = 59.0
+offset_bottom = -96.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_e1tu5")
+
+[node name="BuyLabel" type="Label" parent="BuyButton" unique_id=2000398325]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 17.0
+grow_horizontal = 2
+text = "BUY"
+label_settings = SubResource("LabelSettings_xl51n")
+horizontal_alignment = 1
+
+[node name="BuyCostLabel" type="Label" parent="BuyButton" unique_id=754105762]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -28.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "$5"
+label_settings = SubResource("LabelSettings_2l77h")
+horizontal_alignment = 1
+
+[node name="SellButton" type="Button" parent="." unique_id=2022120030]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = 15.0
+offset_right = 59.0
+offset_bottom = -96.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_e1tu5")
+
+[node name="SellLabel" type="Label" parent="SellButton" unique_id=2001040053]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 17.0
+grow_horizontal = 2
+text = "SELL"
+label_settings = SubResource("LabelSettings_xl51n")
+horizontal_alignment = 1
+
+[node name="SellCostLabel" type="Label" parent="SellButton" unique_id=1418056755]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -28.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "$5"
+label_settings = SubResource("LabelSettings_2l77h")
+horizontal_alignment = 1
+
+[connection signal="pressed" from="BuyButton" to="." method="_on_buy_button_pressed"]
+[connection signal="pressed" from="SellButton" to="." method="_on_sell_button_pressed"]
