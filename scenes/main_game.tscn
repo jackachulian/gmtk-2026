@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://bkfc35ncyclm5"]
 
-[ext_resource type="Theme" uid="uid://yd77drcyxxpq" path="res://theme/main_theme.tres" id="1_ruc6o"]
-[ext_resource type="PackedScene" uid="uid://b1ocpx185lufv" path="res://scenes/upgrade_panel.tscn" id="2_1qejq"]
-[ext_resource type="Script" uid="uid://bpc5xyk2r4bgb" path="res://scripts/countdown_timer.gd" id="2_mcssl"]
-[ext_resource type="Script" uid="uid://dau78bmmu7kw1" path="res://scripts/money_label.gd" id="3_kla8o"]
-[ext_resource type="Script" uid="uid://dv1wl152p8itf" path="res://scenes/RunManager.gd" id="4_1qejq"]
+[ext_resource type="Theme" uid="uid://yd77drcyxxpq" path="res://theme/main_theme.tres" id="1_d2op2"]
+[ext_resource type="Script" uid="uid://bpc5xyk2r4bgb" path="res://scripts/countdown_timer.gd" id="2_0rdsr"]
+[ext_resource type="Script" uid="uid://bttlqk0ar7qd7" path="res://scripts/upgrade_manager.gd" id="2_wi4c7"]
+[ext_resource type="Script" uid="uid://dv1wl152p8itf" path="res://scripts/run_manager.gd" id="3_70vka"]
+[ext_resource type="Script" uid="uid://dau78bmmu7kw1" path="res://scripts/money_label.gd" id="4_2l77h"]
+[ext_resource type="Script" uid="uid://cqpp3k8wxd1u3" path="res://scripts/upgrade_panel_list.gd" id="5_nqdth"]
+[ext_resource type="PackedScene" uid="uid://b1ocpx185lufv" path="res://scenes/upgrade_panel.tscn" id="6_5cypo"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_72e8q"]
 font_size = 40
@@ -48,10 +50,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_ruc6o")
+theme = ExtResource("1_d2op2")
+
+[node name="UpgradeDefinitions" type="Node" parent="." unique_id=1019609389]
+script = ExtResource("2_wi4c7")
 
 [node name="RunManager" type="Node" parent="." unique_id=1845792980]
-script = ExtResource("4_1qejq")
+script = ExtResource("3_70vka")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1891324063]
 layout_mode = 1
@@ -86,7 +91,7 @@ text = "$5"
 label_settings = SubResource("LabelSettings_72e8q")
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("3_kla8o")
+script = ExtResource("4_2l77h")
 
 [node name="UpgradeShopPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1905728050]
 layout_mode = 2
@@ -137,6 +142,27 @@ offset_bottom = 149.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_72e8q")
 
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MainArea/PowerupPanel" unique_id=1984637877]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/PowerupPanel/MarginContainer" unique_id=931835401]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/PowerupPanel/MarginContainer/HBoxContainer" unique_id=1127754829]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("5_nqdth")
+upgrade_panel_scene = ExtResource("6_5cypo")
+upgrade_source = 1
+
+[node name="UpgradePanel" parent="MarginContainer/HBoxContainer/MainArea/PowerupPanel/MarginContainer/HBoxContainer/HBoxContainer2" unique_id=1787012625 instance=ExtResource("6_5cypo")]
+layout_mode = 2
+
 [node name="UpgradeShopPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea" unique_id=760570892]
 custom_minimum_size = Vector2(0, 160)
 layout_mode = 1
@@ -162,8 +188,10 @@ layout_mode = 2
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer" unique_id=1260357722]
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("5_nqdth")
+upgrade_panel_scene = ExtResource("6_5cypo")
 
-[node name="UpgradePanel" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer/HBoxContainer2" unique_id=1787012625 instance=ExtResource("2_1qejq")]
+[node name="UpgradePanel" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer/HBoxContainer2" unique_id=1296285101 instance=ExtResource("6_5cypo")]
 layout_mode = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer" unique_id=1526179674]
@@ -197,7 +225,7 @@ text = "$5"
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-script = ExtResource("2_mcssl")
+script = ExtResource("2_0rdsr")
 time_label = NodePath("PanelContainer/TimeLabel")
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/Timer" unique_id=1733354696]

@@ -1,30 +1,23 @@
 class_name Upgrade
 extends Object
 
-var id : String
-var display_name : String
-var description : String
-var base_cost: int
-var rarity: int = 0
-var icon : Texture2D
+var _definition: UpgradeDefinition
+var definition: UpgradeDefinition:
+	get(): return _definition
+var cost: int
 
-## can_buy(run: Run) -> bool:
-## Takes a Run param, outputs if this item can currently be purchased
-@warning_ignore("unused_parameter")
-var can_buy: Callable = func(run: Run) -> bool: return true
+func _init(definition: UpgradeDefinition) -> void:
+	_definition = definition
+	cost = _definition.base_cost
 
-## buy(run: Run) -> void:
-## Takes a Run param, and applies the buy effects of this upgrade to the run
-@warning_ignore("unused_parameter")
-var buy: Callable = func(run: Run) -> void: return
+func can_buy(run: Run) -> bool:
+	return _definition.can_buy.call(run, self)
 
-## sell(run: Run) -> void:
-## Takes a Run param, and applies the sell effects of this upgrade to the run
-@warning_ignore("unused_parameter")
-var sell: Callable = func(run: Run) -> void: return
+func buy(run: Run) -> void:
+	_definition.buy.call(run, self)
+	
+func sell(run: Run) -> void:
+	_definition.sell.call(run, self)
 
-
-## tick(run: Run) -> void:
-## Takes a Run param, and applies the tick effects of this upgrade to the run
-@warning_ignore("unused_parameter")
-var tick: Callable = func(run: Run) -> void: return
+func tick(run: Run) -> void:
+	_definition.tick.call(run, self)

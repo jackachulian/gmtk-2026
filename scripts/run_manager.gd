@@ -9,6 +9,10 @@ static var run: Run
 
 func _enter_tree() -> void:
 	run = Run.new()
+	
+	## TEMP: add a testing upgarde to inventory
+	var sec30 := UpgradeManager.instantiate_upgrade("boosterI")
+	run.set_inventory_slot(0, sec30)
 
 func _physics_process(delta: float) -> void:
 	run.process(delta)
