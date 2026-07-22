@@ -41,6 +41,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="CostLabel" type="Label" parent="MarginContainer" unique_id=1762509215]
+visible = false
 layout_mode = 2
 size_flags_vertical = 8
 text = "$5"
