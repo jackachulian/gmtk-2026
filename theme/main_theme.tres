@@ -1,0 +1,10 @@
+[gd_resource type="Theme" format=3 uid="uid://yd77drcyxxpq"]
+
+[ext_resource type="FontFile" uid="uid://g0k4jsd678x6" path="res://fonts/easvhs/eas-vhs.ttf" id="1_afw5t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5fetd"]
+bg_color = Color(0.11599999, 0.18559995, 0.29, 1)
+
+[resource]
+default_font = ExtResource("1_afw5t")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_5fetd")

@@ -1,0 +1,199 @@
+[gd_scene format=3 uid="uid://bkfc35ncyclm5"]
+
+[ext_resource type="Theme" uid="uid://yd77drcyxxpq" path="res://theme/main_theme.tres" id="1_ruc6o"]
+[ext_resource type="Script" uid="uid://bpc5xyk2r4bgb" path="res://scripts/countdown_timer.gd" id="2_mcssl"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_72e8q"]
+font_size = 40
+font_color = Color(0.94, 0.6976367, 0.08459997, 1)
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(2.82, 2.82)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ieh6"]
+bg_color = Color(0.0475, 0.142, 0.25, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.01230419, 0.020368531, 0.065298766, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ruc6o"]
+font_color = Color(0.8620888, 0.8713416, 0.88194597, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4kik5"]
+font_color = Color(0.9411765, 0.69803923, 0.08627451, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_72e8q"]
+bg_color = Color(0.11599999, 0.18559995, 0.29, 0.23137255)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4ieh6"]
+font_size = 64
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(3.75, 3.75)
+
+[node name="TimerGame" type="Control" unique_id=1089023773]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ruc6o")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1891324063]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=827578017]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=566485413]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 16
+alignment = 2
+
+[node name="MoneyPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=374316304]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+
+[node name="MoneyLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/MoneyPanel" unique_id=305987423]
+layout_mode = 2
+text = "$5"
+label_settings = SubResource("LabelSettings_72e8q")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UpgradeShopPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1905728050]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/UpgradeShopPanel" unique_id=564508777]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/UpgradeShopPanel/MarginContainer" unique_id=1771520943]
+layout_mode = 2
+
+[node name="UpgradePanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/UpgradeShopPanel/MarginContainer/VBoxContainer" unique_id=1698808303]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4ieh6")
+
+[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/UpgradeShopPanel/MarginContainer/VBoxContainer/UpgradePanel" unique_id=555994984]
+layout_mode = 2
+size_flags_vertical = 0
+text = "+20 Seconds"
+label_settings = SubResource("LabelSettings_ruc6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CostLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/UpgradeShopPanel/MarginContainer/VBoxContainer/UpgradePanel" unique_id=731557492]
+layout_mode = 2
+size_flags_vertical = 8
+text = "$5"
+label_settings = SubResource("LabelSettings_4kik5")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MainArea" type="Control" parent="MarginContainer/HBoxContainer" unique_id=63991259]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PowerupPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea" unique_id=2024267121]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 149.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_72e8q")
+
+[node name="PowerupShopPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea" unique_id=760570892]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -160.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MainArea/PowerupShopPanel" unique_id=1215666298]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/PowerupShopPanel/MarginContainer" unique_id=1470229187]
+layout_mode = 2
+
+[node name="UpgradePanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea/PowerupShopPanel/MarginContainer/HBoxContainer" unique_id=1585327333]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4ieh6")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MainArea/PowerupShopPanel/MarginContainer/HBoxContainer/UpgradePanel" unique_id=1450390691]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/MainArea/PowerupShopPanel/MarginContainer/HBoxContainer/UpgradePanel/MarginContainer" unique_id=263285814]
+layout_mode = 2
+size_flags_vertical = 0
+text = "+20 Seconds"
+label_settings = SubResource("LabelSettings_ruc6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CostLabel" type="Label" parent="MarginContainer/HBoxContainer/MainArea/PowerupShopPanel/MarginContainer/HBoxContainer/UpgradePanel/MarginContainer" unique_id=432182989]
+layout_mode = 2
+size_flags_vertical = 8
+text = "$5"
+label_settings = SubResource("LabelSettings_4kik5")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Control" parent="MarginContainer" unique_id=799066257 node_paths=PackedStringArray("time_label")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("2_mcssl")
+time_label = NodePath("PanelContainer/TimeLabel")
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/Timer" unique_id=1733354696]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TimeLabel" type="Label" parent="MarginContainer/Timer/PanelContainer" unique_id=1510483919]
+layout_mode = 2
+text = "12:34:56:78"
+label_settings = SubResource("LabelSettings_4ieh6")
+horizontal_alignment = 1
+vertical_alignment = 1
