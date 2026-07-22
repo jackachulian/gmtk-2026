@@ -1,6 +1,7 @@
 class_name Upgrade
 extends Object
 
+var id : String
 var display_name : String
 var description : String
 var base_cost: int
