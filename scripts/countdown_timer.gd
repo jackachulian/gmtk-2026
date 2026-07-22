@@ -3,37 +3,19 @@ extends Node
 
 @export var time_label: Label
 
-var reset_time: int = 600
+#var reset_time: int = 600
+#
+### Time remaining on the timer, in seconds
+#var time: int
+#
+### The delay between ticks, in real-world seconds
+#var tick_time: float = 0.25
+#
+### Counts how much real-world seconds until the next tick
+#var tick_time_remaining: float
 
-## Time remaining on the timer, in seconds
-var time: int
-
-## The delay between ticks, in real-world seconds
-var tick_time: float = 0.25
-
-## Counts how much real-world seconds until the next tick
-var tick_time_remaining: float
-
-signal finished()
-
-func _ready() -> void:
-	tick_time_remaining = tick_time
-
-func _physics_process(delta: float) -> void:
-	tick_time_remaining -= delta
-	while tick_time_remaining < 0:
-		tick_time_remaining += tick_time
-		count_down()
-
-func count_down() -> void:
-	time -= 1
-	if time <= 0:
-		time = reset_time
-		finished.emit()
-	update_ui()
-	
-func update_ui() -> void:
-	time_label.text = format_time(time)
+func _physics_process(_delta: float) -> void:
+	time_label.text = format_time(RunManager.run.time)
 	
 static func format_time(total_seconds: int) -> String:
 	total_seconds = max(total_seconds, 0)

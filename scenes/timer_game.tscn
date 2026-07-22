@@ -3,6 +3,7 @@
 [ext_resource type="Theme" uid="uid://yd77drcyxxpq" path="res://theme/main_theme.tres" id="1_ruc6o"]
 [ext_resource type="PackedScene" uid="uid://b1ocpx185lufv" path="res://scenes/upgrade_panel.tscn" id="2_1qejq"]
 [ext_resource type="Script" uid="uid://bpc5xyk2r4bgb" path="res://scripts/countdown_timer.gd" id="2_mcssl"]
+[ext_resource type="Script" uid="uid://dau78bmmu7kw1" path="res://scripts/money_label.gd" id="3_kla8o"]
 [ext_resource type="Script" uid="uid://dv1wl152p8itf" path="res://scenes/RunManager.gd" id="4_1qejq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_72e8q"]
@@ -49,6 +50,9 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_ruc6o")
 
+[node name="RunManager" type="Node" parent="." unique_id=1845792980]
+script = ExtResource("4_1qejq")
+
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1891324063]
 layout_mode = 1
 anchors_preset = 15
@@ -82,6 +86,7 @@ text = "$5"
 label_settings = SubResource("LabelSettings_72e8q")
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("3_kla8o")
 
 [node name="UpgradeShopPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1905728050]
 layout_mode = 2
@@ -196,6 +201,7 @@ script = ExtResource("2_mcssl")
 time_label = NodePath("PanelContainer/TimeLabel")
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/Timer" unique_id=1733354696]
+custom_minimum_size = Vector2(320, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -209,6 +215,3 @@ text = "12:34:56:78"
 label_settings = SubResource("LabelSettings_4ieh6")
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="RunManager" type="Node" parent="." unique_id=1845792980]
-script = ExtResource("4_1qejq")
