@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://b1ocpx185lufv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ruc6o"]
+bg_color = Color(0.0475, 0.142, 0.25, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ruc6o"]
+font_color = Color(0.8620888, 0.8713416, 0.88194597, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4kik5"]
+font_color = Color(0.9411765, 0.69803923, 0.08627451, 1)
+
+[node name="UpgradePanel" type="PanelContainer" unique_id=1787012625]
+custom_minimum_size = Vector2(128, 160)
+theme_override_styles/panel = SubResource("StyleBoxFlat_ruc6o")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=88854476]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="NameLabel" type="Label" parent="MarginContainer" unique_id=1340976265]
+layout_mode = 2
+size_flags_vertical = 0
+text = "+20 Seconds"
+label_settings = SubResource("LabelSettings_ruc6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CostLabel" type="Label" parent="MarginContainer" unique_id=1762509215]
+layout_mode = 2
+size_flags_vertical = 8
+text = "$5"
+label_settings = SubResource("LabelSettings_4kik5")
+horizontal_alignment = 1
+vertical_alignment = 1

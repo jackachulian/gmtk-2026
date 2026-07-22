@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://bkfc35ncyclm5"]
 
 [ext_resource type="Theme" uid="uid://yd77drcyxxpq" path="res://theme/main_theme.tres" id="1_ruc6o"]
+[ext_resource type="PackedScene" uid="uid://b1ocpx185lufv" path="res://scenes/upgrade_panel.tscn" id="2_1qejq"]
 [ext_resource type="Script" uid="uid://bpc5xyk2r4bgb" path="res://scripts/countdown_timer.gd" id="2_mcssl"]
+[ext_resource type="Script" uid="uid://dv1wl152p8itf" path="res://scenes/RunManager.gd" id="4_1qejq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_72e8q"]
 font_size = 40
@@ -27,13 +29,18 @@ font_color = Color(0.9411765, 0.69803923, 0.08627451, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_72e8q"]
 bg_color = Color(0.11599999, 0.18559995, 0.29, 0.23137255)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xl51n"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_o0ard"]
+font_size = 14
+
 [sub_resource type="LabelSettings" id="LabelSettings_4ieh6"]
 font_size = 64
 shadow_size = 0
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(3.75, 3.75)
 
-[node name="TimerGame" type="Control" unique_id=1089023773]
+[node name="MainGame" type="Control" unique_id=1089023773]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -66,7 +73,7 @@ theme_override_constants/separation = 16
 alignment = 2
 
 [node name="MoneyPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=374316304]
-custom_minimum_size = Vector2(0, 160)
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 
 [node name="MoneyLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/MoneyPanel" unique_id=305987423]
@@ -77,12 +84,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="UpgradeShopPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1905728050]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/UpgradeShopPanel" unique_id=564508777]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
@@ -93,6 +98,7 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 
 [node name="UpgradePanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/UpgradeShopPanel/MarginContainer/VBoxContainer" unique_id=1698808303]
+visible = false
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4ieh6")
@@ -118,7 +124,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="PowerupPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea" unique_id=2024267121]
-custom_minimum_size = Vector2(0, 160)
+custom_minimum_size = Vector2(0, 192)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -126,7 +132,7 @@ offset_bottom = 149.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_72e8q")
 
-[node name="PowerupShopPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea" unique_id=760570892]
+[node name="UpgradeShopPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea" unique_id=760570892]
 custom_minimum_size = Vector2(0, 160)
 layout_mode = 1
 anchors_preset = 12
@@ -137,7 +143,7 @@ offset_top = -160.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MainArea/PowerupShopPanel" unique_id=1215666298]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel" unique_id=1215666298]
 custom_minimum_size = Vector2(0, 160)
 layout_mode = 2
 theme_override_constants/margin_left = 16
@@ -145,36 +151,42 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/PowerupShopPanel/MarginContainer" unique_id=1470229187]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer" unique_id=1470229187]
 layout_mode = 2
 
-[node name="UpgradePanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea/PowerupShopPanel/MarginContainer/HBoxContainer" unique_id=1585327333]
-custom_minimum_size = Vector2(0, 100)
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer" unique_id=1260357722]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_4ieh6")
+size_flags_horizontal = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MainArea/PowerupShopPanel/MarginContainer/HBoxContainer/UpgradePanel" unique_id=1450390691]
+[node name="UpgradePanel" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer/HBoxContainer2" unique_id=1787012625 instance=ExtResource("2_1qejq")]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer" unique_id=1526179674]
+custom_minimum_size = Vector2(112, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_xl51n")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer/PanelContainer" unique_id=703177412]
 layout_mode = 2
 theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 4
+theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_bottom = 8
 
-[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/MainArea/PowerupShopPanel/MarginContainer/HBoxContainer/UpgradePanel/MarginContainer" unique_id=263285814]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer" unique_id=361645805]
 layout_mode = 2
-size_flags_vertical = 0
-text = "+20 Seconds"
-label_settings = SubResource("LabelSettings_ruc6o")
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1736517030]
+layout_mode = 2
+text = "Reroll"
+label_settings = SubResource("LabelSettings_o0ard")
 horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="CostLabel" type="Label" parent="MarginContainer/HBoxContainer/MainArea/PowerupShopPanel/MarginContainer/HBoxContainer/UpgradePanel/MarginContainer" unique_id=432182989]
+[node name="RerollButton" type="Button" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1589131598]
 layout_mode = 2
-size_flags_vertical = 8
+theme_override_font_sizes/font_size = 20
 text = "$5"
-label_settings = SubResource("LabelSettings_4kik5")
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Timer" type="Control" parent="MarginContainer" unique_id=799066257 node_paths=PackedStringArray("time_label")]
 layout_mode = 2
@@ -197,3 +209,6 @@ text = "12:34:56:78"
 label_settings = SubResource("LabelSettings_4ieh6")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="RunManager" type="Node" parent="." unique_id=1845792980]
+script = ExtResource("4_1qejq")
