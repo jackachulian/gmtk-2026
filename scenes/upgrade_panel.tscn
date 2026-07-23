@@ -10,13 +10,29 @@ border_width_right = 4
 border_width_bottom = 4
 border_color = Color(0, 0, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ql3a"]
+bg_color = Color(0.0475, 0.142, 0.25, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.134819, 0.6925657, 5.7756904e-07, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8kbbg"]
+bg_color = Color(0.0475, 0.142, 0.25, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0.6133335, 0.8, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_ruc6o"]
 font_color = Color(0.8620888, 0.8713416, 0.88194597, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_4kik5"]
 font_color = Color(0.9411765, 0.69803923, 0.08627451, 1)
 
-[node name="UpgradePanel" type="Control" unique_id=196418158 node_paths=PackedStringArray("description_label", "cost_label")]
+[node name="UpgradePanel" type="Control" unique_id=196418158 node_paths=PackedStringArray("description_label", "cost_label", "card_panel_container")]
 z_index = 2
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 3
@@ -27,6 +43,10 @@ mouse_filter = 1
 script = ExtResource("1_lev6e")
 description_label = NodePath("CenterContainer/PanelContainer/MarginContainer/NameLabel")
 cost_label = NodePath("CenterContainer/PanelContainer/MarginContainer/CostLabel")
+card_panel_container = NodePath("CenterContainer/PanelContainer")
+common_stylebox = SubResource("StyleBoxFlat_lev6e")
+uncommon_stylebox = SubResource("StyleBoxFlat_0ql3a")
+rare_stylebox = SubResource("StyleBoxFlat_8kbbg")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1486266631]
 layout_mode = 1

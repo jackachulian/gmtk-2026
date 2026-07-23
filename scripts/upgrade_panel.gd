@@ -6,6 +6,11 @@ extends Control
 @export var description_label: Label
 @export var cost_label: Label
 
+@export var card_panel_container: PanelContainer
+@export var common_stylebox: StyleBox
+@export var uncommon_stylebox: StyleBox
+@export var rare_stylebox: StyleBox
+
 var upgrade: Upgrade
 
 enum Mode {
@@ -32,6 +37,14 @@ func setup(upgrade: Upgrade, mode: Mode, index: int) -> void:
 	if level_label: level_label.text = "Lv. %d" % upgrade.level
 	if description_label: description_label.text = upgrade.get_parsed_description()
 	if cost_label: cost_label.text = "$%d" % upgrade.cost
+	
+	if card_panel_container:
+		if upgrade.definition.rarity == 0:
+			card_panel_container.add_theme_stylebox_override("panel", common_stylebox)
+		elif upgrade.definition.rarity == 1:
+			card_panel_container.add_theme_stylebox_override("panel", uncommon_stylebox)
+		elif upgrade.definition.rarity == 2:
+			card_panel_container.add_theme_stylebox_override("panel", rare_stylebox)
 	
 func _on_mouse_entered() -> void:
 	UpgradeHoverUI.instance.show_on_upgrade_panel(self)

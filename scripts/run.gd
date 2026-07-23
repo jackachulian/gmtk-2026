@@ -232,7 +232,7 @@ func refresh_shop() -> void:
 		# use the next rarity level lower than current 
 		if rand <= 0.1:
 			pool = rares
-		if pool.is_empty() and rand <= 0.3:
+		if pool.is_empty() and rand <= 0.4:
 			pool = uncommons
 		if pool.is_empty():
 			pool = commons
