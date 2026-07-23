@@ -179,7 +179,7 @@ func generate_modifier_definitions() -> void:
 	m = UpgradeDefinition.new()
 	m.id = "tick_speed_fluctuation"
 	m.display_name = "Tick Speed Fluctuation"
-	m.description = "Each tick, [chance] chance to double speed, and [chance] chance to halve speed (Resets each round)"
+	m.description = "Each tick, [chance] chance to double tick rate, and [chance] chance to halve tick rate (Resets each round)"
 	m.base_chance = 1
 	m.tick = func(run: Run, upgrade: Upgrade, forced: bool): 
 		if randi_range(1,100) <= upgrade.chance: 

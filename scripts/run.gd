@@ -133,6 +133,7 @@ func process(delta: float) -> void:
 			tick_timer += (1.0/tick_rate)
 			_do_tick(false)
 			
+			iterations += 1
 			if iterations > 500:
 				push_error("Very long loop detected; ending loop!")
 				break
