@@ -13,9 +13,10 @@ static var paused: bool = false
 @export var tick_sfx: Array[AudioStream] = []
 @export var upgrade_inventory: UpgradePanelList = null
 @export var modifier_inventory: UpgradePanelList = null
+@export var tick_rate_animator: AnimationPlayer
 
 func _enter_tree() -> void:
-	run = Run.new(self, upgrade_inventory, modifier_inventory)
+	run = Run.new(self, upgrade_inventory, modifier_inventory, tick_rate_animator)
 
 func _physics_process(delta: float) -> void:
 	if not paused:

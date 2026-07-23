@@ -77,8 +77,9 @@ var sfx_player: AudioStreamPlayer = null;
 
 var upgrade_inventory: UpgradePanelList = null;
 var modifier_inventory: UpgradePanelList = null;
+var tick_animator: AnimationPlayer = null;
 
-func _init(node: Node, _upgrade_inventory: UpgradePanelList, _modifier_inventory: UpgradePanelList) -> void:
+func _init(node: Node, _upgrade_inventory: UpgradePanelList, _modifier_inventory: UpgradePanelList, _tick_animator: AnimationPlayer) -> void:
 	tick_count = 0
 	inventory.resize(INVENTORY_SIZE)
 	shop.resize(INVENTORY_SIZE)
@@ -88,6 +89,7 @@ func _init(node: Node, _upgrade_inventory: UpgradePanelList, _modifier_inventory
 	tick_sfx = node.tick_sfx
 	upgrade_inventory = _upgrade_inventory
 	modifier_inventory = _modifier_inventory
+	tick_animator = _tick_animator
 	start_countdown_phase()
 	
 func start_countdown_phase() -> void:
@@ -163,6 +165,7 @@ func _do_tick(forced: bool) -> void:
 	
 	sfx_player.stream = tick_sfx[tick_count % len(tick_sfx)]
 	sfx_player.play();
+	tick_animator.play("tick")
 	time -= tick_amount
 	
 	for index in inventory.size():

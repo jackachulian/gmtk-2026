@@ -43,6 +43,41 @@ bg_color = Color(0.8624, 0.86943996, 0.88, 0.8627451)
 [sub_resource type="LabelSettings" id="LabelSettings_o6v7o"]
 font_color = Color(0.7750301, 0.5734, 0.94, 1)
 
+[sub_resource type="Animation" id="Animation_ikqpi"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, 0, 0, 0, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_5luka"]
+resource_name = "tick"
+length = 0.13333334
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 0),
+"points": PackedFloat32Array(12, 0, 0, 0, 5.841, 0, -0.06666667, 0, 0.06666667, 0),
+"times": PackedFloat32Array(0, 0.13333334)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yu8cv"]
+_data = {
+&"RESET": SubResource("Animation_ikqpi"),
+&"tick": SubResource("Animation_5luka")
+}
+
 [sub_resource type="LabelSettings" id="LabelSettings_4kik5"]
 font_color = Color(0.2364304, 0.67596954, 0.93868446, 1)
 
@@ -81,11 +116,12 @@ theme = ExtResource("1_d2op2")
 [node name="UpgradeDefinitions" type="Node" parent="." unique_id=1019609389]
 script = ExtResource("2_wi4c7")
 
-[node name="RunManager" type="Node" parent="." unique_id=1845792980 node_paths=PackedStringArray("upgrade_inventory", "modifier_inventory")]
+[node name="RunManager" type="Node" parent="." unique_id=1845792980 node_paths=PackedStringArray("upgrade_inventory", "modifier_inventory", "tick_rate_animator")]
 script = ExtResource("3_70vka")
 tick_sfx = Array[AudioStream]([ExtResource("4_vnsdt"), ExtResource("4_ikqpi")])
 upgrade_inventory = NodePath("../MarginContainer/HBoxContainer/MainArea/InventoryPanel/MarginContainer/InventoryUpgradePanelList")
 modifier_inventory = NodePath("../MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/ScrollContainer/ModifierPanelList")
+tick_rate_animator = NodePath("../MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel/MarginContainer/VBoxContainer/TickRateLabel/AnimationPlayer")
 
 [node name="TickAudioPlayer" type="AudioStreamPlayer" parent="RunManager" unique_id=1044620363]
 stream = ExtResource("4_vnsdt")
@@ -184,6 +220,9 @@ text = "Tick Rate: 1 per second"
 label_settings = SubResource("LabelSettings_o6v7o")
 horizontal_alignment = 1
 vertical_alignment = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel/MarginContainer/VBoxContainer/TickRateLabel" unique_id=1345858590]
+libraries/ = SubResource("AnimationLibrary_yu8cv")
 
 [node name="TickAmountLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel/MarginContainer/VBoxContainer" unique_id=731557492]
 layout_mode = 2
