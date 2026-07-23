@@ -37,5 +37,8 @@ func remake_panels(upgrades: Array[Upgrade], mode: UpgradePanel.Mode) -> void:
 		add_child(upgrade_panel)
 		
 func play_upgrade_anim(index: int, anim: String) -> void:
+	
 	var panel = get_child(index)
+	# Can sometimes be null when selling at certain timings
+	if panel == null: return;
 	panel.animation_player.play(anim);

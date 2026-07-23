@@ -9,15 +9,51 @@ border_color = Color(0, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_ihbck"]
 font_size = 14
 
-[node name="ModifierPanel" type="PanelContainer" unique_id=1904273024 node_paths=PackedStringArray("description_label")]
-offset_right = 182.0
-offset_bottom = 80.0
+[sub_resource type="Animation" id="Animation_s2bfg"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate:v")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_tkwf0"]
+resource_name = "trigger"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate:v")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 0),
+"points": PackedFloat32Array(5, 0, 0, 0, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s2bfg"]
+_data = {
+&"RESET": SubResource("Animation_s2bfg"),
+&"trigger": SubResource("Animation_tkwf0")
+}
+
+[node name="ModifierPanel" type="PanelContainer" unique_id=1904273024 node_paths=PackedStringArray("description_label", "animation_player")]
+offset_right = 170.0
+offset_bottom = 143.0
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_sp04v")
 script = ExtResource("1_tkwf0")
 description_label = NodePath("ModifierPanel/DescriptionLabel")
+animation_player = NodePath("AnimationPlayer")
 
 [node name="ModifierPanel" type="MarginContainer" parent="." unique_id=1851831535]
+modulate = Color(5, 5, 5, 1)
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 4
@@ -31,3 +67,6 @@ size_flags_vertical = 3
 text = "Modifier Description Modifier Description Modifier Description "
 label_settings = SubResource("LabelSettings_ihbck")
 autowrap_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=693064455]
+libraries/ = SubResource("AnimationLibrary_s2bfg")

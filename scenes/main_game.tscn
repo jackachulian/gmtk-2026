@@ -81,10 +81,11 @@ theme = ExtResource("1_d2op2")
 [node name="UpgradeDefinitions" type="Node" parent="." unique_id=1019609389]
 script = ExtResource("2_wi4c7")
 
-[node name="RunManager" type="Node" parent="." unique_id=1845792980 node_paths=PackedStringArray("upgrade_inventory")]
+[node name="RunManager" type="Node" parent="." unique_id=1845792980 node_paths=PackedStringArray("upgrade_inventory", "modifier_inventory")]
 script = ExtResource("3_70vka")
 tick_sfx = Array[AudioStream]([ExtResource("4_vnsdt"), ExtResource("4_ikqpi")])
 upgrade_inventory = NodePath("../MarginContainer/HBoxContainer/MainArea/InventoryPanel/MarginContainer/InventoryUpgradePanelList")
+modifier_inventory = NodePath("../MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/ScrollContainer/ModifierPanelList")
 
 [node name="TickAudioPlayer" type="AudioStreamPlayer" parent="RunManager" unique_id=1044620363]
 stream = ExtResource("4_vnsdt")
