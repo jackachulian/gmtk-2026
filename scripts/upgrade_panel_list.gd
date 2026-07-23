@@ -36,6 +36,6 @@ func remake_panels(upgrades: Array[Upgrade], mode: UpgradePanel.Mode) -> void:
 		upgrade_panel.setup(upgrade, mode, i)
 		add_child(upgrade_panel)
 		
-func play_upgrade_trigger_anim(index: int) -> void:
+func play_upgrade_anim(index: int, anim: String) -> void:
 	var panel = get_child(index)
-	panel.animation_player.play("trigger");
+	panel.animation_player.play(anim);

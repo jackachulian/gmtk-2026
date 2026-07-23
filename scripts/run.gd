@@ -169,7 +169,7 @@ func _do_tick(forced: bool) -> void:
 			if await upgrade.tick(self, forced):
 				# not super happy with how this is passed down but i think this is the simplest
 				# way to match the upgrade object to the corresponding panel
-				upgrade_inventory.play_upgrade_trigger_anim(index)
+				upgrade_inventory.play_upgrade_anim(index, "trigger")
 				pass
 	for upgrade in modifiers:
 		upgrade.tick(self, forced)
@@ -181,6 +181,7 @@ func _do_tick(forced: bool) -> void:
 func set_inventory_slot(slot: int, upgrade: Upgrade):
 	inventory[slot] = upgrade
 	inventory_changed.emit()
+
 	
 func set_shop_slot(slot: int, upgrade: Upgrade):
 	shop[slot] = upgrade
@@ -213,6 +214,7 @@ func buy_shop_item(slot: int) -> bool:
 	
 	shop_changed.emit()
 	inventory_changed.emit()
+	upgrade_inventory.play_upgrade_anim(inventory_slot, "add_to_inv")
 	
 	return true
 	
