@@ -32,11 +32,11 @@ var buy: Callable = func(run: Run, upgrade: Upgrade) -> void: return
 @warning_ignore("unused_parameter")
 var sell: Callable = func(run: Run, upgrade: Upgrade) -> void: return
 
-## tick(run: Run, upgrade: Upgrade) -> void:
+## tick(run: Run, upgrade: Upgrade, forced: bool) -> void:
 ## Takes current Run and the Upgrade instance this is being called on, 
 ## and applies the tick effects of this upgrade to the run
 @warning_ignore("unused_parameter")
-var tick: Callable = func(run: Run, upgrade: Upgrade) -> void: return
+var tick: Callable = func(run: Run, upgrade: Upgrade, forced: bool) -> void: return
 
 ## round_start(run: Run, upgrade: Upgrade) -> void
 ## Called when the countdown phase starts

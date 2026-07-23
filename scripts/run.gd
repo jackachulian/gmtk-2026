@@ -63,6 +63,10 @@ signal modifier_choices_changed()
 var modifiers: Array[Upgrade] = []
 signal modifiers_changed()
 
+## Public wrapper for tick function used by some upgrades to "force" ticks
+func runner_force_tick() -> void:
+	_do_tick(true);
+
 func _init() -> void:
 	inventory.resize(INVENTORY_SIZE)
 	shop.resize(INVENTORY_SIZE)
@@ -127,7 +131,7 @@ func process(delta: float) -> void:
 		var iterations: int = 0
 		while tick_timer <= 0:
 			tick_timer += (1.0/tick_rate)
-			_do_tick()
+			_do_tick(false)
 			
 			if iterations > 500:
 				push_error("Very long loop detected; ending loop!")
@@ -137,13 +141,13 @@ func process(delta: float) -> void:
 		if round_timer <= 0.0:
 			start_choose_modifier_phase()
 			
-func _do_tick() -> void:
+func _do_tick(forced: bool) -> void:
 	time -= tick_amount
 	for upgrade in inventory:
 		if upgrade:
-			upgrade.tick(self)
+			upgrade.tick(self, forced)
 	for upgrade in modifiers:
-		upgrade.tick(self)
+		upgrade.tick(self, forced)
 			
 	if time <= 0:
 		game_over()
