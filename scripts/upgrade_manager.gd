@@ -67,7 +67,7 @@ static func generate_upgrade_definitions() -> void:
 	u = UpgradeDefinition.new()
 	u.id = "boosterII"
 	u.display_name = "Booster II"
-	u.description = "Each second, [chance] chance of +20 seconds"
+	u.description = "Each tick, [chance] chance of +20 seconds"
 	u.base_chance = 10
 	u.base_cost = 10
 	u.rarity = 1
@@ -77,7 +77,7 @@ static func generate_upgrade_definitions() -> void:
 	u = UpgradeDefinition.new()
 	u.id = "moneyI"
 	u.display_name = "Money I"
-	u.description = "Each second, [chance] chance of +$1"
+	u.description = "Each tick, [chance] chance of +$1"
 	u.base_chance = 25
 	u.base_cost = 10
 	u.rarity = 0
@@ -87,7 +87,7 @@ static func generate_upgrade_definitions() -> void:
 	u = UpgradeDefinition.new()
 	u.id = "moneyII"
 	u.display_name = "Money II"
-	u.description = "Each second, [chance] chance of +$4"
+	u.description = "Each tick, [chance] chance of +$4"
 	u.base_chance = 10
 	u.base_cost = 10
 	u.rarity = 1
@@ -103,7 +103,7 @@ func generate_modifier_definitions() -> void:
 	m = UpgradeDefinition.new()
 	m.id = "time_fluctuation"
 	m.display_name = "Time Fluctuation"
-	m.description = "Each second, [chance] chance to double time, and [chance] chance to halve time"
+	m.description = "Each tick, [chance] chance to double time, and [chance] chance to halve time"
 	m.base_chance = 1
 	m.tick = func(run: Run, upgrade: Upgrade): 
 		if randi_range(1,100) <= upgrade.chance: run.time *= 2
@@ -113,7 +113,7 @@ func generate_modifier_definitions() -> void:
 	m = UpgradeDefinition.new()
 	m.id = "tick_speed_fluctuation"
 	m.display_name = "Tick Speed Fluctuation"
-	m.description = "Each second, [chance] chance to double speed, and [chance] chance to halve speed (Resets each round)"
+	m.description = "Each tick, [chance] chance to double speed, and [chance] chance to halve speed (Resets each round)"
 	m.base_chance = 1
 	m.tick = func(run: Run, upgrade: Upgrade): 
 		if randi_range(1,100) <= upgrade.chance: 
@@ -130,7 +130,7 @@ func generate_modifier_definitions() -> void:
 	m = UpgradeDefinition.new()
 	m.id = "swapper"
 	m.display_name = "Swapper"
-	m.description = "Each second, [chance] chance to swap minutes and seconds"
+	m.description = "Each tick, [chance] chance to swap minutes and seconds"
 	m.base_chance = 1
 	m.tick = func(run: Run, upgrade: Upgrade): 
 		if randi_range(1,100) <= upgrade.chance:
@@ -143,7 +143,7 @@ func generate_modifier_definitions() -> void:
 	m = UpgradeDefinition.new()
 	m.id = "minute_rounder"
 	m.display_name = "Minute Rounder"
-	m.description = "Each second, [chance] chance to round to the nearest minute"
+	m.description = "Each tick, [chance] chance to round to the nearest minute"
 	m.base_chance = 1
 	m.tick = func(run: Run, upgrade: Upgrade): 
 		if randi_range(1,100) <= upgrade.chance:

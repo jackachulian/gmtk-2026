@@ -7,13 +7,16 @@ const ROUND_DURATION := 30.0
 const MODIFIER_CHOICE_COUNT := 3
 const ROUND_START_REROLL_PRICE := 3
 const REROLL_PRICE_INCREASE := 1
+const CASH_PER_ROUND := 5
 
 ## Represents a phase a run can be in
 enum Phase {
 	## Timer is counting down, player can buy upgrades from the shop / sell from inventory
 	COUNTDOWN,
 	## Player is choosing a modifier to apply to their run
-	CHOOSE_MODIFIER
+	CHOOSE_MODIFIER,
+	## Timer reached 0 and game over screen is showing
+	GAME_LOST
 }
 ## Current phase of the game
 var phase: Phase
@@ -26,7 +29,7 @@ var round_number: int = 1
 var round_timer: float
 
 ## Amount of time remaining in the countdown, in seconds
-var time: int = 600
+var time: int = 15
 
 ## Player's owned cash that can be used to buy upgrades from the shop
 var cash: int = 20
@@ -76,6 +79,13 @@ func start_countdown_phase() -> void:
 func start_choose_modifier_phase() -> void:
 	phase = Phase.CHOOSE_MODIFIER
 	
+	round_number += 1
+	tick_amount += 1
+	cash += CASH_PER_ROUND
+	
+	shop.clear()
+	shop_changed.emit()
+	
 	reroll_price = ROUND_START_REROLL_PRICE
 	
 	var definitions := UpgradeManager.modifier_definitions
@@ -102,6 +112,9 @@ func start_choose_modifier_phase() -> void:
 	modifier_choices_changed.emit()
 	phase_changed.emit()
 
+func game_over() -> void:
+	phase = Phase.GAME_LOST
+
 ## Perform rick timing calculations.
 ## RunManager will call this in its _process() loop
 func process(delta: float) -> void:
@@ -119,7 +132,6 @@ func process(delta: float) -> void:
 				
 		round_timer -= delta
 		if round_timer <= 0.0:
-			round_number += 1
 			start_choose_modifier_phase()
 			
 func _do_tick() -> void:
@@ -129,6 +141,9 @@ func _do_tick() -> void:
 	for upgrade in inventory:
 		if upgrade:
 			upgrade.tick(self)
+			
+	if time <= 0:
+		game_over()
 
 func set_inventory_slot(slot: int, upgrade: Upgrade):
 	inventory[slot] = upgrade
