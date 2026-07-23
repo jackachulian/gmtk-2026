@@ -32,12 +32,113 @@ font_color = Color(0.8620888, 0.8713416, 0.88194597, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_4kik5"]
 font_color = Color(0.9411765, 0.69803923, 0.08627451, 1)
 
-[node name="UpgradePanel" type="Control" unique_id=196418158 node_paths=PackedStringArray("description_label", "cost_label", "card_panel_container")]
+[sub_resource type="Animation" id="Animation_lev6e"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CenterContainer:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterContainer:modulate:v")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2),
+"points": PackedFloat32Array(1, -0.0005, 0, 0.0005, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CenterContainer:scale:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2),
+"points": PackedFloat32Array(1, -0.0005, 0, 0.0005, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CenterContainer:scale:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(2),
+"points": PackedFloat32Array(1, -0.0005, 0, 0.0005, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_0ql3a"]
+resource_name = "trigger"
+length = 0.33333334
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CenterContainer:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.175, -0.15, 0, 0, 0, 0, -0.15, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.33333334)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterContainer:scale:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1.15, -0.15, 0, 0, 0, 1, -0.15, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.33333334)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CenterContainer:scale:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1.15, -0.15, 0, 0, 0, 1, -0.15, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.33333334)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CenterContainer:modulate:v")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(2, -0.16666667, 0, 0.16666667, 0, 1, -0.05555556, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.33333334)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8kbbg"]
+_data = {
+&"RESET": SubResource("Animation_lev6e"),
+&"trigger": SubResource("Animation_0ql3a")
+}
+
+[node name="UpgradePanel" type="Control" unique_id=196418158 node_paths=PackedStringArray("description_label", "cost_label", "card_panel_container", "animation_player")]
 z_index = 2
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 232.0
+offset_right = 128.0
 offset_bottom = 160.0
 mouse_filter = 1
 script = ExtResource("1_lev6e")
@@ -47,6 +148,7 @@ card_panel_container = NodePath("CenterContainer/PanelContainer")
 common_stylebox = SubResource("StyleBoxFlat_lev6e")
 uncommon_stylebox = SubResource("StyleBoxFlat_0ql3a")
 rare_stylebox = SubResource("StyleBoxFlat_8kbbg")
+animation_player = NodePath("AnimationPlayer")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1486266631]
 layout_mode = 1
@@ -55,6 +157,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(64, 80)
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=1534264686]
 custom_minimum_size = Vector2(128, 160)
@@ -86,6 +189,10 @@ text = "$5"
 label_settings = SubResource("LabelSettings_4kik5")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2086586328]
+libraries/ = SubResource("AnimationLibrary_8kbbg")
+speed_scale = 1.5
 
 [connection signal="mouse_entered" from="CenterContainer/PanelContainer" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CenterContainer/PanelContainer" to="." method="_on_mouse_exited"]

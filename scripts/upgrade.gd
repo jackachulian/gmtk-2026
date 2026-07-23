@@ -32,8 +32,8 @@ func buy(run: Run) -> void:
 func sell(run: Run) -> void:
 	_definition.sell.call(run, self)
 
-func tick(run: Run, forced: bool) -> void:
-	_definition.tick.call(run, self, forced)
+func tick(run: Run, forced: bool) -> bool:
+	return await _definition.tick.call(run, self, forced)
 	
 func round_start(run: Run) -> void:
 	_definition.round_start.call(run, self)

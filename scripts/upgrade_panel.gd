@@ -10,6 +10,7 @@ extends Control
 @export var common_stylebox: StyleBox
 @export var uncommon_stylebox: StyleBox
 @export var rare_stylebox: StyleBox
+@export var animation_player: AnimationPlayer
 
 var upgrade: Upgrade
 

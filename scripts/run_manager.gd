@@ -11,9 +11,10 @@ static var run: Run
 static var paused: bool = false
 
 @export var tick_sfx: Array[AudioStream] = []
+@export var upgrade_inventory: UpgradePanelList
 
 func _enter_tree() -> void:
-	run = Run.new(self)
+	run = Run.new(self, upgrade_inventory)
 
 func _physics_process(delta: float) -> void:
 	if not paused:

@@ -75,7 +75,9 @@ func runner_force_tick() -> void:
 	
 var sfx_player: AudioStreamPlayer = null;
 
-func _init(node: Node) -> void:
+var upgrade_inventory: UpgradePanelList = null;
+
+func _init(node: Node, _upgrade_inventory: UpgradePanelList) -> void:
 	tick_count = 0
 	inventory.resize(INVENTORY_SIZE)
 	shop.resize(INVENTORY_SIZE)
@@ -83,6 +85,7 @@ func _init(node: Node) -> void:
 	round_number = 1
 	sfx_player = node.get_node("TickAudioPlayer");
 	tick_sfx = node.tick_sfx
+	upgrade_inventory = _upgrade_inventory
 	start_countdown_phase()
 	
 func start_countdown_phase() -> void:
@@ -160,9 +163,14 @@ func _do_tick(forced: bool) -> void:
 	sfx_player.play();
 	time -= tick_amount
 	
-	for upgrade in inventory:
+	for index in inventory.size():
+		var upgrade = inventory[index]
 		if upgrade:
-			upgrade.tick(self, forced)
+			if await upgrade.tick(self, forced):
+				# not super happy with how this is passed down but i think this is the simplest
+				# way to match the upgrade object to the corresponding panel
+				upgrade_inventory.play_upgrade_trigger_anim(index)
+				pass
 	for upgrade in modifiers:
 		upgrade.tick(self, forced)
 			
