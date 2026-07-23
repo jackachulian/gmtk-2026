@@ -39,10 +39,12 @@ var sell: Callable = func(run: Run, upgrade: Upgrade) -> void: return
 var tick: Callable = func(run: Run, upgrade: Upgrade) -> void: return
 
 ## round_start(run: Run, upgrade: Upgrade) -> void
+## Called when the countdown phase starts
 @warning_ignore("unused_parameter")
 var round_start: Callable = func(run: Run, upgrade: Upgrade) -> void: return
 
 ## round_end(run: Run, upgrade: Upgrade) -> void
+## Called when the countdown phase ends
 @warning_ignore("unused_parameter")
 var round_end: Callable = func(run: Run, upgrade: Upgrade) -> void: return
 

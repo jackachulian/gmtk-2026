@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c50h7ewmxwkiy" path="res://scripts/upgrade_panel.gd" id="1_lev6e"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ruc6o"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lev6e"]
 bg_color = Color(0.0475, 0.142, 0.25, 1)
 border_width_left = 4
 border_width_top = 4
@@ -16,22 +16,39 @@ font_color = Color(0.8620888, 0.8713416, 0.88194597, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_4kik5"]
 font_color = Color(0.9411765, 0.69803923, 0.08627451, 1)
 
-[node name="UpgradePanel" type="PanelContainer" unique_id=1787012625 node_paths=PackedStringArray("description_label", "cost_label")]
+[node name="UpgradePanel" type="Control" unique_id=196418158 node_paths=PackedStringArray("description_label", "cost_label")]
 z_index = 2
 custom_minimum_size = Vector2(128, 160)
-theme_override_styles/panel = SubResource("StyleBoxFlat_ruc6o")
+layout_mode = 3
+anchors_preset = 0
+offset_right = 232.0
+offset_bottom = 160.0
+mouse_filter = 1
 script = ExtResource("1_lev6e")
-description_label = NodePath("MarginContainer/NameLabel")
-cost_label = NodePath("MarginContainer/CostLabel")
+description_label = NodePath("CenterContainer/PanelContainer/MarginContainer/NameLabel")
+cost_label = NodePath("CenterContainer/PanelContainer/MarginContainer/CostLabel")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=88854476]
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1486266631]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=1534264686]
+custom_minimum_size = Vector2(128, 160)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lev6e")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer" unique_id=88854476]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 4
 
-[node name="NameLabel" type="Label" parent="MarginContainer" unique_id=1340976265]
+[node name="NameLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=1340976265]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 size_flags_vertical = 0
@@ -41,7 +58,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="CostLabel" type="Label" parent="MarginContainer" unique_id=1762509215]
+[node name="CostLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=1762509215]
 visible = false
 layout_mode = 2
 size_flags_vertical = 8
@@ -50,5 +67,5 @@ label_settings = SubResource("LabelSettings_4kik5")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="CenterContainer/PanelContainer" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CenterContainer/PanelContainer" to="." method="_on_mouse_exited"]

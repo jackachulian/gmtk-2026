@@ -2,9 +2,48 @@
 
 [ext_resource type="FontFile" uid="uid://g0k4jsd678x6" path="res://fonts/easvhs/eas-vhs.ttf" id="1_afw5t"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_afw5t"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.0442, 0.14772998, 0.34, 0.79607844)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1knni"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.032000005, 0.06840002, 0.2, 0.8509804)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_os614"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.0064097317, 0.012822117, 0.10499095, 0.91764706)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5fetd"]
 bg_color = Color(0.11599999, 0.18559995, 0.29, 1)
 
 [resource]
 default_font = ExtResource("1_afw5t")
+Button/styles/hover = SubResource("StyleBoxFlat_afw5t")
+Button/styles/normal = SubResource("StyleBoxFlat_1knni")
+Button/styles/pressed = SubResource("StyleBoxFlat_os614")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_5fetd")

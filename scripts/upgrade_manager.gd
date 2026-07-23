@@ -46,8 +46,8 @@ static func generate_upgrade_definitions() -> void:
 	
 	u = UpgradeDefinition.new()
 	u.id = "sec30"
-	u.display_name = "+30 Seconds"
-	u.description = "Buy: +30 seconds\nSell: -30 seconds"
+	u.display_name = "Borrowed Time"
+	u.description = "+30 Seconds"
 	u.base_cost = 5
 	u.rarity = 0
 	u.buy = func(run: Run, _upgrade: Upgrade): run.time += 30
@@ -57,7 +57,7 @@ static func generate_upgrade_definitions() -> void:
 	u = UpgradeDefinition.new()
 	u.id = "boosterI"
 	u.display_name = "Booster I"
-	u.description = "Per second, [chance] chance of +5 seconds"
+	u.description = "Each tick, [chance] chance of +5 seconds"
 	u.base_chance = 25
 	u.base_cost = 5
 	u.rarity = 0
@@ -67,7 +67,7 @@ static func generate_upgrade_definitions() -> void:
 	u = UpgradeDefinition.new()
 	u.id = "boosterII"
 	u.display_name = "Booster II"
-	u.description = "Each tick, [chance] chance of +20 seconds"
+	u.description = "Each second, [chance] chance of +20 seconds"
 	u.base_chance = 10
 	u.base_cost = 10
 	u.rarity = 1
@@ -87,7 +87,7 @@ static func generate_upgrade_definitions() -> void:
 	u = UpgradeDefinition.new()
 	u.id = "moneyII"
 	u.display_name = "Money II"
-	u.description = "Per second, [chance] chance of +$4"
+	u.description = "Each second, [chance] chance of +$4"
 	u.base_chance = 10
 	u.base_cost = 10
 	u.rarity = 1
@@ -113,7 +113,7 @@ func generate_modifier_definitions() -> void:
 	m = UpgradeDefinition.new()
 	m.id = "tick_speed_fluctuation"
 	m.display_name = "Tick Speed Fluctuation"
-	m.description = "Each second, [chance] chance to double tick speed, and [chance] chance to halve tick speed (Resets each round)"
+	m.description = "Each second, [chance] chance to double speed, and [chance] chance to halve speed (Resets each round)"
 	m.base_chance = 1
 	m.tick = func(run: Run, upgrade: Upgrade): 
 		if randi_range(1,100) <= upgrade.chance: 

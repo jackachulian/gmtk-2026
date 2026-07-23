@@ -3,20 +3,23 @@
 [ext_resource type="Script" uid="uid://c50h7ewmxwkiy" path="res://scripts/upgrade_panel.gd" id="1_tkwf0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_e1tu5"]
-font_size = 32
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_4ieh6"]
+font_color = Color(1, 1, 1, 0.7921569)
 
 [sub_resource type="LabelSettings" id="LabelSettings_c4tgf"]
-font_size = 18
 
-[node name="ModifierChoicePanel" type="Control" unique_id=878328569 node_paths=PackedStringArray("name_label", "description_label")]
+[node name="ModifierChoicePanel" type="Control" unique_id=878328569 node_paths=PackedStringArray("name_label", "level_label", "description_label")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 292.0
 offset_bottom = 344.0
 size_flags_horizontal = 3
 script = ExtResource("1_tkwf0")
-name_label = NodePath("VBoxContainer/PanelContainer/VBoxContainer/DisplayNameLabel")
-description_label = NodePath("VBoxContainer/PanelContainer/VBoxContainer/DescriptionLabel")
+name_label = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/DisplayNameLabel")
+level_label = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/LevelLabel")
+description_label = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/DescriptionLabel")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=873239338]
 layout_mode = 1
@@ -31,19 +34,32 @@ theme_override_constants/separation = 12
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer" unique_id=1001343147]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer" unique_id=616778248]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/MarginContainer" unique_id=1001343147]
 layout_mode = 2
 
-[node name="DisplayNameLabel" type="Label" parent="VBoxContainer/PanelContainer/VBoxContainer" unique_id=435901678]
-custom_minimum_size = Vector2(1, 64)
+[node name="DisplayNameLabel" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=435901678]
+custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
-text = "Modifier Name Modifier Name"
+text = "Modifier Name"
 label_settings = SubResource("LabelSettings_e1tu5")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="DescriptionLabel" type="Label" parent="VBoxContainer/PanelContainer/VBoxContainer" unique_id=1845702371]
+[node name="LevelLabel" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1555928191]
+layout_mode = 2
+text = "Lv. 1"
+label_settings = SubResource("LabelSettings_4ieh6")
+horizontal_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1845702371]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 size_flags_vertical = 3

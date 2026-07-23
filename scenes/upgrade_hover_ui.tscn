@@ -11,10 +11,9 @@ border_width_bottom = 2
 border_color = Color(0.27385768, 0.16483253, 0.027506122, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_xl51n"]
-font_size = 12
 
 [sub_resource type="LabelSettings" id="LabelSettings_2l77h"]
-font_size = 20
+font_size = 24
 
 [node name="UpgradeHoverUI" type="Control" unique_id=747242511 node_paths=PackedStringArray("buy_button", "buy_cost_label", "sell_button", "sell_cost_label")]
 z_index = 1
@@ -76,8 +75,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -5.0
 offset_top = 15.0
-offset_right = 59.0
-offset_bottom = -96.0
+offset_right = 98.0
+offset_bottom = -88.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_e1tu5")

@@ -14,6 +14,9 @@ extends Node
 ### Counts how much real-world seconds until the next tick
 #var tick_time_remaining: float
 
+func _ready() -> void:
+	time_label.text = format_time(RunManager.run.time)
+
 func _physics_process(_delta: float) -> void:
 	time_label.text = format_time(RunManager.run.time)
 	

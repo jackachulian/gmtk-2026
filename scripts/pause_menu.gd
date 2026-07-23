@@ -19,4 +19,5 @@ func _on_resume_button_pressed() -> void:
 	unpause()
 	
 func _on_new_run_button_pressed() -> void:
-	pass
+	RunManager.paused = false
+	get_tree().reload_current_scene()

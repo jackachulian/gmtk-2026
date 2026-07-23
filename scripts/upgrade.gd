@@ -7,11 +7,16 @@ var definition: UpgradeDefinition:
 	
 var cost: int
 
-## Chance out of 100 for this to occur in effects
+## Chance out of 100 for this to occur in effects.
+## Scales with level for modifiers
 var chance: int
 
 ## Current effect value that can be used in effects for miscellaneous purposes
 var value: float = 1.0
+
+## The level of this upgrade. (Used on modifiers only)
+## When buying a copy of a modifier, the original modifier's level is increased instead.
+var level: int = 1
 
 func _init(definition: UpgradeDefinition) -> void:
 	_definition = definition

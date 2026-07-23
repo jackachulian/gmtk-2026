@@ -2,6 +2,7 @@ class_name UpgradePanel
 extends Control
 
 @export var name_label: Label
+@export var level_label: Label
 @export var description_label: Label
 @export var cost_label: Label
 
@@ -28,6 +29,7 @@ func setup(upgrade: Upgrade, mode: Mode, index: int) -> void:
 	self.mode = mode
 	self.index = index
 	if name_label: name_label.text = upgrade.definition.display_name
+	if level_label: level_label.text = "Lv. %d" % upgrade.level
 	if description_label: description_label.text = upgrade.get_parsed_description()
 	if cost_label: cost_label.text = "$%d" % upgrade.cost
 	

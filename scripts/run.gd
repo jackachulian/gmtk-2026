@@ -5,6 +5,8 @@ const SHOP_SIZE := 5
 const INVENTORY_SIZE := 5
 const ROUND_DURATION := 30.0
 const MODIFIER_CHOICE_COUNT := 3
+const ROUND_START_REROLL_PRICE := 3
+const REROLL_PRICE_INCREASE := 1
 
 ## Represents a phase a run can be in
 enum Phase {
@@ -28,6 +30,9 @@ var time: int = 600
 
 ## Player's owned cash that can be used to buy upgrades from the shop
 var cash: int = 20
+
+## Current price to refresh the shop
+var reroll_price: int = 3
 
 ## Current amount of ticks per real-world second
 ## (Used by the RunManager for real-world timing)
@@ -58,17 +63,20 @@ signal modifiers_changed()
 func _init() -> void:
 	inventory.resize(INVENTORY_SIZE)
 	shop.resize(INVENTORY_SIZE)
+	reroll_price = ROUND_START_REROLL_PRICE
+	round_number = 1
 	start_countdown_phase()
 	
 func start_countdown_phase() -> void:
 	phase = Phase.COUNTDOWN
-	round_number = 1
 	round_timer = ROUND_DURATION
 	refresh_shop()
 	phase_changed.emit()
 	
 func start_choose_modifier_phase() -> void:
 	phase = Phase.CHOOSE_MODIFIER
+	
+	reroll_price = ROUND_START_REROLL_PRICE
 	
 	var definitions := UpgradeManager.modifier_definitions
 	var pool := definitions.values().duplicate()
@@ -77,8 +85,19 @@ func start_choose_modifier_phase() -> void:
 	for i in mini(MODIFIER_CHOICE_COUNT, pool.size()):
 		var pool_index := randi_range(0, pool.size()-1)
 		var def: UpgradeDefinition = pool[pool_index]
+		
+		var matching_upgrade: Upgrade = null
+		for upgrade in modifiers:
+			if upgrade.definition.id == def.id:
+				matching_upgrade = upgrade
+				break
+		
 		var upgrade := Upgrade.new(def)
+		if matching_upgrade:
+			upgrade.level = matching_upgrade.level + 1
+			upgrade.chance = matching_upgrade.chance + upgrade.chance
 		modifier_choices.append(upgrade)
+		pool.remove_at(pool_index)
 	
 	modifier_choices_changed.emit()
 	phase_changed.emit()
@@ -100,6 +119,7 @@ func process(delta: float) -> void:
 				
 		round_timer -= delta
 		if round_timer <= 0.0:
+			round_number += 1
 			start_choose_modifier_phase()
 			
 func _do_tick() -> void:
@@ -177,9 +197,9 @@ func refresh_shop() -> void:
 	shop.clear()
 	shop.resize(current_shop_size)
 	
-	var commons: Array = UpgradeManager.definitions_by_rarity[0]
-	var uncommons: Array = UpgradeManager.definitions_by_rarity[1]
-	var rares: Array = UpgradeManager.definitions_by_rarity[2]
+	var commons: Array = UpgradeManager.definitions_by_rarity[0].duplicate()
+	var uncommons: Array = UpgradeManager.definitions_by_rarity[1].duplicate()
+	var rares: Array = UpgradeManager.definitions_by_rarity[2].duplicate()
 	
 	for i in current_shop_size:
 		var pool: Array = []
@@ -193,19 +213,47 @@ func refresh_shop() -> void:
 			pool = uncommons
 		if pool.is_empty():
 			pool = commons
+			
+		if pool.is_empty(): # If there are no commons, try going back up to uncommons
+			pool = uncommons
+		if pool.is_empty(): # If there are no uncommons, try going back up to rares
+			pool = rares
+		if pool.is_empty(): # If there are no rares, there are no more cards
+			break
 	
-		var def: UpgradeDefinition = pool.pick_random()
+		var pool_index := randi_range(0, pool.size()-1)
+		var def: UpgradeDefinition = pool[pool_index]
 		var upgrade := Upgrade.new(def)
 		shop[i] = upgrade
+		#pool.remove_at(pool_index)
 		
 	shop_changed.emit()
+	
+func pay_to_reroll_shop() -> bool:
+	if cash < reroll_price:
+		push_error("Not enough cash to reroll")
+		return false
+		
+	cash -= reroll_price
+	refresh_shop()
+	reroll_price += REROLL_PRICE_INCREASE
+	return true
 	
 ## Use during CHOOSE_MODIFIER phase to choose a modifier to permanently add to the run.
 ## Countdown phase is started right after the choice is made
 func choose_modifier(slot: int) -> bool:
-	var modifier := modifier_choices[slot]
-	modifiers.append(modifier)
-	modifier.buy(self) # "Buy" event is used as an on select for modifiers
+	var modifier_choice := modifier_choices[slot]
+
+	for i in modifiers.size():
+		var modifier := modifiers[i]
+		if modifier.definition.id == modifier_choice.definition.id:
+			modifier.sell(self) # "Sell" event is used as an on remove for modifiers
+			modifiers.remove_at(i)
+			break
+	
+	modifiers.append(modifier_choice)
+	modifier_choice.buy(self) # "Buy" event is used as an on add for modifiers
+	
 	modifiers_changed.emit()
 	
 	start_countdown_phase()

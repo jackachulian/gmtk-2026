@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b1ocpx185lufv" path="res://scenes/upgrade_panel.tscn" id="6_5cypo"]
 [ext_resource type="PackedScene" uid="uid://bp2wnse5i0xj" path="res://scenes/upgrade_hover_ui.tscn" id="8_70vka"]
 [ext_resource type="Script" uid="uid://bhpjy0cgnwnyr" path="res://scripts/pause_button.gd" id="9_5cypo"]
+[ext_resource type="Script" uid="uid://c0jfkdmlc6pjw" path="res://scripts/reroll_button.gd" id="9_sp04v"]
 [ext_resource type="Script" uid="uid://bqic3y0rmwd43" path="res://scripts/pause_menu.gd" id="10_nqdth"]
 [ext_resource type="PackedScene" uid="uid://dgp4whgo3om7d" path="res://scenes/modifier_panel.tscn" id="12_o6v7o"]
 [ext_resource type="Script" uid="uid://dkyhum7abmk7x" path="res://scripts/modifier_menu.gd" id="12_wjob3"]
@@ -45,10 +46,10 @@ font_color = Color(0.2364304, 0.67596954, 0.93868446, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_72e8q"]
 bg_color = Color(0.11599999, 0.18559995, 0.29, 0.23137255)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xl51n"]
-
 [sub_resource type="LabelSettings" id="LabelSettings_o0ard"]
-font_size = 14
+
+[sub_resource type="LabelSettings" id="LabelSettings_ihbck"]
+font_size = 24
 
 [sub_resource type="LabelSettings" id="LabelSettings_4ieh6"]
 font_size = 64
@@ -135,7 +136,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_4ieh6")
 script = ExtResource("5_2l77h")
 round_number_label = NodePath("MarginContainer/VBoxContainer/RoundNumberLabel")
 round_progess_bar = NodePath("MarginContainer/VBoxContainer/ProgressBar")
-tick_rate_label = NodePath("MarginContainer/VBoxContainer/TickAmountLabel")
+tick_rate_label = NodePath("MarginContainer/VBoxContainer/TickRateLabel")
 tick_amount_label = NodePath("MarginContainer/VBoxContainer/TickAmountLabel")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel" unique_id=2069536615]
@@ -240,6 +241,7 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 16
+alignment = 1
 script = ExtResource("5_nqdth")
 upgrade_panel_scene = ExtResource("6_5cypo")
 upgrade_source = 1
@@ -286,6 +288,7 @@ theme_override_constants/separation = 12
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 16
+alignment = 1
 script = ExtResource("5_nqdth")
 upgrade_panel_scene = ExtResource("6_5cypo")
 
@@ -304,32 +307,49 @@ layout_mode = 2
 [node name="UpgradePanel5" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/ShopUpgradePanelList" unique_id=168375772 instance=ExtResource("6_5cypo")]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer" unique_id=1526179674]
-custom_minimum_size = Vector2(112, 0)
+[node name="Control" type="Control" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer" unique_id=1576738090]
+custom_minimum_size = Vector2(106, 0)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_xl51n")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/PanelContainer" unique_id=703177412]
-layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
+[node name="RerollButton" type="Button" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/Control" unique_id=1589131598 node_paths=PackedStringArray("cost_label")]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -28.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+script = ExtResource("9_sp04v")
+cost_label = NodePath("CostLabel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer" unique_id=361645805]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1736517030]
-layout_mode = 2
+[node name="RerollLabel" type="Label" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/Control/RerollButton" unique_id=1736517030]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
 text = "Reroll"
 label_settings = SubResource("LabelSettings_o0ard")
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="RerollButton" type="Button" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1589131598]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "$5"
+[node name="CostLabel" type="Label" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/Control/RerollButton" unique_id=412921743]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -35.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 10
+text = "$3"
+label_settings = SubResource("LabelSettings_ihbck")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Timer" type="Control" parent="MarginContainer/HBoxContainer/MainArea" unique_id=349014803 node_paths=PackedStringArray("time_label")]
 layout_mode = 1
@@ -487,6 +507,7 @@ layout_mode = 2
 [node name="ModifierPanel3" parent="ModifierMenu/MarginContainer/VBoxContainer/ModifierPanelList" unique_id=825438181 instance=ExtResource("14_8xp80")]
 layout_mode = 2
 
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/Control/RerollButton" to="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/Control/RerollButton" method="_on_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MainArea/PauseButton" to="MarginContainer/HBoxContainer/MainArea/PauseButton" method="_on_pressed"]
 [connection signal="pressed" from="PauseMenu/ColorRect/VBoxContainer/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseMenu/ColorRect/VBoxContainer/NewRunButton" to="PauseMenu" method="_on_new_run_button_pressed"]

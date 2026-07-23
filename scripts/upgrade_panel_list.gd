@@ -18,7 +18,7 @@ func _ready() -> void:
 		run.shop_changed.connect(remake_panels.bind(run.shop, UpgradePanel.Mode.SHOP))
 	elif upgrade_source == UpgradeSource.INVENTORY:
 		remake_panels(run.inventory, UpgradePanel.Mode.INVENTORY)
-		run.inventory_changed.connect(remake_panels.bind(run.inventory, UpgradeSource.INVENTORY))
+		run.inventory_changed.connect(remake_panels.bind(run.inventory, UpgradePanel.Mode.INVENTORY))
 	elif upgrade_source == UpgradeSource.MODIFIER_CHOICES:
 		remake_panels(run.modifier_choices, UpgradePanel.Mode.MODIFIER_CHOICE)
 		run.modifier_choices_changed.connect(remake_panels.bind(run.modifier_choices, UpgradePanel.Mode.MODIFIER_CHOICE))
