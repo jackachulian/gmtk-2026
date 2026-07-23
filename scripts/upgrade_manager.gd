@@ -185,7 +185,7 @@ func generate_modifier_definitions() -> void:
 		if randi_range(1,100) <= upgrade.chance: 
 			upgrade.value *= 2
 			run.tick_rate *= 2
-		elif randi_range(1,100) <= upgrade.chance*2: 
+		elif randi_range(1,100) <= upgrade.chance: 
 			upgrade.value /= 2
 			run.tick_rate /= 2
 	m.round_end = func(run: Run, upgrade: Upgrade):
