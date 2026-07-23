@@ -1,5 +1,5 @@
 class_name Run
-extends Object
+extends Resource
 
 const SHOP_SIZE := 5
 const INVENTORY_SIZE := 5
@@ -47,6 +47,12 @@ var tick_timer: float = 1.0
 ## Current timer second decrease of a single countdown tick
 var tick_amount: int = 1
 
+## Amount of ticks passed this game
+var tick_count: int = 0
+
+## Exported in run manager
+var tick_sfx: Array[AudioStream] = []
+
 ## Currently owned upgrades
 var inventory: Array[Upgrade] = []
 signal inventory_changed()
@@ -66,12 +72,17 @@ signal modifiers_changed()
 ## Public wrapper for tick function used by some upgrades to "force" ticks
 func runner_force_tick() -> void:
 	_do_tick(true);
+	
+var sfx_player: AudioStreamPlayer = null;
 
-func _init() -> void:
+func _init(node: Node) -> void:
+	tick_count = 0
 	inventory.resize(INVENTORY_SIZE)
 	shop.resize(INVENTORY_SIZE)
 	reroll_price = ROUND_START_REROLL_PRICE
 	round_number = 1
+	sfx_player = node.get_node("TickAudioPlayer");
+	tick_sfx = node.tick_sfx
 	start_countdown_phase()
 	
 func start_countdown_phase() -> void:
@@ -143,7 +154,12 @@ func process(delta: float) -> void:
 			start_choose_modifier_phase()
 			
 func _do_tick(forced: bool) -> void:
+	if (!forced): tick_count += 1
+	
+	sfx_player.stream = tick_sfx[tick_count % len(tick_sfx)]
+	sfx_player.play();
 	time -= tick_amount
+	
 	for upgrade in inventory:
 		if upgrade:
 			upgrade.tick(self, forced)
@@ -152,6 +168,7 @@ func _do_tick(forced: bool) -> void:
 			
 	if time <= 0:
 		game_over()
+		
 
 func set_inventory_slot(slot: int, upgrade: Upgrade):
 	inventory[slot] = upgrade

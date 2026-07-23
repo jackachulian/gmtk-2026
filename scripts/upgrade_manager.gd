@@ -126,11 +126,8 @@ static func generate_upgrade_definitions(_node: Node) -> void:
 	u.base_cost = 8
 	u.rarity = 1
 	u.tick = func(run: Run, _upgrade: Upgrade, forced: bool): if randf() <= 0.1 && !forced:
-#		TODO Remove these when sfx/visuals make ticks more obvious
-		print("double tick called 1");
-		await _node.get_tree().create_timer(0.1).timeout
+		await _node.get_tree().create_timer(0.15).timeout
 		run.runner_force_tick()
-		print("double tick called 2");
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -141,12 +138,9 @@ static func generate_upgrade_definitions(_node: Node) -> void:
 	u.base_cost = 16
 	u.rarity = 2
 	u.tick = func(run: Run, _upgrade: Upgrade, forced: bool): if randf() <= 0.1 && !forced:  
-		print("triple tick called 1");
-		await _node.get_tree().create_timer(0.1).timeout
-		print("triple tick called 2");
+		await _node.get_tree().create_timer(0.15).timeout
 		run.runner_force_tick()
-		await _node.get_tree().create_timer(0.1).timeout
-		print("triple tick called 3");
+		await _node.get_tree().create_timer(0.15).timeout
 		run.runner_force_tick()
 	add_upgrade_definition(u)
 	

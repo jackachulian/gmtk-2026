@@ -10,8 +10,10 @@ static var run: Run
 ## True while the game is paused and the pause menu is open
 static var paused: bool = false
 
+@export var tick_sfx: Array[AudioStream] = []
+
 func _enter_tree() -> void:
-	run = Run.new()
+	run = Run.new(self)
 
 func _physics_process(delta: float) -> void:
 	if not paused:
