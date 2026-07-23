@@ -79,7 +79,7 @@ static func generate_upgrade_definitions() -> void:
 	u.display_name = "Money I"
 	u.description = "Each tick, [chance] chance of +$1"
 	u.base_chance = 25
-	u.base_cost = 10
+	u.base_cost = 5
 	u.rarity = 0
 	u.tick = func(run: Run, _upgrade: Upgrade): if randf() <= 0.25: run.cash += 1
 	add_upgrade_definition(u)

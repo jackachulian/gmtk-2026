@@ -3,11 +3,11 @@ extends Object
 
 const SHOP_SIZE := 5
 const INVENTORY_SIZE := 5
-const ROUND_DURATION := 40.0
+const ROUND_DURATION := 45.0
 const MODIFIER_CHOICE_COUNT := 3
 const ROUND_START_REROLL_PRICE := 3
 const REROLL_PRICE_INCREASE := 1
-const CASH_PER_ROUND := 5
+const CASH_PER_ROUND := 10
 
 ## Represents a phase a run can be in
 enum Phase {
@@ -32,7 +32,7 @@ var round_timer: float
 var time: int = 20
 
 ## Player's owned cash that can be used to buy upgrades from the shop
-var cash: int = 20
+var cash: int = 30
 
 ## Current price to refresh the shop
 var reroll_price: int = 3
@@ -79,10 +79,10 @@ func start_countdown_phase() -> void:
 func start_choose_modifier_phase() -> void:
 	phase = Phase.CHOOSE_MODIFIER
 	
-	if (round_number % 2 == 0):
-		tick_amount += 1
-	else:
-		tick_rate += 0.25
+	#if (round_number % 2 == 0):
+		#tick_amount += 1
+	#else:
+		#tick_rate += 0.25
 	round_number += 1
 	cash += CASH_PER_ROUND
 	
@@ -139,11 +139,11 @@ func process(delta: float) -> void:
 			
 func _do_tick() -> void:
 	time -= tick_amount
-	for upgrade in modifiers:
-		upgrade.tick(self)
 	for upgrade in inventory:
 		if upgrade:
 			upgrade.tick(self)
+	for upgrade in modifiers:
+		upgrade.tick(self)
 			
 	if time <= 0:
 		game_over()
