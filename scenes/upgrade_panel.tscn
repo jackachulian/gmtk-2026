@@ -17,6 +17,7 @@ font_color = Color(0.8620888, 0.8713416, 0.88194597, 1)
 font_color = Color(0.9411765, 0.69803923, 0.08627451, 1)
 
 [node name="UpgradePanel" type="PanelContainer" unique_id=1787012625 node_paths=PackedStringArray("name_label", "cost_label")]
+z_index = 2
 custom_minimum_size = Vector2(128, 160)
 theme_override_styles/panel = SubResource("StyleBoxFlat_ruc6o")
 script = ExtResource("1_lev6e")

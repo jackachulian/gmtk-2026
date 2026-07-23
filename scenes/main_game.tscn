@@ -5,9 +5,12 @@
 [ext_resource type="Script" uid="uid://bttlqk0ar7qd7" path="res://scripts/upgrade_manager.gd" id="2_wi4c7"]
 [ext_resource type="Script" uid="uid://dv1wl152p8itf" path="res://scripts/run_manager.gd" id="3_70vka"]
 [ext_resource type="Script" uid="uid://dau78bmmu7kw1" path="res://scripts/money_label.gd" id="4_2l77h"]
+[ext_resource type="Script" uid="uid://b6dftv6lfuiqt" path="res://scripts/round_info_panel.gd" id="5_2l77h"]
 [ext_resource type="Script" uid="uid://cqpp3k8wxd1u3" path="res://scripts/upgrade_panel_list.gd" id="5_nqdth"]
 [ext_resource type="PackedScene" uid="uid://b1ocpx185lufv" path="res://scenes/upgrade_panel.tscn" id="6_5cypo"]
 [ext_resource type="PackedScene" uid="uid://bp2wnse5i0xj" path="res://scenes/upgrade_hover_ui.tscn" id="8_70vka"]
+[ext_resource type="Script" uid="uid://bhpjy0cgnwnyr" path="res://scripts/pause_button.gd" id="9_5cypo"]
+[ext_resource type="Script" uid="uid://bqic3y0rmwd43" path="res://scripts/pause_menu.gd" id="10_nqdth"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_72e8q"]
 font_size = 40
@@ -18,17 +21,20 @@ shadow_offset = Vector2(2.82, 2.82)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ieh6"]
 bg_color = Color(0.0475, 0.142, 0.25, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.01230419, 0.020368531, 0.065298766, 1)
+border_color = Color(0.09209899, 0.126847, 0.25765315, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ruc6o"]
+font_size = 32
 font_color = Color(0.8620888, 0.8713416, 0.88194597, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o0ard"]
+bg_color = Color(0.0342, 0.045360006, 0.09, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4kik5"]
+bg_color = Color(0.8627451, 0.87058824, 0.88235295, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_4kik5"]
-font_color = Color(0.9411765, 0.69803923, 0.08627451, 1)
+font_color = Color(0.2364304, 0.67596954, 0.93868446, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_72e8q"]
 bg_color = Color(0.11599999, 0.18559995, 0.29, 0.23137255)
@@ -43,6 +49,9 @@ font_size = 64
 shadow_size = 0
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(3.75, 3.75)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xl51n"]
+font_size = 32
 
 [node name="MainGame" type="Control" unique_id=1089023773]
 layout_mode = 3
@@ -75,18 +84,17 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=566485413]
+[node name="LeftArea" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=566485413]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/separation = 16
-alignment = 2
 
-[node name="MoneyPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=374316304]
+[node name="MoneyPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/LeftArea" unique_id=374316304]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 
-[node name="MoneyLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/MoneyPanel" unique_id=305987423]
+[node name="MoneyLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftArea/MoneyPanel" unique_id=305987423]
 layout_mode = 2
 text = "$5"
 label_settings = SubResource("LabelSettings_72e8q")
@@ -94,56 +102,76 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("4_2l77h")
 
-[node name="UpgradeShopPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1905728050]
+[node name="UpgradeShopPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/LeftArea" unique_id=1905728050]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/UpgradeShopPanel" unique_id=564508777]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel" unique_id=564508777]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/UpgradeShopPanel/MarginContainer" unique_id=1771520943]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer" unique_id=1771520943]
 layout_mode = 2
 
-[node name="UpgradePanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/UpgradeShopPanel/MarginContainer/VBoxContainer" unique_id=1698808303]
-visible = false
+[node name="RoundInfoPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer" unique_id=1698808303 node_paths=PackedStringArray("round_number_label", "round_progess_bar", "tick_rate_label")]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4ieh6")
+script = ExtResource("5_2l77h")
+round_number_label = NodePath("MarginContainer/VBoxContainer/RoundNumberLabel")
+round_progess_bar = NodePath("MarginContainer/VBoxContainer/ProgressBar")
+tick_rate_label = NodePath("MarginContainer/VBoxContainer/TickRateLabel")
 
-[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/UpgradeShopPanel/MarginContainer/VBoxContainer/UpgradePanel" unique_id=555994984]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel" unique_id=2069536615]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel/MarginContainer" unique_id=1009328613]
+layout_mode = 2
+
+[node name="RoundNumberLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel/MarginContainer/VBoxContainer" unique_id=555994984]
 layout_mode = 2
 size_flags_vertical = 0
-text = "+20 Seconds"
+text = "Round 1"
 label_settings = SubResource("LabelSettings_ruc6o")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CostLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/UpgradeShopPanel/MarginContainer/VBoxContainer/UpgradePanel" unique_id=731557492]
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel/MarginContainer/VBoxContainer" unique_id=543634272]
+custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
-size_flags_vertical = 8
-text = "$5"
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_o0ard")
+theme_override_styles/fill = SubResource("StyleBoxFlat_4kik5")
+value = 69.0
+show_percentage = false
+
+[node name="TickRateLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel/MarginContainer/VBoxContainer" unique_id=731557492]
+layout_mode = 2
+size_flags_vertical = 10
+text = "-2 Seconds per tick"
 label_settings = SubResource("LabelSettings_4kik5")
 horizontal_alignment = 1
-vertical_alignment = 1
+vertical_alignment = 2
 
 [node name="MainArea" type="Control" parent="MarginContainer/HBoxContainer" unique_id=63991259]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PowerupPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea" unique_id=2024267121]
+[node name="InventoryPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea" unique_id=2024267121]
 custom_minimum_size = Vector2(0, 192)
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 149.0
-grow_horizontal = 2
+offset_right = 704.0
+offset_bottom = 192.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_72e8q")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MainArea/PowerupPanel" unique_id=1984637877]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MainArea/InventoryPanel" unique_id=1984637877]
 custom_minimum_size = Vector2(0, 160)
 layout_mode = 2
 theme_override_constants/margin_left = 16
@@ -151,32 +179,30 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/PowerupPanel/MarginContainer" unique_id=931835401]
-layout_mode = 2
-
-[node name="InventoryUpgradePanelList" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/PowerupPanel/MarginContainer/HBoxContainer" unique_id=1127754829]
+[node name="InventoryUpgradePanelList" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/InventoryPanel/MarginContainer" unique_id=1127754829]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 16
 script = ExtResource("5_nqdth")
 upgrade_panel_scene = ExtResource("6_5cypo")
 upgrade_source = 1
 
-[node name="UpgradePanel" parent="MarginContainer/HBoxContainer/MainArea/PowerupPanel/MarginContainer/HBoxContainer/InventoryUpgradePanelList" unique_id=1787012625 instance=ExtResource("6_5cypo")]
+[node name="UpgradePanel" parent="MarginContainer/HBoxContainer/MainArea/InventoryPanel/MarginContainer/InventoryUpgradePanelList" unique_id=1787012625 instance=ExtResource("6_5cypo")]
 layout_mode = 2
 
-[node name="UpgradePanel2" parent="MarginContainer/HBoxContainer/MainArea/PowerupPanel/MarginContainer/HBoxContainer/InventoryUpgradePanelList" unique_id=1020462645 instance=ExtResource("6_5cypo")]
+[node name="UpgradePanel2" parent="MarginContainer/HBoxContainer/MainArea/InventoryPanel/MarginContainer/InventoryUpgradePanelList" unique_id=1020462645 instance=ExtResource("6_5cypo")]
 layout_mode = 2
 
-[node name="UpgradePanel3" parent="MarginContainer/HBoxContainer/MainArea/PowerupPanel/MarginContainer/HBoxContainer/InventoryUpgradePanelList" unique_id=502021408 instance=ExtResource("6_5cypo")]
+[node name="UpgradePanel3" parent="MarginContainer/HBoxContainer/MainArea/InventoryPanel/MarginContainer/InventoryUpgradePanelList" unique_id=502021408 instance=ExtResource("6_5cypo")]
 layout_mode = 2
 
-[node name="UpgradePanel4" parent="MarginContainer/HBoxContainer/MainArea/PowerupPanel/MarginContainer/HBoxContainer/InventoryUpgradePanelList" unique_id=1355391417 instance=ExtResource("6_5cypo")]
+[node name="UpgradePanel4" parent="MarginContainer/HBoxContainer/MainArea/InventoryPanel/MarginContainer/InventoryUpgradePanelList" unique_id=1355391417 instance=ExtResource("6_5cypo")]
 layout_mode = 2
 
-[node name="UpgradePanel5" parent="MarginContainer/HBoxContainer/MainArea/PowerupPanel/MarginContainer/HBoxContainer/InventoryUpgradePanelList" unique_id=1158844033 instance=ExtResource("6_5cypo")]
+[node name="UpgradePanel5" parent="MarginContainer/HBoxContainer/MainArea/InventoryPanel/MarginContainer/InventoryUpgradePanelList" unique_id=1158844033 instance=ExtResource("6_5cypo")]
 layout_mode = 2
 
-[node name="UpgradeShopPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea" unique_id=760570892]
+[node name="ShopPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea" unique_id=760570892]
 custom_minimum_size = Vector2(0, 160)
 layout_mode = 1
 anchors_preset = 12
@@ -187,7 +213,7 @@ offset_top = -160.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel" unique_id=1215666298]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel" unique_id=1215666298]
 custom_minimum_size = Vector2(0, 160)
 layout_mode = 2
 theme_override_constants/margin_left = 16
@@ -195,53 +221,55 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer" unique_id=1470229187]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer" unique_id=1470229187]
 layout_mode = 2
+theme_override_constants/separation = 12
 
-[node name="ShopUpgradePanelList" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer" unique_id=1260357722]
+[node name="ShopUpgradePanelList" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer" unique_id=1260357722]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 16
 script = ExtResource("5_nqdth")
 upgrade_panel_scene = ExtResource("6_5cypo")
 
-[node name="UpgradePanel" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer/ShopUpgradePanelList" unique_id=1296285101 instance=ExtResource("6_5cypo")]
+[node name="UpgradePanel" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/ShopUpgradePanelList" unique_id=1296285101 instance=ExtResource("6_5cypo")]
 layout_mode = 2
 
-[node name="UpgradePanel2" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer/ShopUpgradePanelList" unique_id=1352597433 instance=ExtResource("6_5cypo")]
+[node name="UpgradePanel2" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/ShopUpgradePanelList" unique_id=1352597433 instance=ExtResource("6_5cypo")]
 layout_mode = 2
 
-[node name="UpgradePanel3" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer/ShopUpgradePanelList" unique_id=1289750017 instance=ExtResource("6_5cypo")]
+[node name="UpgradePanel3" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/ShopUpgradePanelList" unique_id=1289750017 instance=ExtResource("6_5cypo")]
 layout_mode = 2
 
-[node name="UpgradePanel4" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer/ShopUpgradePanelList" unique_id=1542133388 instance=ExtResource("6_5cypo")]
+[node name="UpgradePanel4" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/ShopUpgradePanelList" unique_id=1542133388 instance=ExtResource("6_5cypo")]
 layout_mode = 2
 
-[node name="UpgradePanel5" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer/ShopUpgradePanelList" unique_id=168375772 instance=ExtResource("6_5cypo")]
+[node name="UpgradePanel5" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/ShopUpgradePanelList" unique_id=168375772 instance=ExtResource("6_5cypo")]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer" unique_id=1526179674]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer" unique_id=1526179674]
 custom_minimum_size = Vector2(112, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_xl51n")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer/PanelContainer" unique_id=703177412]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/PanelContainer" unique_id=703177412]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer" unique_id=361645805]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer" unique_id=361645805]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1736517030]
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1736517030]
 layout_mode = 2
 text = "Reroll"
 label_settings = SubResource("LabelSettings_o0ard")
 horizontal_alignment = 1
 
-[node name="RerollButton" type="Button" parent="MarginContainer/HBoxContainer/MainArea/UpgradeShopPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1589131598]
+[node name="RerollButton" type="Button" parent="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1589131598]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "$5"
@@ -276,9 +304,73 @@ label_settings = SubResource("LabelSettings_4ieh6")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="PauseButton" type="Button" parent="MarginContainer/HBoxContainer/MainArea" unique_id=1396354725]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+text = "Pause"
+script = ExtResource("9_5cypo")
+
 [node name="UpgradeHoverUI" parent="." unique_id=747242511 instance=ExtResource("8_70vka")]
+z_index = 3
 layout_mode = 0
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 128.0
 offset_bottom = 160.0
+
+[node name="PauseMenu" type="Control" parent="." unique_id=402068010]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_nqdth")
+
+[node name="ColorRect" type="ColorRect" parent="PauseMenu" unique_id=1557062084]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.3764706)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/ColorRect" unique_id=1059959026]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 391.0
+offset_top = -251.0
+offset_right = 564.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PauseMenu/ColorRect/VBoxContainer" unique_id=1670561214]
+layout_mode = 2
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_xl51n")
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="PauseMenu/ColorRect/VBoxContainer" unique_id=1398356239]
+layout_mode = 2
+text = "Resume"
+
+[node name="NewRunButton" type="Button" parent="PauseMenu/ColorRect/VBoxContainer" unique_id=268485254]
+layout_mode = 2
+text = "New Run"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MainArea/PauseButton" to="MarginContainer/HBoxContainer/MainArea/PauseButton" method="_on_pressed"]
+[connection signal="pressed" from="PauseMenu/ColorRect/VBoxContainer/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseMenu/ColorRect/VBoxContainer/NewRunButton" to="PauseMenu" method="_on_new_run_button_pressed"]

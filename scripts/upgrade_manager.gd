@@ -3,6 +3,9 @@ extends Node
 
 static var definitions: Dictionary[String, UpgradeDefinition] = {}
 
+## Index = rarity (0=common, 1=uncommon, 2=rare), value = Array[UpgradeDefinition]
+static var definitions_by_rarity: Array[Array] = []
+
 func _enter_tree() -> void:
 	generate_definitions()
 
@@ -15,9 +18,11 @@ static func instantiate_upgrade(definition_id: String) -> Upgrade:
 
 static func add_definition(def: UpgradeDefinition) -> void:
 	definitions[def.id] = def
+	definitions_by_rarity[def.rarity].append(def)
 	
 static func generate_definitions() -> void:
 	definitions.clear()
+	definitions_by_rarity.resize(3)
 	
 	var u: UpgradeDefinition
 	
@@ -45,6 +50,24 @@ static func generate_definitions() -> void:
 	u.display_name = "Booster II"
 	u.description = "Per second, 10% chance of +20 seconds"
 	u.base_cost = 10
-	u.rarity = 0
+	u.rarity = 1
 	u.tick = func(run: Run, _upgrade: Upgrade): if randf() <= 0.1: run.time += 20
+	add_definition(u)
+	
+	u = UpgradeDefinition.new()
+	u.id = "moneyI"
+	u.display_name = "Money I"
+	u.description = "Per second, 25% chance of +$1"
+	u.base_cost = 10
+	u.rarity = 0
+	u.tick = func(run: Run, _upgrade: Upgrade): if randf() <= 0.25: run.cash += 1
+	add_definition(u)
+	
+	u = UpgradeDefinition.new()
+	u.id = "moneyII"
+	u.display_name = "Money II"
+	u.description = "Per second, 10% chance of +$4"
+	u.base_cost = 10
+	u.rarity = 1
+	u.tick = func(run: Run, _upgrade: Upgrade): if randf() <= 0.1: run.cash += 4
 	add_definition(u)

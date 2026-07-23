@@ -5,6 +5,8 @@ var id : String
 var display_name : String
 var description : String
 var base_cost: int
+
+## 0=common, 1=uncommon, 2=rare
 var rarity: int = 0
 var icon : Texture2D
 

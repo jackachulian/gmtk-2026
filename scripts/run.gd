@@ -3,21 +3,39 @@ extends Object
 
 const SHOP_SIZE := 5
 const INVENTORY_SIZE := 5
+const ROUND_DURATION := 30.0
 
-## Emitted whenever the timer ticks down
+## Represents a phase a run can be in
+enum Phase {
+	## Timer is counting down, player can buy upgrades from the shop / sell from inventory
+	COUNTDOWN,
+	## Player is choosing a modifier to apply to their run
+	CHOOSE_MODIFIER
+}
+## Current phase of the game
+var phase: Phase
+
+## Current round number
+var round_number: int = 1
+
+## Amount of time remaining in the round
+var round_timer: float
+
+## Amount of time remaining in the countdown, in seconds
 var time: int = 600
 
+## Player's owned cash that can be used to buy upgrades from the shop
 var cash: int = 20
 
 ## Current length of a single countdown tick, in seconds
 ## (Used by the RunManager for real-world timing)
-var _tick_delay: float = 1.0
+var tick_delay: float = 1.0
 
 ## Current amount of seconds until the next tick
-var _tick_timer: float = 1.0
+var tick_timer: float = 1.0
 
 ## Current timer second decrease of a single countdown tick
-var _tick_amount: int = 1
+var tick_amount: int = 1
 
 ## Currently owned upgrades
 var inventory: Array[Upgrade] = []
@@ -30,22 +48,38 @@ signal shop_changed()
 func _init() -> void:
 	inventory.resize(INVENTORY_SIZE)
 	shop.resize(INVENTORY_SIZE)
+	start_countdown_phase()
+	
+func start_countdown_phase() -> void:
+	phase = Phase.COUNTDOWN
+	round_number = 1
+	round_timer = ROUND_DURATION
+	refresh_shop()
+	
+func start_choose_modifier_phase() -> void:
+	phase = Phase.CHOOSE_MODIFIER
 
 ## Perform rick timing calculations.
 ## RunManager will call this in its _process() loop
 func process(delta: float) -> void:
-	_tick_timer -= delta
-	var iterations: int = 0
-	while _tick_timer <= 0:
-		_tick_timer += _tick_delay
-		_do_tick()
-		
-		if iterations > 500:
-			push_error("Very long loop detected; ending loop!")
-			break
+	## Only tick down the timer when in countdown phase
+	if phase == Phase.COUNTDOWN:
+		tick_timer -= delta
+		var iterations: int = 0
+		while tick_timer <= 0:
+			tick_timer += tick_delay
+			_do_tick()
+			
+			if iterations > 500:
+				push_error("Very long loop detected; ending loop!")
+				break
+				
+		round_timer -= delta
+		if round_timer <= 0.0:
+			start_choose_modifier_phase()
 			
 func _do_tick() -> void:
-	time -= _tick_amount
+	time -= tick_amount
 	for upgrade in inventory:
 		if upgrade:
 			upgrade.tick(self)
@@ -109,3 +143,34 @@ func get_first_open_inventory_slot() -> int:
 		if inventory[i] == null:
 			return i
 	return -1
+	
+func refresh_shop() -> void:
+	## TODO: maybe make this vary?
+	var current_shop_size := 3
+	
+	shop.clear()
+	shop.resize(current_shop_size)
+	
+	var commons: Array = UpgradeManager.definitions_by_rarity[0]
+	var uncommons: Array = UpgradeManager.definitions_by_rarity[1]
+	var rares: Array = UpgradeManager.definitions_by_rarity[2]
+	
+	for i in current_shop_size:
+		var pool: Array = []
+		var rand := randf()
+		
+		# If the last pool reached was empty, or there is no pool reached yet,
+		# use the next rarity level lower than current 
+		if rand <= 0.1:
+			pool = rares
+		if pool.is_empty() and rand <= 0.3:
+			pool = uncommons
+		if pool.is_empty():
+			pool = commons
+	
+		var def: UpgradeDefinition = pool.pick_random()
+		var upgrade := Upgrade.new(def)
+		shop[i] = upgrade
+		
+	shop_changed.emit()
+	
