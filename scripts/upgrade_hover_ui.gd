@@ -27,18 +27,22 @@ func show_on_upgrade_panel(upgrade_panel: UpgradePanel) -> void:
 	buy_button.hide()
 	sell_button.hide()
 	
-	if upgrade_panel.mode == UpgradePanel.Mode.SHOP_ITEM:
+	if upgrade_panel.mode == UpgradePanel.Mode.SHOP:
 		buy_button.show()
 		buy_cost_label.text = "$%d" % upgrade_panel.upgrade.cost
 	
-	elif upgrade_panel.mode == UpgradePanel.Mode.INVENTORY_ITEM:
+	elif upgrade_panel.mode == UpgradePanel.Mode.INVENTORY:
 		sell_button.show()
 		sell_cost_label.text = "$%d" % upgrade_panel.upgrade.cost
 
 func _on_buy_button_pressed() -> void:
-	if upgrade_panel.mode == UpgradePanel.Mode.SHOP_ITEM:
+	if upgrade_panel.mode == UpgradePanel.Mode.SHOP:
 		RunManager.run.buy_shop_item(upgrade_panel.index)
+	else:
+		push_error("This is not a shop item")
 		
 func _on_sell_button_pressed() -> void:
-	if upgrade_panel.mode == UpgradePanel.Mode.INVENTORY_ITEM:
+	if upgrade_panel.mode == UpgradePanel.Mode.INVENTORY:
 		RunManager.run.sell_inventory_item(upgrade_panel.index)
+	else:
+		push_error("This is not an inventory item")

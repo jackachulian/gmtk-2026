@@ -11,9 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://bp2wnse5i0xj" path="res://scenes/upgrade_hover_ui.tscn" id="8_70vka"]
 [ext_resource type="Script" uid="uid://bhpjy0cgnwnyr" path="res://scripts/pause_button.gd" id="9_5cypo"]
 [ext_resource type="Script" uid="uid://bqic3y0rmwd43" path="res://scripts/pause_menu.gd" id="10_nqdth"]
-[ext_resource type="PackedScene" uid="uid://dgp4whgo3om7d" path="res://scenes/modifier_panel.tscn" id="12_o6v7o"]
+[ext_resource type="PackedScene" uid="uid://eb2a20qa3d0e" path="res://scenes/modifier_panel.tscn" id="12_o6v7o"]
 [ext_resource type="Script" uid="uid://dkyhum7abmk7x" path="res://scripts/modifier_menu.gd" id="12_wjob3"]
-[ext_resource type="PackedScene" uid="uid://eb2a20qa3d0e" path="res://scenes/modifier_choice_panel.tscn" id="14_8xp80"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_72e8q"]
 font_size = 40
@@ -128,7 +127,7 @@ theme_override_constants/margin_bottom = 16
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer" unique_id=1771520943]
 layout_mode = 2
 
-[node name="RoundInfoPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer" unique_id=1698808303 node_paths=PackedStringArray("round_number_label", "round_progess_bar", "tick_rate_label", "tick_amount_label")]
+[node name="RoundInfoPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer" unique_id=1698808303 node_paths=PackedStringArray("round_number_label", "round_progess_bar", "tick_rate_label")]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4ieh6")
@@ -136,7 +135,6 @@ script = ExtResource("5_2l77h")
 round_number_label = NodePath("MarginContainer/VBoxContainer/RoundNumberLabel")
 round_progess_bar = NodePath("MarginContainer/VBoxContainer/ProgressBar")
 tick_rate_label = NodePath("MarginContainer/VBoxContainer/TickAmountLabel")
-tick_amount_label = NodePath("MarginContainer/VBoxContainer/TickAmountLabel")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel" unique_id=2069536615]
 layout_mode = 2
@@ -181,41 +179,6 @@ text = "-2 Seconds per tick"
 label_settings = SubResource("LabelSettings_4kik5")
 horizontal_alignment = 1
 vertical_alignment = 2
-
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer" unique_id=450407533]
-layout_mode = 2
-text = "MODIFIERS"
-horizontal_alignment = 1
-
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer" unique_id=1246524519]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ModifierPanelList" type="VBoxContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/ScrollContainer" unique_id=1963945240]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-script = ExtResource("5_nqdth")
-upgrade_panel_scene = ExtResource("12_o6v7o")
-upgrade_source = 3
-
-[node name="ModifierPanel" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/ScrollContainer/ModifierPanelList" unique_id=1904273024 instance=ExtResource("12_o6v7o")]
-layout_mode = 2
-
-[node name="ModifierPanel2" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/ScrollContainer/ModifierPanelList" unique_id=230591901 instance=ExtResource("12_o6v7o")]
-layout_mode = 2
-
-[node name="ModifierPanel3" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/ScrollContainer/ModifierPanelList" unique_id=808800436 instance=ExtResource("12_o6v7o")]
-layout_mode = 2
-
-[node name="ModifierPanel4" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/ScrollContainer/ModifierPanelList" unique_id=2131005344 instance=ExtResource("12_o6v7o")]
-layout_mode = 2
-
-[node name="ModifierPanel5" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/ScrollContainer/ModifierPanelList" unique_id=806470492 instance=ExtResource("12_o6v7o")]
-layout_mode = 2
-
-[node name="ModifierPanel6" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/ScrollContainer/ModifierPanelList" unique_id=1000511611 instance=ExtResource("12_o6v7o")]
-layout_mode = 2
 
 [node name="MainArea" type="Control" parent="MarginContainer/HBoxContainer" unique_id=63991259]
 layout_mode = 2
@@ -429,7 +392,6 @@ layout_mode = 2
 text = "New Run"
 
 [node name="ModifierMenu" type="Control" parent="." unique_id=1777165444]
-visible = false
 z_index = 10
 layout_mode = 1
 anchors_preset = 15
@@ -475,16 +437,16 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 32
 script = ExtResource("5_nqdth")
-upgrade_panel_scene = ExtResource("14_8xp80")
+upgrade_panel_scene = ExtResource("12_o6v7o")
 upgrade_source = 2
 
-[node name="ModifierPanel" parent="ModifierMenu/MarginContainer/VBoxContainer/ModifierPanelList" unique_id=878328569 instance=ExtResource("14_8xp80")]
+[node name="ModifierPanel" parent="ModifierMenu/MarginContainer/VBoxContainer/ModifierPanelList" unique_id=878328569 instance=ExtResource("12_o6v7o")]
 layout_mode = 2
 
-[node name="ModifierPanel2" parent="ModifierMenu/MarginContainer/VBoxContainer/ModifierPanelList" unique_id=858949804 instance=ExtResource("14_8xp80")]
+[node name="ModifierPanel2" parent="ModifierMenu/MarginContainer/VBoxContainer/ModifierPanelList" unique_id=858949804 instance=ExtResource("12_o6v7o")]
 layout_mode = 2
 
-[node name="ModifierPanel3" parent="ModifierMenu/MarginContainer/VBoxContainer/ModifierPanelList" unique_id=825438181 instance=ExtResource("14_8xp80")]
+[node name="ModifierPanel3" parent="ModifierMenu/MarginContainer/VBoxContainer/ModifierPanelList" unique_id=825438181 instance=ExtResource("12_o6v7o")]
 layout_mode = 2
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MainArea/PauseButton" to="MarginContainer/HBoxContainer/MainArea/PauseButton" method="_on_pressed"]

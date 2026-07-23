@@ -1,21 +1,30 @@
-extends HBoxContainer
+class_name UpgradePanelList
+extends Control
 
 @export var upgrade_panel_scene: PackedScene
 
 enum UpgradeSource {
-	Shop,
-	Inventory
+	SHOP,
+	INVENTORY,
+	MODIFIER_CHOICES,
+	MODIFIERS
 }
 @export var upgrade_source: UpgradeSource
 
 func _ready() -> void:
 	var run := RunManager.run
-	if upgrade_source == UpgradeSource.Shop:
-		remake_panels(run.shop, UpgradePanel.Mode.SHOP_ITEM)
-		run.shop_changed.connect(remake_panels.bind(run.shop, UpgradePanel.Mode.SHOP_ITEM))
-	elif upgrade_source == UpgradeSource.Inventory:
-		remake_panels(run.inventory, UpgradePanel.Mode.INVENTORY_ITEM)
-		run.inventory_changed.connect(remake_panels.bind(run.inventory, UpgradePanel.Mode.INVENTORY_ITEM))
+	if upgrade_source == UpgradeSource.SHOP:
+		remake_panels(run.shop, UpgradePanel.Mode.SHOP)
+		run.shop_changed.connect(remake_panels.bind(run.shop, UpgradePanel.Mode.SHOP))
+	elif upgrade_source == UpgradeSource.INVENTORY:
+		remake_panels(run.inventory, UpgradePanel.Mode.INVENTORY)
+		run.inventory_changed.connect(remake_panels.bind(run.inventory, UpgradeSource.INVENTORY))
+	elif upgrade_source == UpgradeSource.MODIFIER_CHOICES:
+		remake_panels(run.modifier_choices, UpgradePanel.Mode.MODIFIER_CHOICE)
+		run.modifier_choices_changed.connect(remake_panels.bind(run.modifier_choices, UpgradePanel.Mode.MODIFIER_CHOICE))
+	elif upgrade_source == UpgradeSource.MODIFIERS:
+		remake_panels(run.modifiers, UpgradePanel.Mode.MODIFIER)
+		run.modifiers_changed.connect(remake_panels.bind(run.modifiers, UpgradePanel.Mode.MODIFIER))
 	
 func remake_panels(upgrades: Array[Upgrade], mode: UpgradePanel.Mode) -> void:
 	for child in get_children():

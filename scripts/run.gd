@@ -4,6 +4,7 @@ extends Object
 const SHOP_SIZE := 5
 const INVENTORY_SIZE := 5
 const ROUND_DURATION := 30.0
+const MODIFIER_CHOICE_COUNT := 3
 
 ## Represents a phase a run can be in
 enum Phase {
@@ -14,6 +15,7 @@ enum Phase {
 }
 ## Current phase of the game
 var phase: Phase
+signal phase_changed()
 
 ## Current round number
 var round_number: int = 1
@@ -27,9 +29,9 @@ var time: int = 600
 ## Player's owned cash that can be used to buy upgrades from the shop
 var cash: int = 20
 
-## Current length of a single countdown tick, in seconds
+## Current amount of ticks per real-world second
 ## (Used by the RunManager for real-world timing)
-var tick_delay: float = 1.0
+var tick_rate: float = 1.0
 
 ## Current amount of seconds until the next tick
 var tick_timer: float = 1.0
@@ -45,6 +47,14 @@ signal inventory_changed()
 var shop: Array[Upgrade] = []
 signal shop_changed()
 
+## List of modifiers that can be chosen to affect the run during CHOOSE_MODIFIER phase
+var modifier_choices: Array[Upgrade] = []
+signal modifier_choices_changed()
+
+## List of modifiers that have been chosen and are affecting the run
+var modifiers: Array[Upgrade] = []
+signal modifiers_changed()
+
 func _init() -> void:
 	inventory.resize(INVENTORY_SIZE)
 	shop.resize(INVENTORY_SIZE)
@@ -55,9 +65,23 @@ func start_countdown_phase() -> void:
 	round_number = 1
 	round_timer = ROUND_DURATION
 	refresh_shop()
+	phase_changed.emit()
 	
 func start_choose_modifier_phase() -> void:
 	phase = Phase.CHOOSE_MODIFIER
+	
+	var definitions := UpgradeManager.modifier_definitions
+	var pool := definitions.values().duplicate()
+	
+	modifier_choices.clear()
+	for i in mini(MODIFIER_CHOICE_COUNT, pool.size()):
+		var pool_index := randi_range(0, pool.size()-1)
+		var def: UpgradeDefinition = pool[pool_index]
+		var upgrade := Upgrade.new(def)
+		modifier_choices.append(upgrade)
+	
+	modifier_choices_changed.emit()
+	phase_changed.emit()
 
 ## Perform rick timing calculations.
 ## RunManager will call this in its _process() loop
@@ -67,7 +91,7 @@ func process(delta: float) -> void:
 		tick_timer -= delta
 		var iterations: int = 0
 		while tick_timer <= 0:
-			tick_timer += tick_delay
+			tick_timer += (1.0/tick_rate)
 			_do_tick()
 			
 			if iterations > 500:
@@ -80,6 +104,8 @@ func process(delta: float) -> void:
 			
 func _do_tick() -> void:
 	time -= tick_amount
+	for upgrade in modifiers:
+		upgrade.tick(self)
 	for upgrade in inventory:
 		if upgrade:
 			upgrade.tick(self)
@@ -174,3 +200,13 @@ func refresh_shop() -> void:
 		
 	shop_changed.emit()
 	
+## Use during CHOOSE_MODIFIER phase to choose a modifier to permanently add to the run.
+## Countdown phase is started right after the choice is made
+func choose_modifier(slot: int) -> bool:
+	var modifier := modifier_choices[slot]
+	modifiers.append(modifier)
+	modifier.buy(self) # "Buy" event is used as an on select for modifiers
+	modifiers_changed.emit()
+	
+	start_countdown_phase()
+	return true

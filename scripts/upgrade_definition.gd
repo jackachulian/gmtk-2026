@@ -6,6 +6,10 @@ var display_name : String
 var description : String
 var base_cost: int
 
+## "Chance" effect that can be used in descriptions and effects.
+## Range is 0-100, 0 = 0%, 100 = 100%
+var base_chance: int
+
 ## 0=common, 1=uncommon, 2=rare
 var rarity: int = 0
 var icon : Texture2D
@@ -33,6 +37,14 @@ var sell: Callable = func(run: Run, upgrade: Upgrade) -> void: return
 ## and applies the tick effects of this upgrade to the run
 @warning_ignore("unused_parameter")
 var tick: Callable = func(run: Run, upgrade: Upgrade) -> void: return
+
+## round_start(run: Run, upgrade: Upgrade) -> void
+@warning_ignore("unused_parameter")
+var round_start: Callable = func(run: Run, upgrade: Upgrade) -> void: return
+
+## round_end(run: Run, upgrade: Upgrade) -> void
+@warning_ignore("unused_parameter")
+var round_end: Callable = func(run: Run, upgrade: Upgrade) -> void: return
 
 ### Make a duplicate instance of this UpgradeDefinition
 #func duplicate() -> Upgrade:

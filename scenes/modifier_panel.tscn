@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dgp4whgo3om7d"]
+
+[ext_resource type="Script" uid="uid://c50h7ewmxwkiy" path="res://scripts/upgrade_panel.gd" id="1_tkwf0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sp04v"]
+bg_color = Color(0.0475, 0.142, 0.25, 1)
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ihbck"]
+font_size = 14
+
+[node name="ModifierPanel" type="PanelContainer" unique_id=1904273024 node_paths=PackedStringArray("description_label")]
+offset_right = 182.0
+offset_bottom = 80.0
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_sp04v")
+script = ExtResource("1_tkwf0")
+description_label = NodePath("ModifierPanel/DescriptionLabel")
+
+[node name="ModifierPanel" type="MarginContainer" parent="." unique_id=1851831535]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="DescriptionLabel" type="Label" parent="ModifierPanel" unique_id=1377971123]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+text = "Modifier Description Modifier Description Modifier Description "
+label_settings = SubResource("LabelSettings_ihbck")
+autowrap_mode = 2
