@@ -3,7 +3,7 @@ extends Object
 
 const SHOP_SIZE := 5
 const INVENTORY_SIZE := 5
-const ROUND_DURATION := 30.0
+const ROUND_DURATION := 40.0
 const MODIFIER_CHOICE_COUNT := 3
 const ROUND_START_REROLL_PRICE := 3
 const REROLL_PRICE_INCREASE := 1
@@ -29,7 +29,7 @@ var round_number: int = 1
 var round_timer: float
 
 ## Amount of time remaining in the countdown, in seconds
-var time: int = 15
+var time: int = 20
 
 ## Player's owned cash that can be used to buy upgrades from the shop
 var cash: int = 20
@@ -79,8 +79,11 @@ func start_countdown_phase() -> void:
 func start_choose_modifier_phase() -> void:
 	phase = Phase.CHOOSE_MODIFIER
 	
+	if (round_number % 2 == 0):
+		tick_amount += 1
+	else:
+		tick_rate += 0.25
 	round_number += 1
-	tick_amount += 1
 	cash += CASH_PER_ROUND
 	
 	shop.clear()
