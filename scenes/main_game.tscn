@@ -22,27 +22,27 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_72e8q"]
 font_size = 40
-font_color = Color(0.94, 0.6976367, 0.08459997, 1)
+font_color = Color(0.4627451, 0.9098039, 0.3372549, 1)
 shadow_size = 0
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(2.82, 2.82)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ieh6"]
-bg_color = Color(0.0475, 0.142, 0.25, 1)
-border_color = Color(0.09209899, 0.126847, 0.25765315, 1)
+bg_color = Color(0.34117648, 0.21568628, 0.32156864, 1)
+border_color = Color(0.1882353, 0.1882353, 0.25882354, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ruc6o"]
 font_size = 32
-font_color = Color(0.8620888, 0.8713416, 0.88194597, 1)
+font_color = Color(0.972549, 1, 0.7294118, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o0ard"]
 bg_color = Color(0.0342, 0.045360006, 0.09, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4kik5"]
-bg_color = Color(0.8624, 0.86943996, 0.88, 0.8627451)
+bg_color = Color(0.972549, 1, 0.7294118, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_o6v7o"]
-font_color = Color(0.7750301, 0.5734, 0.94, 1)
+font_color = Color(0.9098039, 0.79607844, 0.34509805, 1)
 
 [sub_resource type="Animation" id="Animation_ikqpi"]
 length = 0.001
@@ -80,10 +80,7 @@ _data = {
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_4kik5"]
-font_color = Color(0.2364304, 0.67596954, 0.93868446, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_72e8q"]
-bg_color = Color(0.11599999, 0.18559995, 0.29, 0.23137255)
+font_color = Color(0.29803923, 0.5647059, 0.6313726, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_o0ard"]
 
@@ -281,7 +278,7 @@ anchor_right = 1.0
 offset_right = -118.0
 offset_bottom = 192.0
 grow_horizontal = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_72e8q")
+theme = ExtResource("1_d2op2")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MainArea/InventoryPanel" unique_id=1984637877]
 custom_minimum_size = Vector2(0, 160)

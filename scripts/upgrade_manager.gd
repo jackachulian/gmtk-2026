@@ -99,7 +99,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			run.cash += 1
 			return true
 		return false
-	u.icon = preload("res://graphics/foe_bug.png")
+	u.icon = preload("res://graphics/icons/money.png")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -114,7 +114,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			run.cash += 4
 			return true
 		return false
-	u.icon = preload("res://graphics/foe_bug.png")
+	u.icon = preload("res://graphics/icons/money.png")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()

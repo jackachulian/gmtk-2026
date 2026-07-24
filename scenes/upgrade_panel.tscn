@@ -4,28 +4,28 @@
 [ext_resource type="Texture2D" uid="uid://c0gd7ogq7pw3s" path="res://graphics/foe_bug.png" id="2_0ql3a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lev6e"]
-bg_color = Color(0.0475, 0.142, 0.25, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
+bg_color = Color(0.2, 0.14117648, 0.19215687, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
 border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ql3a"]
-bg_color = Color(0.0475, 0.142, 0.25, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.134819, 0.6925657, 5.7756904e-07, 1)
+bg_color = Color(0.2, 0.14117648, 0.19215687, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.22745098, 0.8784314, 0.3372549, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8kbbg"]
-bg_color = Color(0.0475, 0.142, 0.25, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0, 0.6133335, 0.8, 1)
+bg_color = Color(0.2, 0.14117648, 0.19215687, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.29803923, 0.5647059, 0.6313726, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ruc6o"]
 font_color = Color(0.8620888, 0.8713416, 0.88194597, 1)

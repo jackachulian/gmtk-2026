@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c50h7ewmxwkiy" path="res://scripts/upgrade_panel.gd" id="1_tkwf0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sp04v"]
-bg_color = Color(0.0475, 0.142, 0.25, 1)
+bg_color = Color(0.34117648, 0.21568628, 0.32156864, 1)
 border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ihbck"]

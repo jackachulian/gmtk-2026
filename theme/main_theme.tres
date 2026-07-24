@@ -7,7 +7,7 @@ content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
-bg_color = Color(0.0442, 0.14772998, 0.34, 0.79607844)
+bg_color = Color(0.29803923, 0.5647059, 0.6313726, 1)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
@@ -19,7 +19,7 @@ content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
-bg_color = Color(0.032000005, 0.06840002, 0.2, 0.8509804)
+bg_color = Color(0.27450982, 0.38431373, 0.5294118, 1)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
@@ -39,7 +39,7 @@ corner_radius_bottom_left = 3
 corner_detail = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5fetd"]
-bg_color = Color(0.11599999, 0.18559995, 0.29, 1)
+bg_color = Color(0.1882353, 0.1882353, 0.25882354, 1)
 
 [resource]
 default_font = ExtResource("1_afw5t")
