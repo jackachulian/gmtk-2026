@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://bqic3y0rmwd43" path="res://scripts/pause_menu.gd" id="10_nqdth"]
 [ext_resource type="PackedScene" uid="uid://dgp4whgo3om7d" path="res://scenes/modifier_panel.tscn" id="12_o6v7o"]
 [ext_resource type="Script" uid="uid://dkyhum7abmk7x" path="res://scripts/modifier_menu.gd" id="12_wjob3"]
+[ext_resource type="FontFile" uid="uid://dfsvoaoqxhann" path="res://fonts/vcr_osd_mono/VCR_OSD_MONO.ttf" id="13_5luka"]
 [ext_resource type="PackedScene" uid="uid://eb2a20qa3d0e" path="res://scenes/modifier_choice_panel.tscn" id="14_8xp80"]
 [ext_resource type="Script" uid="uid://bfmbkfi3a8f8j" path="res://scripts/game_over_menu.gd" id="16_ihbck"]
 
@@ -90,6 +91,7 @@ bg_color = Color(0.11599999, 0.18559995, 0.29, 0.23137255)
 font_size = 24
 
 [sub_resource type="LabelSettings" id="LabelSettings_4ieh6"]
+font = ExtResource("13_5luka")
 font_size = 64
 shadow_size = 0
 shadow_color = Color(0, 0, 0, 1)
