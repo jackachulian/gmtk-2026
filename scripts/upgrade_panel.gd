@@ -5,6 +5,7 @@ extends Control
 @export var level_label: Label
 @export var description_label: Label
 @export var cost_label: Label
+@export var icon: Sprite2D
 
 @export var card_panel_container: PanelContainer
 @export var common_stylebox: StyleBox
@@ -38,6 +39,7 @@ func setup(upgrade: Upgrade, mode: Mode, index: int) -> void:
 	if level_label: level_label.text = "Lv. %d" % upgrade.level
 	if description_label: description_label.text = upgrade.get_parsed_description()
 	if cost_label: cost_label.text = "$%d" % upgrade.cost
+	if icon: icon.texture = upgrade.icon
 	
 	if card_panel_container:
 		if upgrade.definition.rarity == 0:
@@ -49,9 +51,14 @@ func setup(upgrade: Upgrade, mode: Mode, index: int) -> void:
 	
 func _on_mouse_entered() -> void:
 	UpgradeHoverUI.instance.show_on_upgrade_panel(self)
+	description_label.show()
+	if name_label: name_label.hide()
+	if icon: icon.hide()
 	
 func _on_mouse_exited() -> void:
-	pass
+	description_label.hide()
+	if name_label: name_label.show()
+	if icon: icon.show()
 	#if (UpgradeHoverUI.instance.upgrade_panel == self):
 		#UpgradeHoverUI.instance.hide()
 

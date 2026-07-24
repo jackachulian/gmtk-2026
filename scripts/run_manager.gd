@@ -13,7 +13,7 @@ static var paused: bool = false
 @export var tick_sfx: Array[AudioStream] = []
 @export var upgrade_inventory: UpgradePanelList = null
 @export var modifier_inventory: UpgradePanelList = null
-@export var tick_rate_animator: AnimationPlayer
+@export var tick_rate_animator: AnimationPlayer = null
 
 func _enter_tree() -> void:
 	run = Run.new(self, upgrade_inventory, modifier_inventory, tick_rate_animator)

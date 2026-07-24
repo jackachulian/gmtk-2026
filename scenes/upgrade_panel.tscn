@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b1ocpx185lufv"]
 
 [ext_resource type="Script" uid="uid://c50h7ewmxwkiy" path="res://scripts/upgrade_panel.gd" id="1_lev6e"]
+[ext_resource type="Texture2D" uid="uid://c0gd7ogq7pw3s" path="res://graphics/foe_bug.png" id="2_0ql3a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lev6e"]
 bg_color = Color(0.0475, 0.142, 0.25, 1)
@@ -159,7 +160,7 @@ _data = {
 &"trigger": SubResource("Animation_0ql3a")
 }
 
-[node name="UpgradePanel" type="Control" unique_id=196418158 node_paths=PackedStringArray("description_label", "cost_label", "card_panel_container", "animation_player")]
+[node name="UpgradePanel" type="Control" unique_id=196418158 node_paths=PackedStringArray("name_label", "description_label", "cost_label", "icon", "card_panel_container", "animation_player")]
 z_index = 2
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 3
@@ -168,8 +169,10 @@ offset_right = 128.0
 offset_bottom = 160.0
 mouse_filter = 1
 script = ExtResource("1_lev6e")
-description_label = NodePath("CenterContainer/PanelContainer/MarginContainer/NameLabel")
+name_label = NodePath("CenterContainer/PanelContainer/MarginContainer/NameLabel")
+description_label = NodePath("CenterContainer/PanelContainer/MarginContainer/DescLabel")
 cost_label = NodePath("CenterContainer/PanelContainer/MarginContainer/CostLabel")
+icon = NodePath("CenterContainer/PanelContainer/MarginContainer/Icon")
 card_panel_container = NodePath("CenterContainer/PanelContainer")
 common_stylebox = SubResource("StyleBoxFlat_lev6e")
 uncommon_stylebox = SubResource("StyleBoxFlat_0ql3a")
@@ -197,7 +200,18 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 4
 
-[node name="NameLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=1340976265]
+[node name="NameLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=1933867341]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+size_flags_vertical = 0
+text = "+20 Seconds"
+label_settings = SubResource("LabelSettings_ruc6o")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="DescLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=1340976265]
+visible = false
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 size_flags_vertical = 0
@@ -215,6 +229,11 @@ text = "$5"
 label_settings = SubResource("LabelSettings_4kik5")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Icon" type="Sprite2D" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=1150159840]
+position = Vector2(60, 90)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_0ql3a")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2086586328]
 libraries/ = SubResource("AnimationLibrary_8kbbg")

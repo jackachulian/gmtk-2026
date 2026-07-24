@@ -18,10 +18,13 @@ var value: float = 1.0
 ## When buying a copy of a modifier, the original modifier's level is increased instead.
 var level: int = 1
 
+var icon: Texture2D
+
 func _init(definition: UpgradeDefinition) -> void:
 	_definition = definition
 	cost = _definition.base_cost
 	chance = _definition.base_chance
+	icon = _definition.icon
 
 func can_buy(run: Run) -> bool:
 	return _definition.can_buy.call(run, self)

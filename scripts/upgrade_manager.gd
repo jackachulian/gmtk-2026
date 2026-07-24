@@ -1,6 +1,8 @@
 class_name UpgradeManager
 extends Node
 
+@export var icon_reg: Array[Texture2D]
+
 ## Key = upgrade id, Value = data defining this type of upgrade
 static var upgrade_definitions: Dictionary[String, UpgradeDefinition] = {}
 
@@ -52,6 +54,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.rarity = 0
 	u.buy = func(run: Run, _upgrade: Upgrade): run.time += 30
 	u.sell = func(run: Run, _upgrade: Upgrade): run.time -= 30
+	u.icon = preload("res://graphics/foe_bug.png")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -66,6 +69,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			run.time += 5
 			return true
 		return false
+	u.icon = preload("res://graphics/icons/booster.png")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -80,6 +84,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			run.time += 20
 			return true
 		return false
+	u.icon = preload("res://graphics/icons/booster.png")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -94,6 +99,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			run.cash += 1
 			return true
 		return false
+	u.icon = preload("res://graphics/foe_bug.png")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -108,6 +114,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			run.cash += 4
 			return true
 		return false
+	u.icon = preload("res://graphics/foe_bug.png")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -123,6 +130,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			run.time += 20;
 			return true
 		return false
+	u.icon = preload("res://graphics/foe_bug.png")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -138,6 +146,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			run.time += 50;
 			return true
 		return false
+	u.icon = preload("res://graphics/foe_bug.png")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -153,6 +162,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			run.runner_force_tick()
 			return true
 		return false
+	u.icon = preload("res://graphics/icons/double.png")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -170,6 +180,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			run.runner_force_tick()
 			return true
 		return false
+	u.icon = preload("res://graphics/icons/triple.png")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -180,6 +191,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.rarity = 0
 	u.buy = func(run: Run, _upgrade: Upgrade): run.cash += 40
 	u.sell = func(run: Run, _upgrade: Upgrade): run.cash -= 40
+	u.icon = preload("res://graphics/icons/loan.png")
 	add_upgrade_definition(u)
 
 
