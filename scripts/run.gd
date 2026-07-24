@@ -171,10 +171,22 @@ func _do_tick(forced: bool) -> void:
 	for index in inventory.size():
 		var upgrade = inventory[index]
 		if upgrade:
+			# This block only runs if item was triggered
 			if await upgrade.tick(self, forced):
 				# not super happy with how this is passed down but i think this is the simplest
 				# way to match the upgrade object to the corresponding panel
 				upgrade_inventory.play_upgrade_anim(index, "trigger")
+				if upgrade.definition.base_dur > -1:
+					upgrade.durability -= 1;
+					upgrade_inventory.update_dur_label(index, upgrade.durability)
+					
+					# break item
+					# TODO animation for this
+					if upgrade.durability <= 0:
+						inventory[index] = null
+						upgrade.sell(self)
+						inventory_changed.emit()
+						
 	for index in modifiers.size():
 		var upgrade = modifiers[index]
 		if upgrade:

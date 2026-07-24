@@ -6,6 +6,8 @@ extends Control
 @export var description_label: Label
 @export var cost_label: Label
 @export var icon: Sprite2D
+@export var durability: PanelContainer
+@export var durability_label: Label
 
 @export var card_panel_container: PanelContainer
 @export var common_stylebox: StyleBox
@@ -40,6 +42,13 @@ func setup(upgrade: Upgrade, mode: Mode, index: int) -> void:
 	if description_label: description_label.text = upgrade.get_parsed_description()
 	if cost_label: cost_label.text = "$%d" % upgrade.cost
 	if icon: icon.texture = upgrade.icon
+	if upgrade.definition.base_dur == -1 && durability && durability_label: 
+		durability_label.hide()
+		durability.hide()
+		durability_label = null
+		durability = null
+	if durability_label: durability_label.text = "%d" % upgrade.durability
+	
 	
 	if card_panel_container:
 		if upgrade.definition.rarity == 0:
@@ -54,14 +63,19 @@ func _on_mouse_entered() -> void:
 	description_label.show()
 	if name_label: name_label.hide()
 	if icon: icon.hide()
-	
+	if durability: durability.hide()
+		
 func _on_mouse_exited() -> void:
 	description_label.hide()
 	if name_label: name_label.show()
 	if icon: icon.show()
+	if durability: durability.show()
 	#if (UpgradeHoverUI.instance.upgrade_panel == self):
 		#UpgradeHoverUI.instance.hide()
 
 ## Used in the modifier panel list only
 func _on_select_button_pressed() -> void:
 	RunManager.run.choose_modifier(index)
+	
+func set_dur_label(dur: int) -> void:
+	if durability_label: durability_label.text = str(dur)	

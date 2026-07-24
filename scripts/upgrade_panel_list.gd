@@ -27,8 +27,12 @@ func _ready() -> void:
 		run.modifiers_changed.connect(remake_panels.bind(run.modifiers, UpgradePanel.Mode.MODIFIER))
 	
 func remake_panels(upgrades: Array[Upgrade], mode: UpgradePanel.Mode) -> void:
-	for child in get_children():
-		child.queue_free()
+	if mode == UpgradePanel.Mode.INVENTORY:
+		for child in get_children().size():
+			free_upgrade_after_anim(child)
+	else:
+		for child in get_children():
+			child.queue_free()
 	for i in upgrades.size():
 		var upgrade: Upgrade = upgrades[i]
 		if not upgrade: continue # empty slots
@@ -37,8 +41,18 @@ func remake_panels(upgrades: Array[Upgrade], mode: UpgradePanel.Mode) -> void:
 		add_child(upgrade_panel)
 		
 func play_upgrade_anim(index: int, anim: String) -> void:
-	
 	var panel = get_child(index)
 	# Can sometimes be null when selling at certain timings
 	if panel == null: return;
 	panel.animation_player.play(anim);
+	
+func free_upgrade_after_anim(index: int) -> void:
+	var child = get_child(index) as UpgradePanel
+	if child.animation_player && child.animation_player.is_playing(): await child.animation_player.animation_finished
+	child.queue_free()
+	
+func update_dur_label(index: int, dur: int) -> void:
+	var panel = get_child(index)
+	# Can sometimes be null when selling at certain timings
+	if panel == null: return;
+	panel.set_dur_label(dur)

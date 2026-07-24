@@ -20,11 +20,15 @@ var level: int = 1
 
 var icon: Texture2D
 
+# When negative, inf durability (for modifiers)
+var durability: int = -1
+
 func _init(definition: UpgradeDefinition) -> void:
 	_definition = definition
 	cost = _definition.base_cost
 	chance = _definition.base_chance
 	icon = _definition.icon
+	durability = definition.base_dur
 
 func can_buy(run: Run) -> bool:
 	return _definition.can_buy.call(run, self)

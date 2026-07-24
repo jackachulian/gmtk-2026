@@ -33,6 +33,9 @@ font_color = Color(0.8620888, 0.8713416, 0.88194597, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_4kik5"]
 font_color = Color(0.9411765, 0.69803923, 0.08627451, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_2re5j"]
+font_size = 24
+
 [sub_resource type="Animation" id="Animation_lev6e"]
 length = 0.001
 tracks/0/type = "bezier"
@@ -160,7 +163,7 @@ _data = {
 &"trigger": SubResource("Animation_0ql3a")
 }
 
-[node name="UpgradePanel" type="Control" unique_id=196418158 node_paths=PackedStringArray("name_label", "description_label", "cost_label", "icon", "card_panel_container", "animation_player")]
+[node name="UpgradePanel" type="Control" unique_id=196418158 node_paths=PackedStringArray("name_label", "description_label", "cost_label", "icon", "durability", "durability_label", "card_panel_container", "animation_player")]
 z_index = 2
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 3
@@ -173,6 +176,8 @@ name_label = NodePath("CenterContainer/PanelContainer/MarginContainer/NameLabel"
 description_label = NodePath("CenterContainer/PanelContainer/MarginContainer/DescLabel")
 cost_label = NodePath("CenterContainer/PanelContainer/MarginContainer/CostLabel")
 icon = NodePath("CenterContainer/PanelContainer/MarginContainer/Icon")
+durability = NodePath("DurabilityPanelContainer")
+durability_label = NodePath("DurabilityPanelContainer/DurabilityLabel")
 card_panel_container = NodePath("CenterContainer/PanelContainer")
 common_stylebox = SubResource("StyleBoxFlat_lev6e")
 uncommon_stylebox = SubResource("StyleBoxFlat_0ql3a")
@@ -234,6 +239,20 @@ vertical_alignment = 1
 position = Vector2(60, 90)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("2_0ql3a")
+
+[node name="DurabilityPanelContainer" type="PanelContainer" parent="." unique_id=1961099163]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 116.0
+offset_right = 122.0
+offset_bottom = 152.0
+
+[node name="DurabilityLabel" type="Label" parent="DurabilityPanelContainer" unique_id=1971965223]
+layout_mode = 2
+text = "5"
+label_settings = SubResource("LabelSettings_2re5j")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2086586328]
 libraries/ = SubResource("AnimationLibrary_8kbbg")

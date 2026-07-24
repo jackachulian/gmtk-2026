@@ -5,6 +5,8 @@ var id : String
 var display_name : String
 var description : String
 var base_cost: int
+# Durability
+var base_dur: int
 
 ## "Chance" effect that can be used in descriptions and effects.
 ## Range is 0-100, 0 = 0%, 100 = 100%
@@ -34,10 +36,20 @@ var sell: Callable = func(run: Run, upgrade: Upgrade) -> void: return
 
 ## tick(run: Run, upgrade: Upgrade, forced: bool) -> bool:
 ## Takes current Run and the Upgrade instance this is being called on, 
-## and applies the tick effects of this upgrade to the run
+## and applies the tick effects of this upgrade to the run (typically by calling
+## "trigger")
 ## Returns true if item was triggered, false if item was not.
 @warning_ignore("unused_parameter")
 var tick: Callable = func(run: Run, upgrade: Upgrade, forced: bool) -> bool: return false
+
+## tick(run: Run, upgrade: Upgrade, forced: bool) -> void:
+## Takes current Run and the Upgrade instance this is being called on, 
+## and applies the trigger effects of this upgrade to the run
+## Typically called from "tick" but can be force-triggered by some mechanics
+## NOTE: "forced" here means the upgrade was force-triggered, "forced" in tick
+## means a tick was caused outside of normal timing
+@warning_ignore("unused_parameter")
+var trigger: Callable = func(run: Run, upgrade: Upgrade, forced: bool) -> void: return
 
 ## round_start(run: Run, upgrade: Upgrade) -> void
 ## Called when the countdown phase starts

@@ -51,6 +51,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.display_name = "Borrowed Time"
 	u.description = "+30 Seconds"
 	u.base_cost = 5
+	u.base_dur = -1
 	u.rarity = 0
 	u.buy = func(run: Run, _upgrade: Upgrade): run.time += 30
 	u.sell = func(run: Run, _upgrade: Upgrade): run.time -= 30
@@ -63,10 +64,13 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.description = "Each tick, [chance] chance of +5 seconds"
 	u.base_chance = 25
 	u.base_cost = 5
+	u.base_dur = 6
 	u.rarity = 0
+	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void:
+		run.time += 5
 	u.tick = func(run: Run, _upgrade: Upgrade, forced: bool) -> bool: 
 		if randf() <= 0.25: 
-			run.time += 5
+			u.trigger.call(run, _upgrade, false)
 			return true
 		return false
 	u.icon = preload("res://graphics/icons/booster.png")
@@ -77,41 +81,48 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.display_name = "Booster II"
 	u.description = "Each tick, [chance] chance of +20 seconds"
 	u.base_chance = 10
+	u.base_dur = 6
 	u.base_cost = 10
 	u.rarity = 1
 	u.tick = func(run: Run, _upgrade: Upgrade, forced: bool) -> bool: 
 		if randf() <= 0.1: 
-			run.time += 20
+			u.trigger.call(run, _upgrade, false)
 			return true
 		return false
 	u.icon = preload("res://graphics/icons/booster.png")
+	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void:
+		run.time += 20
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
 	u.id = "moneyI"
 	u.display_name = "Money I"
-	u.description = "Each tick, [chance] chance of +$1"
+	u.description = "Each tick, [chance] chance of +$2"
 	u.base_chance = 25
 	u.base_cost = 5
+	u.base_dur = 6
 	u.rarity = 0
 	u.tick = func(run: Run, _upgrade: Upgrade, forced: bool) -> bool: 
 		if randf() <= 0.25: 
-			run.cash += 1
+			u.trigger.call(run, _upgrade, false)
 			return true
 		return false
 	u.icon = preload("res://graphics/icons/money.png")
+	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void: run.cash += 2
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
 	u.id = "moneyII"
 	u.display_name = "Money II"
-	u.description = "Each tick, [chance] chance of +$4"
-	u.base_chance = 10
+	u.description = "Each tick, [chance] chance of +$5"
+	u.base_chance = 15
 	u.base_cost = 10
+	u.base_dur = 6
 	u.rarity = 1
+	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void: run.cash += 5
 	u.tick = func(run: Run, _upgrade: Upgrade, forced: bool) -> bool: 
-		if randf() <= 0.1: 
-			run.cash += 4
+		if randf() <= 0.15: 
+			u.trigger.call(run, _upgrade, false)
 			return true
 		return false
 	u.icon = preload("res://graphics/icons/money.png")
@@ -123,11 +134,14 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.description = "Each tick, [chance] chance of -$5 and +20 seconds"
 	u.base_chance = 10
 	u.base_cost = 3
+	u.base_dur = 10
 	u.rarity = 1
+	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void:
+		run.cash -= 5;
+		run.time += 20;
 	u.tick = func(run: Run, _upgrade: Upgrade, forced: bool) -> bool:
 		if randf() <= 0.1 && run.cash >= 5:
-			run.cash -= 5;
-			run.time += 20;
+			u.trigger.call(run, _upgrade, false)
 			return true
 		return false
 	u.icon = preload("res://graphics/foe_bug.png")
@@ -138,12 +152,15 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.display_name = "Money Drain II"
 	u.description = "Each tick, [chance] chance of -$10 and +50 seconds"
 	u.base_chance = 10
+	u.base_dur = 12
 	u.base_cost = 5
 	u.rarity = 2
+	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void:
+		run.cash -= 10;
+		run.time += 50;
 	u.tick = func(run: Run, _upgrade: Upgrade, forced: bool) -> bool: 
 		if randf() <= 0.1 && run.cash >= 10:
-			run.cash -= 10;
-			run.time += 50;
+			u.trigger.call(run, _upgrade, false)
 			return true
 		return false
 	u.icon = preload("res://graphics/foe_bug.png")
@@ -155,11 +172,14 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.description = "Each tick, [chance] chance of +1 second and force additional tick"
 	u.base_chance = 10
 	u.base_cost = 8
+	u.base_dur = 8
 	u.rarity = 1
+	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void:
+		await node.get_tree().create_timer(0.15).timeout
+		run.runner_force_tick()
 	u.tick = func(run: Run, _upgrade: Upgrade, forced: bool) -> bool:
 		if randf() <= 0.1 && !forced:
-			await node.get_tree().create_timer(0.15).timeout
-			run.runner_force_tick()
+			u.trigger.call(run, _upgrade, false)
 			return true
 		return false
 	u.icon = preload("res://graphics/icons/double.png")
@@ -171,13 +191,16 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.description = "Each tick, [chance] chance of +1 second and force 2 additional ticks"
 	u.base_chance = 10
 	u.base_cost = 16
+	u.base_dur = 8
 	u.rarity = 2
+	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void:
+		await node.get_tree().create_timer(0.15).timeout
+		run.runner_force_tick()
+		await node.get_tree().create_timer(0.15).timeout
+		run.runner_force_tick()
 	u.tick = func(run: Run, _upgrade: Upgrade, forced: bool) -> bool: 
 		if randf() <= 0.1 && !forced:  
-			await node.get_tree().create_timer(0.15).timeout
-			run.runner_force_tick()
-			await node.get_tree().create_timer(0.15).timeout
-			run.runner_force_tick()
+			u.trigger.call(run, _upgrade, false)
 			return true
 		return false
 	u.icon = preload("res://graphics/icons/triple.png")
@@ -186,15 +209,19 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u = UpgradeDefinition.new()
 	u.id = "loan"
 	u.display_name = "Loan"
-	u.description = "+40$, removes 40$ when sold"
+	u.description = "+40$, removes 80$ when sold. +20$ on force-trigger."
 	u.base_cost = 0
+	u.base_dur = 6
 	u.rarity = 0
+	
+	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void: run.cash += 20
 	u.buy = func(run: Run, _upgrade: Upgrade): run.cash += 40
-	u.sell = func(run: Run, _upgrade: Upgrade): run.cash -= 40
+	u.sell = func(run: Run, _upgrade: Upgrade): run.cash -= 80
 	u.icon = preload("res://graphics/icons/loan.png")
 	add_upgrade_definition(u)
 
 
+# TODO make this use the tick/trigger system instead of just tick
 func generate_modifier_definitions() -> void:
 	modifier_definitions.clear()
 	
@@ -205,6 +232,7 @@ func generate_modifier_definitions() -> void:
 	m.display_name = "Time Fluctuation"
 	m.description = "Each tick, [chance] chance to double time, and [chance] chance to halve time"
 	m.base_chance = 1
+	m.base_dur = -1
 	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool: 
 		if randi_range(1,100) <= upgrade.chance: 
 			run.time *= 2
@@ -220,6 +248,7 @@ func generate_modifier_definitions() -> void:
 	m.display_name = "Tick Speed Fluctuation"
 	m.description = "Each tick, [chance] chance to double tick rate, and [chance] chance to halve tick rate (Resets each round)"
 	m.base_chance = 1
+	m.base_dur = -1
 	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool:
 		if randi_range(1,100) <= upgrade.chance: 
 			upgrade.value *= 2
@@ -240,6 +269,7 @@ func generate_modifier_definitions() -> void:
 	m.display_name = "Swapper"
 	m.description = "Each tick, [chance] chance to swap minutes and seconds"
 	m.base_chance = 1
+	m.base_dur = -1
 	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool:
 		if randi_range(1,100) <= upgrade.chance:
 			@warning_ignore("integer_division") var days := run.time / 86400
@@ -255,6 +285,7 @@ func generate_modifier_definitions() -> void:
 	m.display_name = "Minute Rounder"
 	m.description = "Each tick, [chance] chance to round to the nearest minute"
 	m.base_chance = 1
+	m.base_dur = -1
 	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool:
 		if randi_range(1,100) <= upgrade.chance:
 			var seconds := run.time % 60
