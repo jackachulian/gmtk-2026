@@ -6,6 +6,8 @@ extends Node
 ## Key = upgrade id, Value = data defining this type of upgrade
 static var upgrade_definitions: Dictionary[String, UpgradeDefinition] = {}
 
+static var status_definitions: Dictionary[String, UpgradeDefinition] = {}
+
 ## Index = rarity (0=common, 1=uncommon, 2=rare), value = Array[UpgradeDefinition]
 static var definitions_by_rarity: Array[Array] = []
 
@@ -37,6 +39,9 @@ static func add_upgrade_definition(def: UpgradeDefinition) -> void:
 	upgrade_definitions[def.id] = def
 	definitions_by_rarity[def.rarity].append(def)
 	
+static func add_status_definition(def: UpgradeDefinition) -> void:
+	status_definitions[def.id] = def
+		
 static func add_modifier_definition(def: UpgradeDefinition) -> void:
 	modifier_definitions[def.id] = def
 	
@@ -61,13 +66,13 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u = UpgradeDefinition.new()
 	u.id = "boosterI"
 	u.display_name = "Booster I"
-	u.description = "Each tick, [chance] chance of +5 seconds"
+	u.description = "Each tick, [chance] chance of +3 seconds"
 	u.base_chance = 25
 	u.base_cost = 5
 	u.base_dur = 6
 	u.rarity = 0
 	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void:
-		run.time += 5
+		run.time += 3
 	u.tick = func(run: Run, _upgrade: Upgrade, forced: bool) -> bool: 
 		if randf() <= 0.25: 
 			u.trigger.call(run, _upgrade, false)
@@ -79,7 +84,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u = UpgradeDefinition.new()
 	u.id = "boosterII"
 	u.display_name = "Booster II"
-	u.description = "Each tick, [chance] chance of +20 seconds"
+	u.description = "Each tick, [chance] chance of +15 seconds"
 	u.base_chance = 10
 	u.base_dur = 6
 	u.base_cost = 10
@@ -91,7 +96,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 		return false
 	u.icon = preload("res://graphics/icons/booster.png")
 	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void:
-		run.time += 20
+		run.time += 15
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -219,6 +224,53 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.sell = func(run: Run, _upgrade: Upgrade): run.cash -= 80
 	u.icon = preload("res://graphics/icons/loan.png")
 	add_upgrade_definition(u)
+	
+	u = UpgradeDefinition.new()
+	u.id = "battery"
+	u.display_name = "Battery"
+	u.description = "Each tick, 33% chance of force-triggering 2 random upgrades"
+	u.base_chance = 33
+	u.base_cost = 9
+	u.base_dur = 8
+	u.rarity = 1
+	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void:
+		var trigger_idxs = []
+		# get n valid items to trigger
+		var valid_idxs = run.get_non_battery_inventory_indexes()
+		for i in range(2):
+			var idx = valid_idxs.get(randi_range(0, valid_idxs.size()-1))
+			
+			print(idx)
+			var upg = run.inventory[idx]
+			if upg == null: return
+			
+			upg.definition.trigger.call(run, _upgrade, true)
+			run.do_upgrade_trigger_effect(idx, true)
+			
+		#upg.definition.trigger.call(run, upgrade, true)
+		#run.do_upgrade_trigger_effect(idx, true)
+	u.tick = func(run: Run, _upgrade: Upgrade, forced: bool) -> bool:
+		if randf() <= 0.33 && (run.get_non_battery_inventory_indexes().size() >= 1):
+			u.trigger.call(run, _upgrade, false)
+			return true
+		return false
+	u.icon = preload("res://graphics/icons/double.png")
+	add_upgrade_definition(u)
+	
+	# ===========
+	# STATUSES
+	# ===========
+	
+	u = UpgradeDefinition.new()
+	u.id = "rock"
+	u.display_name = "Rock"
+	u.description = "Cannot be sold."
+	u.base_cost = 0
+	u.base_dur = 8
+	u.rarity = 0
+	u.can_be_sold = false
+	u.icon = preload("res://graphics/foe_bug.png")
+	add_status_definition(u)
 
 
 # TODO make this use the tick/trigger system instead of just tick
@@ -244,24 +296,24 @@ func generate_modifier_definitions() -> void:
 	add_modifier_definition(m)
 	
 	m = UpgradeDefinition.new()
-	m.id = "tick_speed_fluctuation"
-	m.display_name = "Tick Speed Fluctuation"
-	m.description = "Each tick, [chance] chance to double tick rate, and [chance] chance to halve tick rate (Resets each round)"
-	m.base_chance = 1
+	m.id = "trigger_wave"
+	m.display_name = "Trigger Wave"
+	m.description = "Each natural tick, [chance] chance trigger all items. +0.5 mult to shop prices."
+	m.base_chance = 8
 	m.base_dur = -1
+	m.buy = func(run: Run, _upgrade: Upgrade):
+		run.cost_mult += 0.5
 	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool:
-		if randi_range(1,100) <= upgrade.chance: 
-			upgrade.value *= 2
-			run.tick_rate *= 2
-			return true
-		elif randi_range(1,100) <= upgrade.chance: 
-			upgrade.value /= 2
-			run.tick_rate /= 2
+		if randi_range(1,100) <= upgrade.chance && !forced:
+			for idx in run.inventory.size():
+				var upg = run.inventory[idx]
+				if upg:
+					upg.definition.trigger.call(run, upgrade, true)
+					run.do_upgrade_trigger_effect(idx, true)
 			return true
 		return false
 	m.round_end = func(run: Run, upgrade: Upgrade):
-		run.tick_rate /= upgrade.value
-		upgrade.value = 1.0
+		pass
 	add_modifier_definition(m)
 	
 	m = UpgradeDefinition.new()
@@ -294,5 +346,21 @@ func generate_modifier_definitions() -> void:
 			run.time -= seconds
 			return true
 		return false
+		
+	m = UpgradeDefinition.new()
+	m.id = "passive_income"
+	m.display_name = "Passive Income"
+	m.description = "Each tick, +[chance]$. Sell all upgrades and gain one rock."
+	m.base_chance = 3
+	m.base_dur = -1
+	m.buy = func(run: Run, _upgrade: Upgrade):
+		for i in run.inventory.size():
+			run.sell_inventory_item(i)
+		run.set_inventory_slot(run.get_first_open_inventory_slot(), Upgrade.new(status_definitions.get("rock")))
+	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool:
+		run.cash += m.base_chance
+		return true
 			
 	add_modifier_definition(m)
+	
+	

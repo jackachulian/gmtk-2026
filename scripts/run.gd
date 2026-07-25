@@ -2,8 +2,8 @@ class_name Run
 extends Resource
 
 const SHOP_SIZE := 5
-const INVENTORY_SIZE := 5
-const ROUND_DURATION := 45.0
+const INVENTORY_SIZE := 7
+const ROUND_DURATION := 40.0
 const MODIFIER_CHOICE_COUNT := 3
 const ROUND_START_REROLL_PRICE := 3
 const REROLL_PRICE_INCREASE := 1
@@ -33,6 +33,9 @@ var time: int = 20
 
 ## Player's owned cash that can be used to buy upgrades from the shop
 var cash: int = 30
+
+## Multiplier for shop prices
+var cost_mult: float = 1.0
 
 ## Current price to refresh the shop
 var reroll_price: int = 3
@@ -85,6 +88,7 @@ func _init(node: Node, _upgrade_inventory: UpgradePanelList, _modifier_inventory
 	shop.resize(INVENTORY_SIZE)
 	reroll_price = ROUND_START_REROLL_PRICE
 	round_number = 1
+	cost_mult = 1.0
 	sfx_player = node.get_node("TickAudioPlayer");
 	tick_sfx = node.tick_sfx
 	upgrade_inventory = _upgrade_inventory
@@ -157,9 +161,24 @@ func process(delta: float) -> void:
 				break
 				
 		round_timer -= delta
-		if round_timer <= 0.0:
+		if round_timer <= 0.0 :
 			start_choose_modifier_phase()
-			
+
+
+func do_upgrade_trigger_effect(index: int, forced: bool) -> void:
+	var upgrade = inventory[index]
+	upgrade_inventory.play_upgrade_anim(index, "trigger")
+	if upgrade.definition.base_dur > -1:
+		upgrade.durability -= 1;
+		upgrade_inventory.update_dur_label(index, upgrade.durability)
+		
+		# break item
+		# TODO animation for this
+		if upgrade.durability <= 0:
+			inventory[index] = null
+			upgrade.sell(self)
+			inventory_changed.emit()
+
 func _do_tick(forced: bool) -> void:
 	if (!forced): tick_count += 1
 	
@@ -173,19 +192,7 @@ func _do_tick(forced: bool) -> void:
 		if upgrade:
 			# This block only runs if item was triggered
 			if await upgrade.tick(self, forced):
-				# not super happy with how this is passed down but i think this is the simplest
-				# way to match the upgrade object to the corresponding panel
-				upgrade_inventory.play_upgrade_anim(index, "trigger")
-				if upgrade.definition.base_dur > -1:
-					upgrade.durability -= 1;
-					upgrade_inventory.update_dur_label(index, upgrade.durability)
-					
-					# break item
-					# TODO animation for this
-					if upgrade.durability <= 0:
-						inventory[index] = null
-						upgrade.sell(self)
-						inventory_changed.emit()
+				do_upgrade_trigger_effect(index, false)
 						
 	for index in modifiers.size():
 		var upgrade = modifiers[index]
@@ -204,7 +211,17 @@ func set_inventory_slot(slot: int, upgrade: Upgrade):
 	
 func set_shop_slot(slot: int, upgrade: Upgrade):
 	shop[slot] = upgrade
+	shop[slot].cost *= cost_mult
 	shop_changed.emit()
+	
+func get_non_battery_inventory_indexes() -> Array[int]:
+	var arr: Array[int] = []
+	for i: int in inventory.size():
+		var upg = inventory[i]
+		if upg != null && upg.definition.id != "battery":
+			arr.push_front(i)
+	print(arr)
+	return arr
 	
 ## Returns true if successfully purchased
 func buy_shop_item(slot: int) -> bool:
@@ -225,6 +242,7 @@ func buy_shop_item(slot: int) -> bool:
 		
 	shop[slot] = null
 	inventory[inventory_slot] = upgrade
+	upgrade.inventory_slot = inventory_slot
 	cash -= upgrade.cost
 	## Upon buying, halve the upgrade's cost (which is now sell price) and round up
 	upgrade.cost = roundi(upgrade.cost / 2.0)
@@ -239,9 +257,12 @@ func buy_shop_item(slot: int) -> bool:
 	
 func sell_inventory_item(slot: int) -> bool:
 	var upgrade := inventory[slot]
+
 	if not upgrade:
 		push_error("No upgrade in inventory slot ",slot)
 		return false
+		
+	if !upgrade.can_be_sold: return false
 		
 	inventory[slot] = null
 	cash += upgrade.cost
@@ -258,6 +279,10 @@ func get_first_open_inventory_slot() -> int:
 		if inventory[i] == null:
 			return i
 	return -1
+	
+func get_owned_upgrade_count() -> int:
+	var c = get_first_open_inventory_slot()
+	return c if c != -1 else INVENTORY_SIZE 
 	
 func refresh_shop() -> void:
 	## TODO: maybe make this vary?
@@ -294,6 +319,7 @@ func refresh_shop() -> void:
 		var def: UpgradeDefinition = pool[pool_index]
 		var upgrade := Upgrade.new(def)
 		shop[i] = upgrade
+		shop[i].cost *= clampf(cost_mult, 0.20, 5)
 		#pool.remove_at(pool_index)
 		
 	shop_changed.emit()

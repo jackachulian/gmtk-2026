@@ -23,12 +23,20 @@ var icon: Texture2D
 # When negative, inf durability (for modifiers)
 var durability: int = -1
 
+var can_be_sold: bool = true
+
+# -1 when not in inventroy
+var inventory_slot: int = -1
+
 func _init(definition: UpgradeDefinition) -> void:
 	_definition = definition
 	cost = _definition.base_cost
 	chance = _definition.base_chance
 	icon = _definition.icon
 	durability = definition.base_dur
+	can_be_sold = definition.can_be_sold
+	inventory_slot = -1
+	
 
 func can_buy(run: Run) -> bool:
 	return _definition.can_buy.call(run, self)

@@ -21,3 +21,9 @@ func _enter_tree() -> void:
 func _physics_process(delta: float) -> void:
 	if not paused:
 		run.process(delta)
+		
+# Debug
+func _input(event):
+	if event is InputEventKey and event.pressed and not event.is_echo():
+		if event.keycode == KEY_1:
+			run.start_choose_modifier_phase()

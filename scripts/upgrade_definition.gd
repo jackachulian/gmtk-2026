@@ -7,6 +7,7 @@ var description : String
 var base_cost: int
 # Durability
 var base_dur: int
+var can_be_sold: bool = true
 
 ## "Chance" effect that can be used in descriptions and effects.
 ## Range is 0-100, 0 = 0%, 100 = 100%

@@ -80,7 +80,7 @@ _data = {
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_4kik5"]
-font_color = Color(0.29803923, 0.5647059, 0.6313726, 1)
+font_color = Color(0.4627451, 0.9098039, 0.3372549, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_o0ard"]
 
@@ -182,7 +182,7 @@ script = ExtResource("5_2l77h")
 round_number_label = NodePath("MarginContainer/VBoxContainer/RoundNumberLabel")
 round_progess_bar = NodePath("MarginContainer/VBoxContainer/ProgressBar")
 tick_rate_label = NodePath("MarginContainer/VBoxContainer/TickRateLabel")
-tick_amount_label = NodePath("MarginContainer/VBoxContainer/TickAmountLabel")
+tick_amount_label = NodePath("MarginContainer/VBoxContainer/CostMultLabel")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel" unique_id=2069536615]
 layout_mode = 2
@@ -223,7 +223,7 @@ vertical_alignment = 2
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel/MarginContainer/VBoxContainer/TickRateLabel" unique_id=1345858590]
 libraries/ = SubResource("AnimationLibrary_yu8cv")
 
-[node name="TickAmountLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel/MarginContainer/VBoxContainer" unique_id=731557492]
+[node name="CostMultLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel/MarginContainer/VBoxContainer" unique_id=731557492]
 layout_mode = 2
 size_flags_vertical = 10
 text = "-2 Seconds per tick"
@@ -275,9 +275,12 @@ custom_minimum_size = Vector2(0, 192)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_right = -118.0
+offset_left = -85.32
+offset_right = 84.67999
 offset_bottom = 192.0
 grow_horizontal = 2
+scale = Vector2(0.85, 0.85)
+pivot_offset = Vector2(512, 96)
 theme = ExtResource("1_d2op2")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MainArea/InventoryPanel" unique_id=1984637877]
@@ -310,6 +313,12 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="UpgradePanel5" parent="MarginContainer/HBoxContainer/MainArea/InventoryPanel/MarginContainer/InventoryUpgradePanelList" unique_id=1158844033 instance=ExtResource("6_5cypo")]
+layout_mode = 2
+
+[node name="UpgradePanel6" parent="MarginContainer/HBoxContainer/MainArea/InventoryPanel/MarginContainer/InventoryUpgradePanelList" unique_id=196418158 instance=ExtResource("6_5cypo")]
+layout_mode = 2
+
+[node name="UpgradePanel7" parent="MarginContainer/HBoxContainer/MainArea/InventoryPanel/MarginContainer/InventoryUpgradePanelList" unique_id=1631985772 instance=ExtResource("6_5cypo")]
 layout_mode = 2
 
 [node name="ShopPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea" unique_id=760570892]
@@ -441,8 +450,9 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -8.0
-offset_bottom = 8.0
+offset_left = -54.0
+offset_top = 196.0
+offset_bottom = 226.0
 grow_horizontal = 0
 text = "Pause"
 script = ExtResource("9_5cypo")
@@ -457,7 +467,8 @@ offset_bottom = 160.0
 
 [node name="PauseMenu" type="Control" parent="." unique_id=402068010]
 visible = false
-z_index = 1
+top_level = true
+z_index = 9
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

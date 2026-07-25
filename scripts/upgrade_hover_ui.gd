@@ -31,7 +31,7 @@ func show_on_upgrade_panel(upgrade_panel: UpgradePanel) -> void:
 		buy_button.show()
 		buy_cost_label.text = "$%d" % upgrade_panel.upgrade.cost
 	
-	elif upgrade_panel.mode == UpgradePanel.Mode.INVENTORY:
+	elif upgrade_panel.mode == UpgradePanel.Mode.INVENTORY && upgrade_panel.upgrade.can_be_sold:
 		sell_button.show()
 		sell_cost_label.text = "$%d" % upgrade_panel.upgrade.cost
 
