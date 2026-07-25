@@ -36,6 +36,7 @@ func remake_panels(upgrades: Array[Upgrade], mode: UpgradePanel.Mode) -> void:
 	for i in upgrades.size():
 		var upgrade: Upgrade = upgrades[i]
 		if not upgrade: continue # empty slots
+		if upgrade.definition.display_name == "": continue # hack to not double-show debuffs
 		var upgrade_panel = upgrade_panel_scene.instantiate() as UpgradePanel
 		upgrade_panel.setup(upgrade, mode, i)
 		add_child(upgrade_panel)

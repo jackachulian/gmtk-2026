@@ -108,6 +108,16 @@ func start_countdown_phase() -> void:
 func start_choose_modifier_phase() -> void:
 	phase = Phase.CHOOSE_MODIFIER
 	
+	# Round end logic
+	for index in inventory.size():
+		var upgrade = inventory[index]
+		if upgrade: upgrade.round_end(self)
+		
+	for index in modifiers.size():
+		print("round end")
+		var upgrade = modifiers[index]
+		if upgrade: upgrade.round_end(self)
+	
 	#if (round_number % 2 == 0):
 		#tick_amount += 1
 	#else:
@@ -125,6 +135,14 @@ func start_choose_modifier_phase() -> void:
 	var definitions := UpgradeManager.modifier_definitions
 	var pool := definitions.values().duplicate()
 	
+	var mod_debuffs = []
+	var debuff_pool := UpgradeManager.debuff_definitions.values().duplicate()
+	for i in MODIFIER_CHOICE_COUNT:
+		var pool_idx := randi_range(0, debuff_pool.size()-1)
+		mod_debuffs.push_front(
+			Upgrade.new(debuff_pool[pool_idx]
+		))
+		print(pool_idx)
 	modifier_choices.clear()
 	for i in mini(MODIFIER_CHOICE_COUNT, pool.size()):
 		var pool_index := randi_range(0, pool.size()-1)
@@ -140,6 +158,9 @@ func start_choose_modifier_phase() -> void:
 		if matching_upgrade:
 			upgrade.level = matching_upgrade.level + 1
 			upgrade.chance = matching_upgrade.chance + upgrade.chance
+		
+		print("arg" + str(i))
+		upgrade.attached_upgrade = mod_debuffs[i]
 		modifier_choices.append(upgrade)
 		pool.remove_at(pool_index)
 	
@@ -353,7 +374,9 @@ func choose_modifier(slot: int) -> bool:
 			break
 	
 	modifiers.append(modifier_choice)
+	modifiers.append(modifier_choice.attached_upgrade)
 	modifier_choice.buy(self) # "Buy" event is used as an on add for modifiers
+	modifier_choice.attached_upgrade.buy.call(self)
 	
 	modifiers_changed.emit()
 	

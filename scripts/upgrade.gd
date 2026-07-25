@@ -28,6 +28,8 @@ var can_be_sold: bool = true
 # -1 when not in inventroy
 var inventory_slot: int = -1
 
+var attached_upgrade: Upgrade
+
 func _init(definition: UpgradeDefinition) -> void:
 	_definition = definition
 	cost = _definition.base_cost
@@ -36,6 +38,8 @@ func _init(definition: UpgradeDefinition) -> void:
 	durability = definition.base_dur
 	can_be_sold = definition.can_be_sold
 	inventory_slot = -1
+	attached_upgrade = null
+	
 	
 
 func can_buy(run: Run) -> bool:

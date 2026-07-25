@@ -49,6 +49,8 @@ func setup(upgrade: Upgrade, mode: Mode, index: int) -> void:
 		durability = null
 	if durability_label: durability_label.text = "%d" % upgrade.durability
 	
+	if upgrade.attached_upgrade: description_label.text += "\n" + upgrade.attached_upgrade.get_parsed_description()
+	
 	
 	if card_panel_container:
 		if upgrade.definition.rarity == 0:

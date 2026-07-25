@@ -17,6 +17,11 @@ static var definitions_by_rarity: Array[Array] = []
 ## currently owned within the inventory.
 static var modifier_definitions: Dictionary[String, UpgradeDefinition] = {}
 
+# Purely negative effects that are coupled with modifiers when they are being
+# selected. Debuffs don't have a corresponding mod and are coupled randomly
+static var debuff_definitions: Dictionary[String, UpgradeDefinition] = {}
+
+
 func _enter_tree() -> void:
 	generate_upgrade_definitions(get_tree().root.get_child(0))
 	generate_modifier_definitions()
@@ -44,6 +49,9 @@ static func add_status_definition(def: UpgradeDefinition) -> void:
 		
 static func add_modifier_definition(def: UpgradeDefinition) -> void:
 	modifier_definitions[def.id] = def
+	
+static func add_debuff_definition(def: UpgradeDefinition) -> void:
+	debuff_definitions[def.id] = def
 	
 static func generate_upgrade_definitions(node: Node) -> void:
 	upgrade_definitions.clear()
@@ -267,10 +275,24 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.display_name = "Rock"
 	u.description = "Cannot be sold."
 	u.base_cost = 0
-	u.base_dur = 8
+	u.base_dur = 20
 	u.rarity = 0
 	u.can_be_sold = false
 	u.icon = preload("res://graphics/foe_bug.png")
+	add_status_definition(u)
+	
+	u = UpgradeDefinition.new()
+	u.id = "debt"
+	u.display_name = "Debt"
+	u.description = "Cannot be sold. On force-trigger, lose 30$."
+	u.base_cost = 0
+	u.base_dur = 10
+	u.rarity = 0
+	u.can_be_sold = false
+	u.icon = preload("res://graphics/foe_bug.png")
+	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void:
+		run.cash -= 30
+	
 	add_status_definition(u)
 
 
@@ -332,6 +354,7 @@ func generate_modifier_definitions() -> void:
 			run.time = days*86400 + hours*3600 + seconds*60 + minutes
 			return true
 		return false
+	add_modifier_definition(m)
 			
 	m = UpgradeDefinition.new()
 	m.id = "minute_rounder"
@@ -361,7 +384,50 @@ func generate_modifier_definitions() -> void:
 	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool:
 		run.cash += m.base_chance
 		return true
-			
 	add_modifier_definition(m)
 	
+	# ===========
+	# Debuffs
+	# ===========
+	m = UpgradeDefinition.new()
+	m.id = "debt"
+	m.display_name = ""
+	m.description = "Replace your first 2 upgrades with Debt"
+	m.base_chance = 1
+	m.base_dur = -1
+	m.buy = func(run: Run, _upgrade: Upgrade):
+		run.set_inventory_slot(0, Upgrade.new(status_definitions.get("debt")))
+		run.set_inventory_slot(1, Upgrade.new(status_definitions.get("debt")))
+	add_debuff_definition(m)
+	
+	# above debuff not appearing for some reason? TODO get better fix
+	m = UpgradeDefinition.new()
+	m.id = "debt2"
+	m.display_name = ""
+	m.description = "Replace your first 2 upgrades with Debt"
+	m.base_chance = 1
+	m.base_dur = -1
+	m.buy = func(run: Run, _upgrade: Upgrade):
+		run.set_inventory_slot(0, Upgrade.new(status_definitions.get("debt")))
+		run.set_inventory_slot(1, Upgrade.new(status_definitions.get("debt")))
+	add_debuff_definition(m)
+	
+	m.id = "expensive"
+	m.display_name = ""
+	m.description = "Increase cost mult by 0.5"
+	m.base_chance = 1
+	m.base_dur = -1
+	m.buy = func(run: Run, _upgrade: Upgrade):
+		run.cost_mult += 0.5
+	add_debuff_definition(m)
+	
+	m = UpgradeDefinition.new()
+	m.id = "lose_money"
+	m.display_name = ""
+	m.description = "-150$ at the end of each round"
+	m.base_chance = 1
+	m.base_dur = -1
+	m.round_end = func(run: Run, _upgrade: Upgrade):
+		run.cash -= 150
+	add_debuff_definition(m)
 	
