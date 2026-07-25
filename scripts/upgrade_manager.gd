@@ -241,6 +241,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			var idx = valid_idxs.get(randi_range(0, valid_idxs.size()-1))
 			
 			print(idx)
+			if idx == null: return
 			var upg = run.inventory[idx]
 			if upg == null: return
 			

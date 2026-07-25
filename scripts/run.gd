@@ -53,6 +53,8 @@ var tick_amount: int = 1
 ## Amount of ticks passed this game
 var tick_count: int = 0
 
+var countdown_mult: float = 1.0
+
 ## Exported in run manager
 var tick_sfx: Array[AudioStream] = []
 
@@ -94,6 +96,7 @@ func _init(node: Node, _upgrade_inventory: UpgradePanelList, _modifier_inventory
 	upgrade_inventory = _upgrade_inventory
 	modifier_inventory = _modifier_inventory
 	tick_animator = _tick_animator
+	countdown_mult = 1.0
 	start_countdown_phase()
 	
 func start_countdown_phase() -> void:
@@ -110,7 +113,9 @@ func start_choose_modifier_phase() -> void:
 	#else:
 		#tick_rate += 0.25
 	round_number += 1
-	cash += CASH_PER_ROUND
+	cash += 5 * round_number
+	countdown_mult += 1.0
+	tick_rate += 1
 	
 	shop.clear()
 	shop_changed.emit()
@@ -161,6 +166,7 @@ func process(delta: float) -> void:
 				break
 				
 		round_timer -= delta
+		
 		if round_timer <= 0.0 :
 			start_choose_modifier_phase()
 
@@ -185,7 +191,7 @@ func _do_tick(forced: bool) -> void:
 	sfx_player.stream = tick_sfx[tick_count % len(tick_sfx)]
 	sfx_player.play();
 	tick_animator.play("tick")
-	time -= tick_amount
+	time -= 1
 	
 	for index in inventory.size():
 		var upgrade = inventory[index]
