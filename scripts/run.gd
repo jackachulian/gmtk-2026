@@ -37,6 +37,9 @@ var cash: int = 30
 ## Multiplier for shop prices
 var cost_mult: float = 1.0
 
+# Fixed offset to durability of shop items
+var durability_mod: int = 0
+
 ## Current price to refresh the shop
 var reroll_price: int = 3
 
@@ -97,6 +100,7 @@ func _init(node: Node, _upgrade_inventory: UpgradePanelList, _modifier_inventory
 	modifier_inventory = _modifier_inventory
 	tick_animator = _tick_animator
 	countdown_mult = 1.0
+	durability_mod = 0
 	start_countdown_phase()
 	
 func start_countdown_phase() -> void:
@@ -208,6 +212,7 @@ func do_upgrade_trigger_effect(index: int, forced: bool) -> void:
 
 func _do_tick(forced: bool) -> void:
 	if (!forced): tick_count += 1
+	#if (!forced): cash += 1
 	
 	sfx_player.stream = tick_sfx[tick_count % len(tick_sfx)]
 	sfx_player.play();
@@ -239,6 +244,7 @@ func set_inventory_slot(slot: int, upgrade: Upgrade):
 func set_shop_slot(slot: int, upgrade: Upgrade):
 	shop[slot] = upgrade
 	shop[slot].cost *= cost_mult
+	upgrade.durability += durability_mod
 	shop_changed.emit()
 	
 func get_non_battery_inventory_indexes() -> Array[int]:
@@ -347,6 +353,7 @@ func refresh_shop() -> void:
 		var upgrade := Upgrade.new(def)
 		shop[i] = upgrade
 		shop[i].cost *= clampf(cost_mult, 0.20, 5)
+		shop[i].durability += durability_mod
 		#pool.remove_at(pool_index)
 		
 	shop_changed.emit()

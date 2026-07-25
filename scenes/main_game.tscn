@@ -82,6 +82,9 @@ _data = {
 [sub_resource type="LabelSettings" id="LabelSettings_4kik5"]
 font_color = Color(0.4627451, 0.9098039, 0.3372549, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_5luka"]
+font_color = Color(0.29803923, 0.5647059, 0.6313726, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_o0ard"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ihbck"]
@@ -174,7 +177,7 @@ theme_override_constants/margin_bottom = 16
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer" unique_id=1771520943]
 layout_mode = 2
 
-[node name="RoundInfoPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer" unique_id=1698808303 node_paths=PackedStringArray("round_number_label", "round_progess_bar", "tick_rate_label", "tick_amount_label")]
+[node name="RoundInfoPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer" unique_id=1698808303 node_paths=PackedStringArray("round_number_label", "round_progess_bar", "tick_rate_label", "tick_amount_label", "dur_amount_label")]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4ieh6")
@@ -183,6 +186,7 @@ round_number_label = NodePath("MarginContainer/VBoxContainer/RoundNumberLabel")
 round_progess_bar = NodePath("MarginContainer/VBoxContainer/ProgressBar")
 tick_rate_label = NodePath("MarginContainer/VBoxContainer/TickRateLabel")
 tick_amount_label = NodePath("MarginContainer/VBoxContainer/CostMultLabel")
+dur_amount_label = NodePath("MarginContainer/VBoxContainer/DurModLabel")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel" unique_id=2069536615]
 layout_mode = 2
@@ -228,6 +232,14 @@ layout_mode = 2
 size_flags_vertical = 10
 text = "-2 Seconds per tick"
 label_settings = SubResource("LabelSettings_4kik5")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="DurModLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel/MarginContainer/VBoxContainer" unique_id=1029206153]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Durability Mod: +1"
+label_settings = SubResource("LabelSettings_5luka")
 horizontal_alignment = 1
 vertical_alignment = 2
 

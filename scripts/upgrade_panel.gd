@@ -3,7 +3,7 @@ extends Control
 
 @export var name_label: Label
 @export var level_label: Label
-@export var description_label: Label
+@export var description_label: Node
 @export var cost_label: Label
 @export var icon: Sprite2D
 @export var durability: PanelContainer
@@ -14,6 +14,7 @@ extends Control
 @export var uncommon_stylebox: StyleBox
 @export var rare_stylebox: StyleBox
 @export var animation_player: AnimationPlayer
+@export var select_button: Button
 
 var upgrade: Upgrade
 
@@ -49,8 +50,10 @@ func setup(upgrade: Upgrade, mode: Mode, index: int) -> void:
 		durability = null
 	if durability_label: durability_label.text = "%d" % upgrade.durability
 	
-	if upgrade.attached_upgrade: description_label.text += "\n" + upgrade.attached_upgrade.get_parsed_description()
+	if upgrade.attached_upgrade && mode == Mode.MODIFIER_CHOICE: 
+		description_label.text += "\n[color=#E04646]" + upgrade.attached_upgrade.get_parsed_description() + "[/color]"
 	
+	if select_button: select_button.disabled = true
 	
 	if card_panel_container:
 		if upgrade.definition.rarity == 0:
@@ -59,6 +62,10 @@ func setup(upgrade: Upgrade, mode: Mode, index: int) -> void:
 			card_panel_container.add_theme_stylebox_override("panel", uncommon_stylebox)
 		elif upgrade.definition.rarity == 2:
 			card_panel_container.add_theme_stylebox_override("panel", rare_stylebox)
+	
+	if select_button:
+		await UpgradeHoverUI.instance.get_tree().create_timer(1.0).timeout
+		select_button.disabled = false
 	
 func _on_mouse_entered() -> void:
 	UpgradeHoverUI.instance.show_on_upgrade_panel(self)

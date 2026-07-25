@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://eb2a20qa3d0e"]
 
 [ext_resource type="Script" uid="uid://c50h7ewmxwkiy" path="res://scripts/upgrade_panel.gd" id="1_tkwf0"]
+[ext_resource type="Theme" uid="uid://yd77drcyxxpq" path="res://theme/main_theme.tres" id="2_m40rm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_e1tu5"]
 font_size = 24
@@ -8,9 +9,7 @@ font_size = 24
 [sub_resource type="LabelSettings" id="LabelSettings_4ieh6"]
 font_color = Color(1, 1, 1, 0.7921569)
 
-[sub_resource type="LabelSettings" id="LabelSettings_c4tgf"]
-
-[node name="ModifierChoicePanel" type="Control" unique_id=878328569 node_paths=PackedStringArray("name_label", "level_label", "description_label")]
+[node name="ModifierChoicePanel" type="Control" unique_id=878328569 node_paths=PackedStringArray("name_label", "level_label", "description_label", "select_button")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 292.0
@@ -19,7 +18,8 @@ size_flags_horizontal = 3
 script = ExtResource("1_tkwf0")
 name_label = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/DisplayNameLabel")
 level_label = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/LevelLabel")
-description_label = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/DescriptionLabel")
+description_label = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/RichTextLabel")
+select_button = NodePath("VBoxContainer/SelectButton")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=873239338]
 layout_mode = 1
@@ -59,14 +59,15 @@ text = "Lv. 1"
 label_settings = SubResource("LabelSettings_4ieh6")
 horizontal_alignment = 1
 
-[node name="DescriptionLabel" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1845702371]
-custom_minimum_size = Vector2(1, 0)
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1247648036]
 layout_mode = 2
-size_flags_vertical = 3
+theme = ExtResource("2_m40rm")
+theme_override_constants/line_separation = 4
+bbcode_enabled = true
 text = "Modifier Description Modifier Description Modifier Description "
-label_settings = SubResource("LabelSettings_c4tgf")
+fit_content = true
 horizontal_alignment = 1
-autowrap_mode = 2
+justification_flags = 162
 
 [node name="SelectButton" type="Button" parent="VBoxContainer" unique_id=1343784232]
 layout_mode = 2

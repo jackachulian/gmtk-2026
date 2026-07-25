@@ -61,4 +61,4 @@ func round_end(run: Run) -> void:
 	_definition.round_end.call(run, self)
 	
 func get_parsed_description() -> String:
-	return _definition.description.replace("[chance]", str(chance)+"%")
+	return _definition.description.replace("[chance]", str(chance))

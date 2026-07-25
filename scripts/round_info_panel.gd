@@ -5,6 +5,7 @@ extends PanelContainer
 @export var round_progess_bar: ProgressBar
 @export var tick_rate_label: Label
 @export var tick_amount_label: Label
+@export var dur_amount_label: Label
 
 func _ready() -> void:
 	round_progess_bar.max_value = Run.ROUND_DURATION
@@ -15,3 +16,4 @@ func _physics_process(_delta: float) -> void:
 	round_progess_bar.value = (Run.ROUND_DURATION - run.round_timer)
 	tick_rate_label.text = "Tick Rate: %s" % str(run.tick_rate).trim_suffix(".0").trim_suffix("0")
 	tick_amount_label.text = "Cost Mult: %sx" % run.cost_mult
+	dur_amount_label.text = "Durability Bonus: %s" % run.durability_mod

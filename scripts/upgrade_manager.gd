@@ -24,7 +24,7 @@ static var debuff_definitions: Dictionary[String, UpgradeDefinition] = {}
 
 func _enter_tree() -> void:
 	generate_upgrade_definitions(get_tree().root.get_child(0))
-	generate_modifier_definitions()
+	generate_modifier_definitions(get_tree().root.get_child(0))
 #
 #static func instantiate_upgrade(definition_id: String) -> Upgrade:
 	#var definition: UpgradeDefinition = upgrade_definitions.get(definition_id)
@@ -222,22 +222,22 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u = UpgradeDefinition.new()
 	u.id = "loan"
 	u.display_name = "Loan"
-	u.description = "+40$, removes 80$ when sold. +20$ on force-trigger."
+	u.description = "+40$, removes 60$ when sold. +20$ on force-trigger."
 	u.base_cost = 0
 	u.base_dur = 6
 	u.rarity = 0
 	
 	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void: run.cash += 20
 	u.buy = func(run: Run, _upgrade: Upgrade): run.cash += 40
-	u.sell = func(run: Run, _upgrade: Upgrade): run.cash -= 80
+	u.sell = func(run: Run, _upgrade: Upgrade): run.cash -= 60
 	u.icon = preload("res://graphics/icons/loan.png")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
 	u.id = "battery"
 	u.display_name = "Battery"
-	u.description = "Each tick, 33% chance of force-triggering 2 random upgrades"
-	u.base_chance = 33
+	u.description = "Each tick, [chance] chance of force-triggering 2 random upgrades"
+	u.base_chance = 25
 	u.base_cost = 9
 	u.base_dur = 8
 	u.rarity = 1
@@ -284,48 +284,34 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u = UpgradeDefinition.new()
 	u.id = "debt"
 	u.display_name = "Debt"
-	u.description = "Cannot be sold. On force-trigger, lose 30$."
+	u.description = "Cannot be sold. On force-trigger, lose 20$."
 	u.base_cost = 0
 	u.base_dur = 10
 	u.rarity = 0
 	u.can_be_sold = false
 	u.icon = preload("res://graphics/foe_bug.png")
 	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void:
-		run.cash -= 30
+		if run.cash >= 0: 
+			run.cash = max(run.cash - 20, 0)
 	
 	add_status_definition(u)
 
 
 # TODO make this use the tick/trigger system instead of just tick
-func generate_modifier_definitions() -> void:
+func generate_modifier_definitions(node: Node) -> void:
 	modifier_definitions.clear()
 	
 	var m: UpgradeDefinition
 	
 	m = UpgradeDefinition.new()
-	m.id = "time_fluctuation"
-	m.display_name = "Time Fluctuation"
-	m.description = "Each tick, [chance] chance to double time, and [chance] chance to halve time"
-	m.base_chance = 1
-	m.base_dur = -1
-	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool: 
-		if randi_range(1,100) <= upgrade.chance: 
-			run.time *= 2
-			return true
-		if randi_range(1,100) <= upgrade.chance*2: 
-			run.time /= 2
-			return true
-		return false
-	add_modifier_definition(m)
-	
-	m = UpgradeDefinition.new()
 	m.id = "trigger_wave"
 	m.display_name = "Trigger Wave"
-	m.description = "Each natural tick, [chance] chance trigger all items. +0.5 mult to shop prices."
+	m.description = "Each natural tick, [chance]% chance to trigger all upgrades."
 	m.base_chance = 8
 	m.base_dur = -1
 	m.buy = func(run: Run, _upgrade: Upgrade):
-		run.cost_mult += 0.5
+		pass
+		#run.cost_mult += 0.5
 	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool:
 		if randi_range(1,100) <= upgrade.chance && !forced:
 			for idx in run.inventory.size():
@@ -340,9 +326,35 @@ func generate_modifier_definitions() -> void:
 	add_modifier_definition(m)
 	
 	m = UpgradeDefinition.new()
+	m.id = "melter"
+	m.display_name = "Melter"
+	m.description = "Each tick, [chance]% chance trigger your first upgrade 4 times."
+	m.base_chance = 6
+	m.base_dur = -1
+	m.buy = func(run: Run, _upgrade: Upgrade):
+		pass
+		#run.cost_mult += 0.5
+	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool:
+		if randi_range(1,100) <= upgrade.chance:
+			var idx: int = -1
+			for _idx in run.inventory.size():
+				idx = _idx
+				if run.inventory[idx]: break
+			for i in range(4):
+				if  run.inventory[idx]:
+					run.inventory[idx].definition.trigger.call(run, upgrade, true)
+					run.do_upgrade_trigger_effect(idx, true)
+					await node.get_tree().create_timer(0.075).timeout
+			return true
+		return false
+	m.round_end = func(run: Run, upgrade: Upgrade):
+		pass
+	add_modifier_definition(m)
+	
+	m = UpgradeDefinition.new()
 	m.id = "swapper"
 	m.display_name = "Swapper"
-	m.description = "Each tick, [chance] chance to swap minutes and seconds"
+	m.description = "Each tick, [chance]% chance to swap minutes and seconds"
 	m.base_chance = 1
 	m.base_dur = -1
 	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool:
@@ -355,63 +367,83 @@ func generate_modifier_definitions() -> void:
 			return true
 		return false
 	add_modifier_definition(m)
-			
-	m = UpgradeDefinition.new()
-	m.id = "minute_rounder"
-	m.display_name = "Minute Rounder"
-	m.description = "Each tick, [chance] chance to round to the nearest minute"
-	m.base_chance = 1
-	m.base_dur = -1
-	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool:
-		if randi_range(1,100) <= upgrade.chance:
-			var seconds := run.time % 60
-			if seconds >= 30:
-				run.time += 60
-			run.time -= seconds
-			return true
-		return false
 		
 	m = UpgradeDefinition.new()
 	m.id = "passive_income"
 	m.display_name = "Passive Income"
-	m.description = "Each tick, +[chance]$. Sell all upgrades and gain one rock."
+	m.description = "Each tick, +[chance]$."
 	m.base_chance = 3
 	m.base_dur = -1
 	m.buy = func(run: Run, _upgrade: Upgrade):
-		for i in run.inventory.size():
-			run.sell_inventory_item(i)
-		run.set_inventory_slot(run.get_first_open_inventory_slot(), Upgrade.new(status_definitions.get("rock")))
+		pass
+		#for i in run.inventory.size():
+			#run.sell_inventory_item(i)
+		#run.set_inventory_slot(run.get_first_open_inventory_slot(), Upgrade.new(status_definitions.get("rock")))
 	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool:
 		run.cash += m.base_chance
 		return true
 	add_modifier_definition(m)
 	
+	m = UpgradeDefinition.new()
+	m.id = "sturdy"
+	m.display_name = "Sturdy"
+	m.description = "+2 to durability bonus."
+	m.base_chance = 2
+	m.base_dur = -1
+	m.buy = func(run: Run, _upgrade: Upgrade):
+		run.durability_mod += 2
+	add_modifier_definition(m)
+	
+	m = UpgradeDefinition.new()
+	m.id = "charged"
+	m.display_name = "Supercharged"
+	m.description = "+[chance] to durability of Battery."
+	m.base_chance = 3
+	m.base_dur = -1
+	m.buy = func(run: Run, _upgrade: Upgrade):
+		print(UpgradeManager.upgrade_definitions["battery"].base_dur)
+		UpgradeManager.upgrade_definitions["battery"].base_dur = 8 + _upgrade.chance
+		print(UpgradeManager.upgrade_definitions["battery"].base_dur)
+	add_modifier_definition(m)
+	
+	
+	
 	# ===========
 	# Debuffs
 	# ===========
-	m = UpgradeDefinition.new()
-	m.id = "debt"
-	m.display_name = ""
-	m.description = "Replace your first 2 upgrades with Debt"
-	m.base_chance = 1
-	m.base_dur = -1
-	m.buy = func(run: Run, _upgrade: Upgrade):
-		run.set_inventory_slot(0, Upgrade.new(status_definitions.get("debt")))
-		run.set_inventory_slot(1, Upgrade.new(status_definitions.get("debt")))
-	add_debuff_definition(m)
+	#m = UpgradeDefinition.new()
+	#m.id = "debt"
+	#m.display_name = ""
+	#m.description = "Replace your first upgrade with Debt"
+	#m.base_chance = 1
+	#m.base_dur = -1
+	#m.buy = func(run: Run, _upgrade: Upgrade):
+		#run.set_inventory_slot(0, Upgrade.new(status_definitions.get("debt")))
+	#add_debuff_definition(m)
 	
 	# above debuff not appearing for some reason? TODO get better fix
 	m = UpgradeDefinition.new()
 	m.id = "debt2"
 	m.display_name = ""
-	m.description = "Replace your first 2 upgrades with Debt"
+	m.description = "Replace your first upgrade with Debt"
 	m.base_chance = 1
 	m.base_dur = -1
 	m.buy = func(run: Run, _upgrade: Upgrade):
 		run.set_inventory_slot(0, Upgrade.new(status_definitions.get("debt")))
-		run.set_inventory_slot(1, Upgrade.new(status_definitions.get("debt")))
 	add_debuff_definition(m)
 	
+	m = UpgradeDefinition.new()
+	m.id = "rock_debuff"
+	m.display_name = ""
+	m.description = "Replace your first two upgrades with Rocks"
+	m.base_chance = 1
+	m.base_dur = -1
+	m.buy = func(run: Run, _upgrade: Upgrade):
+		run.set_inventory_slot(0, Upgrade.new(status_definitions.get("rock")))
+		run.set_inventory_slot(1, Upgrade.new(status_definitions.get("rock")))
+	add_debuff_definition(m)
+	
+	m = UpgradeDefinition.new()
 	m.id = "expensive"
 	m.display_name = ""
 	m.description = "Increase cost mult by 0.5"
@@ -429,5 +461,25 @@ func generate_modifier_definitions() -> void:
 	m.base_dur = -1
 	m.round_end = func(run: Run, _upgrade: Upgrade):
 		run.cash -= 150
+	add_debuff_definition(m)
+	
+	m = UpgradeDefinition.new()
+	m.id = "half_time"
+	m.display_name = ""
+	m.description = "Halves time at the end of each round"
+	m.base_chance = 1
+	m.base_dur = -1
+	m.round_end = func(run: Run, _upgrade: Upgrade):
+		run.time = round(run.time * 0.5)
+	add_debuff_definition(m)
+	
+	m = UpgradeDefinition.new()
+	m.id = "dur_debuff"
+	m.display_name = ""
+	m.description = "-1 to durability bonus."
+	m.base_chance = 1
+	m.base_dur = -1
+	m.buy = func(run: Run, _upgrade: Upgrade):
+		run.durability_mod -= 1
 	add_debuff_definition(m)
 	

@@ -27,3 +27,7 @@ func _input(event):
 	if event is InputEventKey and event.pressed and not event.is_echo():
 		if event.keycode == KEY_1:
 			run.start_choose_modifier_phase()
+		if event.keycode == KEY_2:
+			run.cash += 100
+		if event.keycode == KEY_3:
+			run.time += 60
