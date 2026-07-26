@@ -39,6 +39,7 @@ var cost_mult: float = 1.0
 
 # Fixed offset to durability of shop items
 var durability_mod: int = 0
+var battery_dur_mod: int = 0
 
 ## Current price to refresh the shop
 var reroll_price: int = 3
@@ -355,6 +356,7 @@ func refresh_shop() -> void:
 		shop[i] = upgrade
 		shop[i].cost *= clampf(cost_mult, 0.20, 5)
 		shop[i].durability += durability_mod
+		if shop[i].definition.id == "battery": shop[i].durability += battery_dur_mod
 		#pool.remove_at(pool_index)
 		
 	shop_changed.emit()

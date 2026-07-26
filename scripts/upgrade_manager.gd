@@ -407,12 +407,12 @@ func generate_modifier_definitions(node: Node) -> void:
 	m = UpgradeDefinition.new()
 	m.id = "charged"
 	m.display_name = "Supercharged"
-	m.description = "+[chance] to durability of Battery."
+	m.description = "+[chance] to base durability of Battery."
 	m.base_chance = 3
 	m.base_dur = -1
 	m.buy = func(run: Run, _upgrade: Upgrade):
 		print(UpgradeManager.upgrade_definitions["battery"].base_dur)
-		UpgradeManager.upgrade_definitions["battery"].base_dur = 8 + _upgrade.chance
+		run.battery_dur_mod = _upgrade.chance
 		print(UpgradeManager.upgrade_definitions["battery"].base_dur)
 	add_modifier_definition(m)
 	
