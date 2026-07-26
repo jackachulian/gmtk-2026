@@ -777,7 +777,6 @@ stream = ExtResource("22_cybgu")
 volume_db = -8.0
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=2033946042]
-visible = false
 z_index = -9
 texture_filter = 1
 texture_repeat = 1
@@ -801,7 +800,6 @@ playback_type = 1
 parameters/looping = true
 
 [node name="CRTEffect" type="ColorRect" parent="." unique_id=1845806034]
-visible = false
 z_index = 999
 material = SubResource("ShaderMaterial_dcudo")
 layout_mode = 1
