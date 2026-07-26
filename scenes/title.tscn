@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://chfiordypihuk"]
 
 [ext_resource type="Shader" uid="uid://b6pxmxfup2660" path="res://scenes/bg.gdshader" id="1_p6dhs"]
-[ext_resource type="Texture2D" uid="uid://pemk7f6c210k" path="res://graphics/bgtile_alt.png" id="2_pyl7j"]
+[ext_resource type="Texture2D" uid="uid://ba1bkuppcji82" path="res://graphics/bgtile.png" id="2_4rr2b"]
 [ext_resource type="Shader" uid="uid://gyrvttg12dsx" path="res://title.gdshader" id="3_b3w7a"]
 [ext_resource type="FontFile" uid="uid://dfsvoaoqxhann" path="res://fonts/vcr_osd_mono/VCR_OSD_MONO.ttf" id="3_pyl7j"]
 [ext_resource type="Script" uid="uid://dgmm5sa8154wn" path="res://scripts/title/play_button.gd" id="5_b3w7a"]
+[ext_resource type="Shader" uid="uid://bcyjpwtivctcg" path="res://scenes/crt.gdshader" id="6_4rr2b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2re5j"]
 shader = ExtResource("1_p6dhs")
@@ -26,6 +27,33 @@ stacked_shadow_2/offset = Vector2(12, 12)
 stacked_shadow_2/color = Color(0.9098039, 0.59607846, 0.31764707, 1)
 stacked_shadow_2/outline_size = 8
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yql1r"]
+shader = ExtResource("6_4rr2b")
+shader_parameter/pixel_size = 1.0
+shader_parameter/lod_blur = 0.0
+shader_parameter/chroma_offset_px = 0.8
+shader_parameter/saturation = 1.0000000475
+shader_parameter/contrast = 1.00000002375
+shader_parameter/shadow_lift = 0.0
+shader_parameter/scanline_strength = 0.04
+shader_parameter/vignette_strength = 0.1
+shader_parameter/noise_strength = 0.025
+shader_parameter/noise_speed = 18.0
+shader_parameter/base_jitter_px = 0.08
+shader_parameter/base_jitter_speed = 0.0
+shader_parameter/glitchiness = 0.0
+shader_parameter/glitch_rate = 6.0
+shader_parameter/glitch_shift_px = 1.8
+shader_parameter/glitch_window_min = 0.03
+shader_parameter/glitch_window_max = 0.1
+shader_parameter/blue_band_start_y = 0.45
+shader_parameter/blue_band_speed = 0.06
+shader_parameter/blue_band_width = 0.035
+shader_parameter/blue_band_strength = 0.1
+shader_parameter/blue_band_glitch = 0.0
+shader_parameter/blue_band_distort_px = 1.2
+shader_parameter/bulge_intensity = 0.03000004892500007
+
 [node name="Control" type="Control" unique_id=1113855449]
 layout_mode = 3
 anchors_preset = 15
@@ -45,7 +73,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2, 2)
-texture = ExtResource("2_pyl7j")
+texture = ExtResource("2_4rr2b")
 stretch_mode = 1
 
 [node name="BoxContainer" type="BoxContainer" parent="." unique_id=611980456]
@@ -78,6 +106,7 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="BoxContainer/SubViewportContainer" unique_id=1133754510]
 disable_3d = true
 transparent_bg = true
+handle_input_locally = false
 snap_2d_transforms_to_pixel = true
 snap_2d_vertices_to_pixel = true
 size = Vector2i(573, 128)
@@ -101,5 +130,16 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Play"
 script = ExtResource("5_b3w7a")
+
+[node name="CRTEffect" type="ColorRect" parent="." unique_id=1983978166]
+z_index = 999
+material = SubResource("ShaderMaterial_yql1r")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [connection signal="pressed" from="BoxContainer/Button" to="BoxContainer/Button" method="_on_pressed"]

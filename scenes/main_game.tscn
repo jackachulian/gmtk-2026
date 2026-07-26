@@ -22,7 +22,6 @@
 [ext_resource type="Script" uid="uid://o56u53a8r528" path="res://scenes/music_toggle.gd" id="16_6de02"]
 [ext_resource type="Script" uid="uid://bfmbkfi3a8f8j" path="res://scripts/game_over_menu.gd" id="16_ihbck"]
 [ext_resource type="Texture2D" uid="uid://ba1bkuppcji82" path="res://graphics/bgtile.png" id="21_ibnub"]
-[ext_resource type="AudioStream" uid="uid://c654xtoqbabh" path="res://audio/mus.mp3" id="22_5wboo"]
 [ext_resource type="AudioStream" uid="uid://bq48hxpar0m2k" path="res://audio/Lose.wav" id="22_cybgu"]
 [ext_resource type="Shader" uid="uid://bcyjpwtivctcg" path="res://scenes/crt.gdshader" id="25_wdxbp"]
 
@@ -586,14 +585,13 @@ layout_mode = 2
 text = "Pause"
 script = ExtResource("9_5cypo")
 
-[node name="MusicToggle" type="CheckButton" parent="MarginContainer/HBoxContainer/MainArea/PauseAndAudioControls" unique_id=127965470 node_paths=PackedStringArray("source")]
+[node name="MusicToggle" type="CheckButton" parent="MarginContainer/HBoxContainer/MainArea/PauseAndAudioControls" unique_id=127965470]
 layout_mode = 2
 theme_override_styles/pressed = SubResource("StyleBoxFlat_5wboo")
 button_pressed = true
 icon = SubResource("CompressedTexture2D_ibnub")
 expand_icon = true
 script = ExtResource("16_6de02")
-source = NodePath("../../../../../MusicAudioStreamPlayer")
 
 [node name="UpgradeHoverUI" parent="." unique_id=747242511 instance=ExtResource("8_70vka")]
 z_index = 3
@@ -791,13 +789,6 @@ scale = Vector2(2, 2)
 mouse_filter = 2
 texture = ExtResource("21_ibnub")
 stretch_mode = 1
-
-[node name="MusicAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=926608586]
-stream = ExtResource("22_5wboo")
-volume_db = 4.0
-autoplay = true
-playback_type = 1
-parameters/looping = true
 
 [node name="CRTEffect" type="ColorRect" parent="." unique_id=1845806034]
 z_index = 999
