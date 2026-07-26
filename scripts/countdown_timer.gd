@@ -6,12 +6,15 @@ extends Node
 @export var danger_color: Color = Color.RED
 
 func _ready() -> void:
-	time_label.text = format_time(RunManager.run.time)
-	time_label.label_settings.font_color = normal_color if RunManager.run.time > 10 else danger_color
+	update_ui()
 
 func _physics_process(_delta: float) -> void:
+	update_ui()
+	
+func update_ui() -> void:
 	time_label.text = format_time(RunManager.run.time)
-	time_label.label_settings.font_color = normal_color if RunManager.run.time > 10 else danger_color
+	var danger_threshold: int = 5 + RunManager.run.round_number*5
+	time_label.label_settings.font_color = normal_color if RunManager.run.time > danger_threshold else danger_color
 	
 static func format_time(total_seconds: int) -> String:
 	total_seconds = max(total_seconds, 0)
