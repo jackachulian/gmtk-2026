@@ -2,23 +2,16 @@ class_name CountdownTimer
 extends Node
 
 @export var time_label: Label
-
-#var reset_time: int = 600
-#
-### Time remaining on the timer, in seconds
-#var time: int
-#
-### The delay between ticks, in real-world seconds
-#var tick_time: float = 0.25
-#
-### Counts how much real-world seconds until the next tick
-#var tick_time_remaining: float
+@export var normal_color: Color = Color.WHITE
+@export var danger_color: Color = Color.RED
 
 func _ready() -> void:
 	time_label.text = format_time(RunManager.run.time)
+	time_label.label_settings.font_color = normal_color if RunManager.run.time > 10 else danger_color
 
 func _physics_process(_delta: float) -> void:
 	time_label.text = format_time(RunManager.run.time)
+	time_label.label_settings.font_color = normal_color if RunManager.run.time > 10 else danger_color
 	
 static func format_time(total_seconds: int) -> String:
 	total_seconds = max(total_seconds, 0)
