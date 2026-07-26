@@ -188,7 +188,7 @@ shader_parameter/blue_band_width = 0.035
 shader_parameter/blue_band_strength = 0.1
 shader_parameter/blue_band_glitch = 0.0
 shader_parameter/blue_band_distort_px = 1.2
-shader_parameter/bulge_intensity = 0.030000048925000078
+shader_parameter/bulge_intensity = 0.03000004892500007
 
 [node name="MainGame2" type="Control" unique_id=1089023773]
 layout_mode = 3
@@ -709,7 +709,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="GameOverMenu" type="Control" parent="." unique_id=1851980242 node_paths=PackedStringArray("lost_sfx")]
-visible = false
 z_index = 10
 layout_mode = 1
 anchors_preset = 15
@@ -727,7 +726,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.1898, 0.1898, 0.26, 0.5019608)
+color = Color(0.56, 0.14559999, 0.1801334, 0.34509805)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameOverMenu" unique_id=1659791297]
 layout_mode = 1
