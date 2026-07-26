@@ -244,7 +244,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.id = "battery"
 	u.display_name = "Battery"
 	u.description = "Each tick, [chance]% chance of force-triggering 2 random upgrades"
-	u.base_chance = 25
+	u.base_chance = 15
 	u.base_cost = 9
 	u.base_dur = 8
 	u.rarity = 1
