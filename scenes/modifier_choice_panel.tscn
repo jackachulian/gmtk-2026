@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c50h7ewmxwkiy" path="res://scripts/upgrade_panel.gd" id="1_tkwf0"]
 [ext_resource type="Theme" uid="uid://yd77drcyxxpq" path="res://theme/main_theme.tres" id="2_m40rm"]
+[ext_resource type="AudioStream" uid="uid://bw5asl8xnl3g4" path="res://audio/foresightConsume .mp3" id="3_paafo"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_e1tu5"]
 font_size = 24
@@ -9,7 +10,7 @@ font_size = 24
 [sub_resource type="LabelSettings" id="LabelSettings_4ieh6"]
 font_color = Color(1, 1, 1, 0.7921569)
 
-[node name="ModifierChoicePanel" type="Control" unique_id=878328569 node_paths=PackedStringArray("name_label", "level_label", "description_label", "select_button")]
+[node name="ModifierChoicePanel" type="Control" unique_id=878328569 node_paths=PackedStringArray("name_label", "level_label", "description_label", "select_button", "mod_select_sfx")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 292.0
@@ -20,6 +21,7 @@ name_label = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContaine
 level_label = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/LevelLabel")
 description_label = NodePath("VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/RichTextLabel")
 select_button = NodePath("VBoxContainer/SelectButton")
+mod_select_sfx = NodePath("VBoxContainer/SelectButton/AudioStreamPlayer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=873239338]
 layout_mode = 1
@@ -73,5 +75,9 @@ justification_flags = 162
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "Select"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="VBoxContainer/SelectButton" unique_id=567636789]
+stream = ExtResource("3_paafo")
+volume_db = -24.0
 
 [connection signal="pressed" from="VBoxContainer/SelectButton" to="." method="_on_select_button_pressed"]

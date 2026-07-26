@@ -436,7 +436,7 @@ func generate_modifier_definitions(node: Node) -> void:
 	m.id = "debt2"
 	m.display_name = ""
 	m.description = "Replace your first upgrade with Debt"
-	m.base_chance = 1
+	m.base_chance = 0
 	m.base_dur = -1
 	m.buy = func(run: Run, _upgrade: Upgrade):
 		run.set_inventory_slot(0, Upgrade.new(status_definitions.get("debt")))
@@ -446,7 +446,7 @@ func generate_modifier_definitions(node: Node) -> void:
 	m.id = "rock_debuff"
 	m.display_name = ""
 	m.description = "Replace your first two upgrades with Rocks"
-	m.base_chance = 1
+	m.base_chance = 0
 	m.base_dur = -1
 	m.buy = func(run: Run, _upgrade: Upgrade):
 		run.set_inventory_slot(0, Upgrade.new(status_definitions.get("rock")))
@@ -457,7 +457,7 @@ func generate_modifier_definitions(node: Node) -> void:
 	m.id = "expensive"
 	m.display_name = ""
 	m.description = "Increase cost mult by 0.5"
-	m.base_chance = 1
+	m.base_chance = 0
 	m.base_dur = -1
 	m.buy = func(run: Run, _upgrade: Upgrade):
 		run.cost_mult += 0.5
@@ -467,7 +467,7 @@ func generate_modifier_definitions(node: Node) -> void:
 	m.id = "expensive2"
 	m.display_name = ""
 	m.description = "Increase cost mult by 1.0"
-	m.base_chance = 1
+	m.base_chance = 0
 	m.base_dur = -1
 	m.buy = func(run: Run, _upgrade: Upgrade):
 		run.cost_mult += 1.0
@@ -549,7 +549,7 @@ func generate_modifier_definitions(node: Node) -> void:
 	m.id = "dur_debuff"
 	m.display_name = ""
 	m.description = "-1 to durability bonus."
-	m.base_chance = 1
+	m.base_chance = 0
 	m.base_dur = -1
 	m.buy = func(run: Run, _upgrade: Upgrade):
 		run.durability_mod -= 1

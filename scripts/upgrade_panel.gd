@@ -18,6 +18,7 @@ extends Control
 @export var select_button: Button
 
 @export var sfx_player: AudioStreamPlayer
+@export var mod_select_sfx: AudioStreamPlayer
 
 var upgrade: Upgrade
 
@@ -90,6 +91,7 @@ func _on_mouse_exited() -> void:
 
 ## Used in the modifier panel list only
 func _on_select_button_pressed() -> void:
+	if (mod_select_sfx): mod_select_sfx.play()
 	RunManager.run.choose_modifier(index)
 	
 func set_dur_label(dur: int) -> void:

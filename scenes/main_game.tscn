@@ -23,6 +23,7 @@
 [ext_resource type="Script" uid="uid://bfmbkfi3a8f8j" path="res://scripts/game_over_menu.gd" id="16_ihbck"]
 [ext_resource type="Texture2D" uid="uid://ba1bkuppcji82" path="res://graphics/bgtile.png" id="21_ibnub"]
 [ext_resource type="AudioStream" uid="uid://c654xtoqbabh" path="res://audio/mus.mp3" id="22_5wboo"]
+[ext_resource type="AudioStream" uid="uid://bq48hxpar0m2k" path="res://audio/Lose.wav" id="22_cybgu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ieh6"]
 bg_color = Color(0.34117648, 0.21568628, 0.32156864, 1)
@@ -666,7 +667,7 @@ layout_mode = 2
 [node name="ModifierPanel3" parent="ModifierMenu/MarginContainer/VBoxContainer/ModifierPanelList" unique_id=825438181 instance=ExtResource("14_8xp80")]
 layout_mode = 2
 
-[node name="GameOverMenu" type="Control" parent="." unique_id=1851980242]
+[node name="GameOverMenu" type="Control" parent="." unique_id=1851980242 node_paths=PackedStringArray("lost_sfx")]
 visible = false
 z_index = 10
 layout_mode = 1
@@ -676,6 +677,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("16_ihbck")
+lost_sfx = NodePath("AudioStreamPlayer")
 
 [node name="ColorRect" type="ColorRect" parent="GameOverMenu" unique_id=1740364962]
 layout_mode = 1
@@ -684,7 +686,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.5019608)
+color = Color(0.1898, 0.1898, 0.26, 0.5019608)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameOverMenu" unique_id=1659791297]
 layout_mode = 1
@@ -704,7 +706,7 @@ alignment = 1
 
 [node name="HeaderLabel" type="Label" parent="GameOverMenu/VBoxContainer" unique_id=519060309]
 layout_mode = 2
-text = "GAME OVER"
+text = "TIME OVER"
 label_settings = SubResource("LabelSettings_wjob3")
 horizontal_alignment = 1
 
@@ -715,6 +717,10 @@ layout_mode = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "RETRY"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GameOverMenu" unique_id=520566844]
+stream = ExtResource("22_cybgu")
+volume_db = -8.0
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=2033946042]
 z_index = -9
