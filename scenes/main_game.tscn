@@ -20,6 +20,8 @@
 [ext_resource type="FontFile" uid="uid://dfsvoaoqxhann" path="res://fonts/vcr_osd_mono/VCR_OSD_MONO.ttf" id="13_5luka"]
 [ext_resource type="PackedScene" uid="uid://eb2a20qa3d0e" path="res://scenes/modifier_choice_panel.tscn" id="14_8xp80"]
 [ext_resource type="Script" uid="uid://bfmbkfi3a8f8j" path="res://scripts/game_over_menu.gd" id="16_ihbck"]
+[ext_resource type="Shader" uid="uid://b6pxmxfup2660" path="res://scenes/bg.gdshader" id="21_5wboo"]
+[ext_resource type="Texture2D" uid="uid://ba1bkuppcji82" path="res://graphics/bgtile.png" id="21_ibnub"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ieh6"]
 bg_color = Color(0.34117648, 0.21568628, 0.32156864, 1)
@@ -108,6 +110,9 @@ font_size = 64
 shadow_size = 0
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(3.75, 3.75)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6de02"]
+shader = ExtResource("21_5wboo")
 
 [node name="MainGame2" type="Control" unique_id=1089023773]
 layout_mode = 3
@@ -659,6 +664,22 @@ layout_mode = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "RETRY"
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2033946042]
+z_index = -9
+texture_filter = 1
+texture_repeat = 1
+material = SubResource("ShaderMaterial_6de02")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+mouse_filter = 2
+texture = ExtResource("21_ibnub")
+stretch_mode = 1
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/Control/RerollButton" to="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/Control/RerollButton" method="_on_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MainArea/PauseButton" to="MarginContainer/HBoxContainer/MainArea/PauseButton" method="_on_pressed"]

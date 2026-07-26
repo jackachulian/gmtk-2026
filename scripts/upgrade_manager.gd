@@ -68,7 +68,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.rarity = 0
 	u.buy = func(run: Run, _upgrade: Upgrade): run.time += 30
 	u.sell = func(run: Run, _upgrade: Upgrade): run.time -= 30
-	u.icon = preload("res://graphics/foe_bug.png")
+	u.icon = preload("res://graphics/icons/borrow.png")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -161,7 +161,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			u.trigger.call(run, _upgrade, false)
 			return true
 		return false
-	u.icon = preload("res://graphics/foe_bug.png")
+	u.icon = preload("res://graphics/icons/drain.png")
 	u.trigger_sfx = preload("res://audio/talk-aqua.wav")
 	add_upgrade_definition(u)
 	
@@ -181,7 +181,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			u.trigger.call(run, _upgrade, false)
 			return true
 		return false
-	u.icon = preload("res://graphics/foe_bug.png")
+	u.icon = preload("res://graphics/icons/drain.png")
 	u.trigger_sfx = preload("res://audio/talk-aqua.wav")
 	add_upgrade_definition(u)
 	
