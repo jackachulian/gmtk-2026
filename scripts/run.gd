@@ -130,7 +130,7 @@ func start_choose_modifier_phase() -> void:
 	round_number += 1
 	cash += 5 * round_number
 	countdown_mult += 1.0
-	tick_rate += 0.25
+	tick_rate += 0.1
 	
 	shop.clear()
 	shop_changed.emit()
