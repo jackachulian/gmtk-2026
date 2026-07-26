@@ -21,13 +21,6 @@
 [ext_resource type="PackedScene" uid="uid://eb2a20qa3d0e" path="res://scenes/modifier_choice_panel.tscn" id="14_8xp80"]
 [ext_resource type="Script" uid="uid://bfmbkfi3a8f8j" path="res://scripts/game_over_menu.gd" id="16_ihbck"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_72e8q"]
-font_size = 40
-font_color = Color(0.4627451, 0.9098039, 0.3372549, 1)
-shadow_size = 0
-shadow_color = Color(0, 0, 0, 1)
-shadow_offset = Vector2(2.82, 2.82)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ieh6"]
 bg_color = Color(0.34117648, 0.21568628, 0.32156864, 1)
 border_color = Color(0.1882353, 0.1882353, 0.25882354, 1)
@@ -87,6 +80,7 @@ font_color = Color(0.4627451, 0.9098039, 0.3372549, 1)
 font_color = Color(0.29803923, 0.5647059, 0.6313726, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_o0ard"]
+font_size = 18
 
 [sub_resource type="LabelSettings" id="LabelSettings_ihbck"]
 font_size = 24
@@ -97,6 +91,14 @@ font_size = 64
 shadow_size = 0
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(3.75, 3.75)
+
+[sub_resource type="LabelSettings" id="LabelSettings_72e8q"]
+font = ExtResource("13_5luka")
+font_size = 40
+font_color = Color(0.4627451, 0.9098039, 0.3372549, 1)
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(2.82, 2.82)
 
 [sub_resource type="LabelSettings" id="LabelSettings_xl51n"]
 font_size = 32
@@ -151,18 +153,6 @@ custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/separation = 16
-
-[node name="MoneyPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/LeftArea" unique_id=374316304]
-custom_minimum_size = Vector2(0, 64)
-layout_mode = 2
-
-[node name="MoneyLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftArea/MoneyPanel" unique_id=305987423]
-layout_mode = 2
-text = "$5"
-label_settings = SubResource("LabelSettings_72e8q")
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("4_2l77h")
 
 [node name="UpgradeShopPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/LeftArea" unique_id=1905728050]
 layout_mode = 2
@@ -289,8 +279,9 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = -85.32
+offset_top = -12.5
 offset_right = 84.67999
-offset_bottom = 192.0
+offset_bottom = 179.5
 grow_horizontal = 2
 scale = Vector2(0.85, 0.85)
 pivot_offset = Vector2(512, 96)
@@ -335,7 +326,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="ShopPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea" unique_id=760570892]
-custom_minimum_size = Vector2(0, 160)
+custom_minimum_size = Vector2(0, 192)
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -391,7 +382,7 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_top = -28.0
-offset_bottom = 28.0
+offset_bottom = 36.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 20
@@ -405,7 +396,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 27.0
 grow_horizontal = 2
-text = "Reroll"
+text = "Refresh"
 label_settings = SubResource("LabelSettings_o0ard")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -438,6 +429,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("2_0rdsr")
@@ -446,13 +438,15 @@ time_label = NodePath("PanelContainer/TimeLabel")
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea/Timer" unique_id=1039521358]
 custom_minimum_size = Vector2(320, 0)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -294.0
-offset_top = -44.0
-offset_right = 26.0
-offset_bottom = 44.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -206.5
+offset_top = -64.0
+offset_right = 206.5
+offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -462,6 +456,31 @@ text = "12:34:56:78"
 label_settings = SubResource("LabelSettings_4ieh6")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MoneyPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea/Timer" unique_id=374316304]
+custom_minimum_size = Vector2(240, 52)
+custom_maximum_size = Vector2(208, 52)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -104.0
+offset_top = 32.0
+offset_right = 104.0
+offset_bottom = 84.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(104, 24)
+
+[node name="MoneyLabel" type="Label" parent="MarginContainer/HBoxContainer/MainArea/Timer/MoneyPanel" unique_id=305987423]
+layout_mode = 2
+text = "$5"
+label_settings = SubResource("LabelSettings_72e8q")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_2l77h")
 
 [node name="PauseButton" type="Button" parent="MarginContainer/HBoxContainer/MainArea" unique_id=1396354725]
 layout_mode = 1
