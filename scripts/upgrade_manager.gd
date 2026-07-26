@@ -263,7 +263,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			u.trigger.call(run, _upgrade, false)
 			return true
 		return false
-	u.icon = preload("res://graphics/icons/double.png")
+	u.icon = preload("res://graphics/icons/battery.png")
 	add_upgrade_definition(u)
 	
 	# ===========
@@ -276,9 +276,9 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.description = "Cannot be sold."
 	u.base_cost = 0
 	u.base_dur = 20
-	u.rarity = 0
+	u.rarity = -1
 	u.can_be_sold = false
-	u.icon = preload("res://graphics/foe_bug.png")
+	u.icon = preload("res://graphics/icons/rock.png")
 	add_status_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -287,9 +287,9 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.description = "Cannot be sold. On force-trigger, lose 20$."
 	u.base_cost = 0
 	u.base_dur = 10
-	u.rarity = 0
+	u.rarity = -1
 	u.can_be_sold = false
-	u.icon = preload("res://graphics/foe_bug.png")
+	u.icon = preload("res://graphics/icons/debt.png")
 	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void:
 		if run.cash >= 0: 
 			run.cash = max(run.cash - 20, 0)
@@ -471,6 +471,55 @@ func generate_modifier_definitions(node: Node) -> void:
 	m.base_dur = -1
 	m.round_end = func(run: Run, _upgrade: Upgrade):
 		run.time = round(run.time * 0.5)
+	add_debuff_definition(m)
+	
+	m = UpgradeDefinition.new()
+	m.id = "deduct_time"
+	m.display_name = ""
+	m.description = "-2 minutes at the end of each round"
+	m.base_chance = 1
+	m.base_dur = -1
+	m.round_end = func(run: Run, _upgrade: Upgrade):
+		run.time -= 120
+	add_debuff_definition(m)
+	
+	m = UpgradeDefinition.new()
+	m.id = "deduct_time_tick"
+	m.display_name = ""
+	m.description = "Each tick, 1% chance to lose 30 seconds"
+	m.base_chance = 1
+	m.base_dur = -1
+	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool:
+		if randi_range(1,100) == 1:
+			run.time -= 30
+			return true
+		return false
+	add_debuff_definition(m)
+	
+	m = UpgradeDefinition.new()
+	m.id = "half_time_tick"
+	m.display_name = ""
+	m.description = "Each tick, 0.5% chance to cut time in half"
+	m.base_chance = 1
+	m.base_dur = -1
+	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool:
+		if randi_range(1,200) == 1:
+			run.time = round(run.time * 0.5)
+			return true
+		return false
+	add_debuff_definition(m)
+	
+	m = UpgradeDefinition.new()
+	m.id = "lose_money_tick"
+	m.display_name = ""
+	m.description = "Each tick, 1% chance to lose 100$"
+	m.base_chance = 1
+	m.base_dur = -1
+	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool:
+		if randi_range(1,100) == 1:
+			run.cash = max(run.cash - 100, 0)
+			return true
+		return false
 	add_debuff_definition(m)
 	
 	m = UpgradeDefinition.new()

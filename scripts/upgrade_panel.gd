@@ -10,6 +10,7 @@ extends Control
 @export var durability_label: Label
 
 @export var card_panel_container: PanelContainer
+@export var status_stylebox: StyleBox
 @export var common_stylebox: StyleBox
 @export var uncommon_stylebox: StyleBox
 @export var rare_stylebox: StyleBox
@@ -62,6 +63,8 @@ func setup(upgrade: Upgrade, mode: Mode, index: int) -> void:
 			card_panel_container.add_theme_stylebox_override("panel", uncommon_stylebox)
 		elif upgrade.definition.rarity == 2:
 			card_panel_container.add_theme_stylebox_override("panel", rare_stylebox)
+		elif upgrade.definition.rarity == -1:
+			card_panel_container.add_theme_stylebox_override("panel", status_stylebox)
 	
 	if select_button:
 		await UpgradeHoverUI.instance.get_tree().create_timer(1.0).timeout

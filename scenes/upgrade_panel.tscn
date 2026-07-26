@@ -3,6 +3,14 @@
 [ext_resource type="Script" uid="uid://c50h7ewmxwkiy" path="res://scripts/upgrade_panel.gd" id="1_lev6e"]
 [ext_resource type="Texture2D" uid="uid://c0gd7ogq7pw3s" path="res://graphics/foe_bug.png" id="2_0ql3a"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nx88n"]
+bg_color = Color(0.2, 0.14117648, 0.19215687, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.8784314, 0.27450982, 0.27450982, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lev6e"]
 bg_color = Color(0.2, 0.14117648, 0.19215687, 1)
 border_width_left = 5
@@ -179,6 +187,7 @@ icon = NodePath("CenterContainer/PanelContainer/MarginContainer/Icon")
 durability = NodePath("DurabilityPanelContainer")
 durability_label = NodePath("DurabilityPanelContainer/DurabilityLabel")
 card_panel_container = NodePath("CenterContainer/PanelContainer")
+status_stylebox = SubResource("StyleBoxFlat_nx88n")
 common_stylebox = SubResource("StyleBoxFlat_lev6e")
 uncommon_stylebox = SubResource("StyleBoxFlat_0ql3a")
 rare_stylebox = SubResource("StyleBoxFlat_8kbbg")

@@ -217,7 +217,7 @@ func _do_tick(forced: bool) -> void:
 	sfx_player.stream = tick_sfx[tick_count % len(tick_sfx)]
 	sfx_player.play();
 	tick_animator.play("tick")
-	time -= 1
+	time -= 1 * ceil(float(round_number) / 2)
 	
 	for index in inventory.size():
 		var upgrade = inventory[index]
