@@ -57,7 +57,6 @@ func _physics_process(delta: float) -> void:
 	
 	elif upgrade_panel.mode == UpgradePanel.Mode.INVENTORY && upgrade_panel.upgrade.can_be_sold:
 		sell_button.show()
-		size *= 0.85 # (last minute bandaid fix)
 		sell_cost_label.text = "$%d" % upgrade_panel.upgrade.cost
 		sell_cost_label.label_settings.font_color = normal_color
 
