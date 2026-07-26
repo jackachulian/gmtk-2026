@@ -19,9 +19,10 @@
 [ext_resource type="AudioStream" uid="uid://c7sbo0tcsopnw" path="res://audio/paper.mp3" id="12_yu8cv"]
 [ext_resource type="FontFile" uid="uid://dfsvoaoqxhann" path="res://fonts/vcr_osd_mono/VCR_OSD_MONO.ttf" id="13_5luka"]
 [ext_resource type="PackedScene" uid="uid://eb2a20qa3d0e" path="res://scenes/modifier_choice_panel.tscn" id="14_8xp80"]
+[ext_resource type="Script" uid="uid://o56u53a8r528" path="res://scenes/music_toggle.gd" id="16_6de02"]
 [ext_resource type="Script" uid="uid://bfmbkfi3a8f8j" path="res://scripts/game_over_menu.gd" id="16_ihbck"]
-[ext_resource type="Shader" uid="uid://b6pxmxfup2660" path="res://scenes/bg.gdshader" id="21_5wboo"]
 [ext_resource type="Texture2D" uid="uid://ba1bkuppcji82" path="res://graphics/bgtile.png" id="21_ibnub"]
+[ext_resource type="AudioStream" uid="uid://c654xtoqbabh" path="res://audio/mus.mp3" id="22_5wboo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ieh6"]
 bg_color = Color(0.34117648, 0.21568628, 0.32156864, 1)
@@ -102,6 +103,21 @@ shadow_size = 0
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(2.82, 2.82)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5wboo"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.27450982, 0.38431373, 0.5294118, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ibnub"]
+load_path = "res://.godot/imported/mus-toggle.png-21d4ffb3b786aaa375693af3e51db570.ctex"
+
 [sub_resource type="LabelSettings" id="LabelSettings_xl51n"]
 font_size = 32
 
@@ -111,8 +127,29 @@ shadow_size = 0
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(3.75, 3.75)
 
+[sub_resource type="Shader" id="Shader_ibnub"]
+code = "shader_type canvas_item;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+void fragment() {
+	vec2 uv = UV;
+	uv.x += TIME * 0.05 + sin(TIME + uv.y * 5.0) * 0.05;
+	uv.y += -TIME * 0.05;
+	COLOR = texture(TEXTURE, uv) * 0.5;
+	COLOR += texture(TEXTURE, -UV - TIME * 0.01) * 0.5;
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6de02"]
-shader = ExtResource("21_5wboo")
+shader = SubResource("Shader_ibnub")
 
 [node name="MainGame2" type="Control" unique_id=1089023773]
 layout_mode = 3
@@ -494,10 +531,24 @@ anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -54.0
 offset_top = 196.0
+offset_right = 10.0
 offset_bottom = 226.0
 grow_horizontal = 0
 text = "Pause"
 script = ExtResource("9_5cypo")
+
+[node name="MusicToggle" type="CheckButton" parent="MarginContainer/HBoxContainer/MainArea" unique_id=127965470 node_paths=PackedStringArray("source")]
+layout_mode = 0
+offset_left = 800.0
+offset_top = 232.0
+offset_right = 864.0
+offset_bottom = 264.0
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5wboo")
+button_pressed = true
+icon = SubResource("CompressedTexture2D_ibnub")
+expand_icon = true
+script = ExtResource("16_6de02")
+source = NodePath("../../../../MusicAudioStreamPlayer")
 
 [node name="UpgradeHoverUI" parent="." unique_id=747242511 instance=ExtResource("8_70vka")]
 z_index = 3
@@ -680,6 +731,13 @@ scale = Vector2(2, 2)
 mouse_filter = 2
 texture = ExtResource("21_ibnub")
 stretch_mode = 1
+
+[node name="MusicAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=926608586]
+stream = ExtResource("22_5wboo")
+volume_db = 4.0
+autoplay = true
+playback_type = 1
+parameters/looping = true
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/Control/RerollButton" to="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/Control/RerollButton" method="_on_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MainArea/PauseButton" to="MarginContainer/HBoxContainer/MainArea/PauseButton" method="_on_pressed"]
