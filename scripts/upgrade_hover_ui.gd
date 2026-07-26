@@ -22,9 +22,10 @@ func _ready() -> void:
 	
 @warning_ignore("shadowed_variable")
 func show_on_upgrade_panel(upgrade_panel: UpgradePanel) -> void:
+	await get_tree().process_frame
 	self.upgrade_panel = upgrade_panel
-	global_position = upgrade_panel.global_position
-	size = upgrade_panel.size
+	global_position = upgrade_panel.card_panel_container.global_position
+	size = upgrade_panel.card_panel_container.size
 	
 	show()
 	buy_button.hide()
@@ -36,6 +37,7 @@ func show_on_upgrade_panel(upgrade_panel: UpgradePanel) -> void:
 	
 	elif upgrade_panel.mode == UpgradePanel.Mode.INVENTORY && upgrade_panel.upgrade.can_be_sold:
 		sell_button.show()
+		size *= 0.85 # (last minute bandaid fix)
 		sell_cost_label.text = "$%d" % upgrade_panel.upgrade.cost
 
 func _on_buy_button_pressed() -> void:
