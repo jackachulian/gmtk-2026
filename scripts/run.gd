@@ -129,7 +129,7 @@ func start_choose_modifier_phase() -> void:
 	round_number += 1
 	cash += 5 * round_number
 	countdown_mult += 1.0
-	tick_rate += 0.5
+	tick_rate += 0.25
 	
 	shop.clear()
 	shop_changed.emit()
@@ -217,7 +217,7 @@ func _do_tick(forced: bool) -> void:
 	sfx_player.stream = tick_sfx[tick_count % len(tick_sfx)]
 	sfx_player.play();
 	tick_animator.play("tick")
-	time -= 1 * ceil(float(round_number) / 2)
+	time -= 1 + (max(round_number - 2, 0))
 	
 	for index in inventory.size():
 		var upgrade = inventory[index]

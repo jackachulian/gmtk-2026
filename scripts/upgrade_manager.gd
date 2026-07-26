@@ -351,22 +351,22 @@ func generate_modifier_definitions(node: Node) -> void:
 		pass
 	add_modifier_definition(m)
 	
-	m = UpgradeDefinition.new()
-	m.id = "swapper"
-	m.display_name = "Swapper"
-	m.description = "Each tick, [chance]% chance to swap minutes and seconds"
-	m.base_chance = 1
-	m.base_dur = -1
-	m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool:
-		if randi_range(1,100) <= upgrade.chance:
-			@warning_ignore("integer_division") var days := run.time / 86400
-			@warning_ignore("integer_division") var hours := (run.time % 86400) / 3600
-			@warning_ignore("integer_division") var minutes := (run.time % 3600) / 60
-			var seconds := run.time % 60
-			run.time = days*86400 + hours*3600 + seconds*60 + minutes
-			return true
-		return false
-	add_modifier_definition(m)
+	#m = UpgradeDefinition.new()
+	#m.id = "swapper"
+	#m.display_name = "Swapper"
+	#m.description = "Each tick, [chance]% chance to swap minutes and seconds"
+	#m.base_chance = 1
+	#m.base_dur = -1
+	#m.tick = func(run: Run, upgrade: Upgrade, forced: bool) -> bool:
+		#if randi_range(1,100) <= upgrade.chance:
+			#@warning_ignore("integer_division") var days := run.time / 86400
+			#@warning_ignore("integer_division") var hours := (run.time % 86400) / 3600
+			#@warning_ignore("integer_division") var minutes := (run.time % 3600) / 60
+			#var seconds := run.time % 60
+			#run.time = days*86400 + hours*3600 + seconds*60 + minutes
+			#return true
+		#return false
+	#add_modifier_definition(m)
 		
 	m = UpgradeDefinition.new()
 	m.id = "passive_income"
