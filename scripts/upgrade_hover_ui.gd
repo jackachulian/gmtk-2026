@@ -8,6 +8,9 @@ static var instance: UpgradeHoverUI
 @export var sell_button: Control
 @export var sell_cost_label: Control
 
+@export var buy_sfx: AudioStreamPlayer
+@export var sell_sfx: AudioStreamPlayer
+
 ## Current upgrade panel this is showing for
 var upgrade_panel: UpgradePanel
 
@@ -37,12 +40,16 @@ func show_on_upgrade_panel(upgrade_panel: UpgradePanel) -> void:
 
 func _on_buy_button_pressed() -> void:
 	if upgrade_panel.mode == UpgradePanel.Mode.SHOP:
-		RunManager.run.buy_shop_item(upgrade_panel.index)
+		if RunManager.run.buy_shop_item(upgrade_panel.index):
+			buy_sfx.pitch_scale = pow(1.059463, randi_range(0, 4))
+			buy_sfx.play()
+			
 	else:
 		push_error("This is not a shop item")
 		
 func _on_sell_button_pressed() -> void:
 	if upgrade_panel.mode == UpgradePanel.Mode.INVENTORY:
-		RunManager.run.sell_inventory_item(upgrade_panel.index)
+		if RunManager.run.sell_inventory_item(upgrade_panel.index):
+			sell_sfx.play()
 	else:
 		push_error("This is not an inventory item")

@@ -17,6 +17,8 @@ extends Control
 @export var animation_player: AnimationPlayer
 @export var select_button: Button
 
+@export var sfx_player: AudioStreamPlayer
+
 var upgrade: Upgrade
 
 enum Mode {
@@ -50,6 +52,7 @@ func setup(upgrade: Upgrade, mode: Mode, index: int) -> void:
 		durability_label = null
 		durability = null
 	if durability_label: durability_label.text = "%d" % upgrade.durability
+	if sfx_player: sfx_player.stream = upgrade.trigger_sfx 
 	
 	if upgrade.attached_upgrade && mode == Mode.MODIFIER_CHOICE: 
 		description_label.text += "\n[color=#E04646]" + upgrade.attached_upgrade.get_parsed_description() + "[/color]"
@@ -91,3 +94,7 @@ func _on_select_button_pressed() -> void:
 	
 func set_dur_label(dur: int) -> void:
 	if durability_label: durability_label.text = str(dur)	
+	
+func play_trigger_sound() -> void:
+	sfx_player.pitch_scale = pow(1.059463, [0, 4, 6][randi_range(0, 2)])
+	sfx_player.play()

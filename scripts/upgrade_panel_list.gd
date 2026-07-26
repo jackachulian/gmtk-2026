@@ -46,7 +46,12 @@ func play_upgrade_anim(index: int, anim: String) -> void:
 	# Can sometimes be null when selling at certain timings
 	if panel == null: return;
 	panel.animation_player.play(anim);
-	
+
+func play_trigger_sound(index: int) -> void:
+	var panel = get_child(index)
+	if panel == null: return
+	panel.play_trigger_sound()
+
 func free_upgrade_after_anim(index: int) -> void:
 	var child = get_child(index) as UpgradePanel
 	if child.animation_player && child.animation_player.is_playing(): await child.animation_player.animation_finished

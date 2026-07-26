@@ -87,6 +87,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			return true
 		return false
 	u.icon = preload("res://graphics/icons/booster.png")
+	u.trigger_sfx = preload("res://audio/talk-aqua.wav")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -103,6 +104,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			return true
 		return false
 	u.icon = preload("res://graphics/icons/booster.png")
+	u.trigger_sfx = preload("res://audio/talk-aqua.wav")
 	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void:
 		run.time += 15
 	add_upgrade_definition(u)
@@ -121,6 +123,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			return true
 		return false
 	u.icon = preload("res://graphics/icons/money.png")
+	u.trigger_sfx = preload("res://audio/talk-generic.wav")
 	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void: run.cash += 2
 	add_upgrade_definition(u)
 	
@@ -139,6 +142,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			return true
 		return false
 	u.icon = preload("res://graphics/icons/money.png")
+	u.trigger_sfx = preload("res://audio/talk-generic.wav")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -158,6 +162,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			return true
 		return false
 	u.icon = preload("res://graphics/foe_bug.png")
+	u.trigger_sfx = preload("res://audio/talk-aqua.wav")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -177,6 +182,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			return true
 		return false
 	u.icon = preload("res://graphics/foe_bug.png")
+	u.trigger_sfx = preload("res://audio/talk-aqua.wav")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -231,6 +237,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.buy = func(run: Run, _upgrade: Upgrade): run.cash += 40
 	u.sell = func(run: Run, _upgrade: Upgrade): run.cash -= 60
 	u.icon = preload("res://graphics/icons/loan.png")
+	u.trigger_sfx = preload("res://audio/fall_new.mp3")
 	add_upgrade_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -264,6 +271,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 			return true
 		return false
 	u.icon = preload("res://graphics/icons/battery.png")
+	u.trigger_sfx = preload("res://audio/select.wav")
 	add_upgrade_definition(u)
 	
 	# ===========
@@ -279,6 +287,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.rarity = -1
 	u.can_be_sold = false
 	u.icon = preload("res://graphics/icons/rock.png")
+	u.trigger_sfx = preload("res://audio/57_drop.wav")
 	add_status_definition(u)
 	
 	u = UpgradeDefinition.new()
@@ -290,6 +299,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.rarity = -1
 	u.can_be_sold = false
 	u.icon = preload("res://graphics/icons/debt.png")
+	u.trigger_sfx = preload("res://audio/57_drop.wav")
 	u.trigger = func(run: Run, _upgrade: Upgrade, forced: bool) -> void:
 		if run.cash >= 0: 
 			run.cash = max(run.cash - 20, 0)
@@ -470,7 +480,7 @@ func generate_modifier_definitions(node: Node) -> void:
 	m.base_chance = 1
 	m.base_dur = -1
 	m.round_end = func(run: Run, _upgrade: Upgrade):
-		run.cash -= 150
+		run.cash = max(run.cash - 150, 0)
 	add_debuff_definition(m)
 	
 	m = UpgradeDefinition.new()
@@ -505,6 +515,7 @@ func generate_modifier_definitions(node: Node) -> void:
 			return true
 		return false
 	add_debuff_definition(m)
+	m.trigger_sfx = preload("res://audio/57_drop.wav")
 	
 	m = UpgradeDefinition.new()
 	m.id = "half_time_tick"
@@ -517,6 +528,7 @@ func generate_modifier_definitions(node: Node) -> void:
 			run.time = round(run.time * 0.5)
 			return true
 		return false
+	m.trigger_sfx = preload("res://audio/57_drop.wav")
 	add_debuff_definition(m)
 	
 	m = UpgradeDefinition.new()
@@ -530,6 +542,7 @@ func generate_modifier_definitions(node: Node) -> void:
 			run.cash = max(run.cash - 100, 0)
 			return true
 		return false
+	m.trigger_sfx = preload("res://audio/57_drop.wav")
 	add_debuff_definition(m)
 	
 	m = UpgradeDefinition.new()

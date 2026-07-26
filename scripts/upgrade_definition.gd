@@ -16,6 +16,7 @@ var base_chance: int
 ## 0=common, 1=uncommon, 2=rare
 var rarity: int = 0
 var icon : Texture2D
+var trigger_sfx: AudioStream = null
 
 ## can_buy(run: Run, upgrade: Upgrade) -> bool:
 ## Takes current Run and the Upgrade instance this is being called on, 

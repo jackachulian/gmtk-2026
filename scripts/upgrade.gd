@@ -20,6 +20,8 @@ var level: int = 1
 
 var icon: Texture2D
 
+var trigger_sfx: AudioStream
+
 # When negative, inf durability (for modifiers)
 var durability: int = -1
 
@@ -39,8 +41,7 @@ func _init(definition: UpgradeDefinition) -> void:
 	can_be_sold = definition.can_be_sold
 	inventory_slot = -1
 	attached_upgrade = null
-	
-	
+	trigger_sfx = _definition.trigger_sfx
 
 func can_buy(run: Run) -> bool:
 	return _definition.can_buy.call(run, self)

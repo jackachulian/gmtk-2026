@@ -199,6 +199,7 @@ func process(delta: float) -> void:
 func do_upgrade_trigger_effect(index: int, forced: bool) -> void:
 	var upgrade = inventory[index]
 	upgrade_inventory.play_upgrade_anim(index, "trigger")
+	upgrade_inventory.play_trigger_sound(index)
 	if upgrade.definition.base_dur > -1:
 		upgrade.durability -= 1;
 		upgrade_inventory.update_dur_label(index, upgrade.durability)

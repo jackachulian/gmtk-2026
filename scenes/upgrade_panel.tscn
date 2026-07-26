@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c50h7ewmxwkiy" path="res://scripts/upgrade_panel.gd" id="1_lev6e"]
 [ext_resource type="Texture2D" uid="uid://c0gd7ogq7pw3s" path="res://graphics/foe_bug.png" id="2_0ql3a"]
+[ext_resource type="AudioStream" uid="uid://denu2cqpc1pd" path="res://audio/Move.wav" id="3_8kbbg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nx88n"]
 bg_color = Color(0.2, 0.14117648, 0.19215687, 1)
@@ -171,7 +172,7 @@ _data = {
 &"trigger": SubResource("Animation_0ql3a")
 }
 
-[node name="UpgradePanel" type="Control" unique_id=196418158 node_paths=PackedStringArray("name_label", "description_label", "cost_label", "icon", "durability", "durability_label", "card_panel_container", "animation_player")]
+[node name="UpgradePanel" type="Control" unique_id=196418158 node_paths=PackedStringArray("name_label", "description_label", "cost_label", "icon", "durability", "durability_label", "card_panel_container", "animation_player", "sfx_player")]
 z_index = 2
 custom_minimum_size = Vector2(128, 160)
 layout_mode = 3
@@ -192,6 +193,7 @@ common_stylebox = SubResource("StyleBoxFlat_lev6e")
 uncommon_stylebox = SubResource("StyleBoxFlat_0ql3a")
 rare_stylebox = SubResource("StyleBoxFlat_8kbbg")
 animation_player = NodePath("AnimationPlayer")
+sfx_player = NodePath("AudioStreamPlayer")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1486266631]
 layout_mode = 1
@@ -266,6 +268,10 @@ vertical_alignment = 1
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2086586328]
 libraries/ = SubResource("AnimationLibrary_8kbbg")
 speed_scale = 1.5
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=31170169]
+stream = ExtResource("3_8kbbg")
+volume_db = -7.0
 
 [connection signal="mouse_entered" from="CenterContainer/PanelContainer" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CenterContainer/PanelContainer" to="." method="_on_mouse_exited"]

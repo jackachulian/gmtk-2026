@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://bp2wnse5i0xj"]
 
 [ext_resource type="Script" uid="uid://cm0r4wfneefwg" path="res://scripts/upgrade_hover_ui.gd" id="1_y8acg"]
+[ext_resource type="AudioStream" uid="uid://do34psdli5q78" path="res://audio/clack.mp3" id="2_2e4x6"]
+[ext_resource type="AudioStream" uid="uid://ccnwn26sdguic" path="res://audio/buy_new.mp3" id="3_rhi6w"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1tu5"]
 bg_color = Color(0.4751683, 0.39143732, 0.17404118, 1)
@@ -15,7 +17,7 @@ border_color = Color(0.27385768, 0.16483253, 0.027506122, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_2l77h"]
 font_size = 24
 
-[node name="UpgradeHoverUI" type="Control" unique_id=747242511 node_paths=PackedStringArray("buy_button", "buy_cost_label", "sell_button", "sell_cost_label")]
+[node name="UpgradeHoverUI" type="Control" unique_id=747242511 node_paths=PackedStringArray("buy_button", "buy_cost_label", "sell_button", "sell_cost_label", "buy_sfx", "sell_sfx")]
 z_index = 1
 layout_mode = 3
 anchors_preset = 0
@@ -29,6 +31,8 @@ buy_button = NodePath("BuyButton")
 buy_cost_label = NodePath("BuyButton/BuyCostLabel")
 sell_button = NodePath("SellButton")
 sell_cost_label = NodePath("SellButton/SellCostLabel")
+buy_sfx = NodePath("BuyAudio")
+sell_sfx = NodePath("SellAudio")
 
 [node name="BuyButton" type="Button" parent="." unique_id=1169065480]
 layout_mode = 1
@@ -103,6 +107,14 @@ grow_vertical = 0
 text = "$5"
 label_settings = SubResource("LabelSettings_2l77h")
 horizontal_alignment = 1
+
+[node name="BuyAudio" type="AudioStreamPlayer" parent="." unique_id=512579726]
+stream = ExtResource("2_2e4x6")
+volume_db = -1.0
+
+[node name="SellAudio" type="AudioStreamPlayer" parent="." unique_id=742959608]
+stream = ExtResource("3_rhi6w")
+volume_db = -6.0
 
 [connection signal="pressed" from="BuyButton" to="." method="_on_buy_button_pressed"]
 [connection signal="pressed" from="SellButton" to="." method="_on_sell_button_pressed"]
