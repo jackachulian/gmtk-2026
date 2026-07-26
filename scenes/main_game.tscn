@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://ba1bkuppcji82" path="res://graphics/bgtile.png" id="21_ibnub"]
 [ext_resource type="AudioStream" uid="uid://c654xtoqbabh" path="res://audio/mus.mp3" id="22_5wboo"]
 [ext_resource type="AudioStream" uid="uid://bq48hxpar0m2k" path="res://audio/Lose.wav" id="22_cybgu"]
+[ext_resource type="Shader" uid="uid://bcyjpwtivctcg" path="res://scenes/crt.gdshader" id="25_wdxbp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ieh6"]
 bg_color = Color(0.34117648, 0.21568628, 0.32156864, 1)
@@ -161,6 +162,33 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6de02"]
 shader = SubResource("Shader_ibnub")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dcudo"]
+shader = ExtResource("25_wdxbp")
+shader_parameter/pixel_size = 1.0
+shader_parameter/lod_blur = 0.0
+shader_parameter/chroma_offset_px = 0.8
+shader_parameter/saturation = 1.0000000475
+shader_parameter/contrast = 1.00000002375
+shader_parameter/shadow_lift = 0.0
+shader_parameter/scanline_strength = 0.04
+shader_parameter/vignette_strength = 0.1
+shader_parameter/noise_strength = 0.025
+shader_parameter/noise_speed = 18.0
+shader_parameter/base_jitter_px = 0.08
+shader_parameter/base_jitter_speed = 0.0
+shader_parameter/glitchiness = 0.0
+shader_parameter/glitch_rate = 6.0
+shader_parameter/glitch_shift_px = 1.8
+shader_parameter/glitch_window_min = 0.03
+shader_parameter/glitch_window_max = 0.1
+shader_parameter/blue_band_start_y = 0.45
+shader_parameter/blue_band_speed = 0.06
+shader_parameter/blue_band_width = 0.035
+shader_parameter/blue_band_strength = 0.1
+shader_parameter/blue_band_glitch = 0.0
+shader_parameter/blue_band_distort_px = 1.2
+shader_parameter/bulge_intensity = 0.030000048925000078
 
 [node name="MainGame2" type="Control" unique_id=1089023773]
 layout_mode = 3
@@ -571,6 +599,7 @@ offset_right = 128.0
 offset_bottom = 160.0
 
 [node name="PauseMenu" type="Control" parent="." unique_id=402068010]
+visible = false
 top_level = true
 z_index = 9
 layout_mode = 1
@@ -756,6 +785,17 @@ volume_db = 4.0
 autoplay = true
 playback_type = 1
 parameters/looping = true
+
+[node name="CRTEffect" type="ColorRect" parent="." unique_id=1845806034]
+z_index = 999
+material = SubResource("ShaderMaterial_dcudo")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/Control/RerollButton" to="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/Control/RerollButton" method="_on_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MainArea/PauseButton" to="MarginContainer/HBoxContainer/MainArea/PauseButton" method="_on_pressed"]
