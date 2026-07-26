@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://chfiordypihuk"]
+
+[ext_resource type="Shader" uid="uid://b6pxmxfup2660" path="res://scenes/bg.gdshader" id="1_p6dhs"]
+[ext_resource type="Texture2D" uid="uid://pemk7f6c210k" path="res://graphics/bgtile_alt.png" id="2_pyl7j"]
+[ext_resource type="Shader" uid="uid://gyrvttg12dsx" path="res://title.gdshader" id="3_b3w7a"]
+[ext_resource type="FontFile" uid="uid://dfsvoaoqxhann" path="res://fonts/vcr_osd_mono/VCR_OSD_MONO.ttf" id="3_pyl7j"]
+[ext_resource type="Script" uid="uid://dgmm5sa8154wn" path="res://scripts/title/play_button.gd" id="5_b3w7a"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2re5j"]
+shader = ExtResource("1_p6dhs")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d7vlv"]
+shader = ExtResource("3_b3w7a")
+
+[sub_resource type="LabelSettings" id="LabelSettings_p6dhs"]
+font = ExtResource("3_pyl7j")
+font_size = 48
+stacked_shadow_count = 3
+stacked_shadow_0/offset = Vector2(4, 4)
+stacked_shadow_0/color = Color(0.34117648, 0.21568628, 0.32156864, 1)
+stacked_shadow_0/outline_size = 8
+stacked_shadow_1/offset = Vector2(8, 8)
+stacked_shadow_1/color = Color(0.6509804, 0.29803923, 0.42352942, 1)
+stacked_shadow_1/outline_size = 8
+stacked_shadow_2/offset = Vector2(12, 12)
+stacked_shadow_2/color = Color(0.9098039, 0.59607846, 0.31764707, 1)
+stacked_shadow_2/outline_size = 8
+
+[node name="Control" type="Control" unique_id=1113855449]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=666651041]
+texture_filter = 1
+texture_repeat = 1
+material = SubResource("ShaderMaterial_2re5j")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+texture = ExtResource("2_pyl7j")
+stretch_mode = 1
+
+[node name="BoxContainer" type="BoxContainer" parent="." unique_id=611980456]
+texture_filter = 1
+texture_repeat = 1
+propagate_maximum_size = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -286.5
+offset_top = -256.0
+offset_right = 286.5
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.5, 1.5)
+pivot_offset = Vector2(256, 256)
+alignment = 1
+vertical = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="BoxContainer" unique_id=71114321]
+texture_filter = 1
+texture_repeat = 1
+material = SubResource("ShaderMaterial_d7vlv")
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="BoxContainer/SubViewportContainer" unique_id=1133754510]
+disable_3d = true
+transparent_bg = true
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+size = Vector2i(573, 128)
+render_target_update_mode = 4
+
+[node name="Label" type="Label" parent="BoxContainer/SubViewportContainer/SubViewport" unique_id=1770010806]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -33.0
+offset_right = 563.0
+offset_bottom = 33.0
+grow_vertical = 2
+text = "You Have 20* Seconds"
+label_settings = SubResource("LabelSettings_p6dhs")
+
+[node name="Button" type="Button" parent="BoxContainer" unique_id=412653110]
+custom_minimum_size = Vector2(128, 0)
+custom_maximum_size = Vector2(64, -1)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Play"
+script = ExtResource("5_b3w7a")
+
+[connection signal="pressed" from="BoxContainer/Button" to="BoxContainer/Button" method="_on_pressed"]
