@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://ba1bkuppcji82" path="res://graphics/bgtile.png" id="21_ibnub"]
 [ext_resource type="AudioStream" uid="uid://c654xtoqbabh" path="res://audio/mus.mp3" id="22_5wboo"]
 [ext_resource type="AudioStream" uid="uid://bq48hxpar0m2k" path="res://audio/Lose.wav" id="22_cybgu"]
+[ext_resource type="Shader" uid="uid://bcyjpwtivctcg" path="res://scenes/crt.gdshader" id="25_wdxbp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ieh6"]
 bg_color = Color(0.34117648, 0.21568628, 0.32156864, 1)
@@ -138,6 +139,12 @@ shadow_size = 0
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(3.75, 3.75)
 
+[sub_resource type="LabelSettings" id="LabelSettings_e1tu5"]
+font_size = 24
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(1.4, 1.4)
+
 [sub_resource type="Shader" id="Shader_ibnub"]
 code = "shader_type canvas_item;
 
@@ -161,6 +168,33 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6de02"]
 shader = SubResource("Shader_ibnub")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dcudo"]
+shader = ExtResource("25_wdxbp")
+shader_parameter/pixel_size = 1.0
+shader_parameter/lod_blur = 0.0
+shader_parameter/chroma_offset_px = 0.8
+shader_parameter/saturation = 1.0000000475
+shader_parameter/contrast = 1.00000002375
+shader_parameter/shadow_lift = 0.0
+shader_parameter/scanline_strength = 0.04
+shader_parameter/vignette_strength = 0.1
+shader_parameter/noise_strength = 0.025
+shader_parameter/noise_speed = 18.0
+shader_parameter/base_jitter_px = 0.08
+shader_parameter/base_jitter_speed = 0.0
+shader_parameter/glitchiness = 0.0
+shader_parameter/glitch_rate = 6.0
+shader_parameter/glitch_shift_px = 1.8
+shader_parameter/glitch_window_min = 0.03
+shader_parameter/glitch_window_max = 0.1
+shader_parameter/blue_band_start_y = 0.45
+shader_parameter/blue_band_speed = 0.06
+shader_parameter/blue_band_width = 0.035
+shader_parameter/blue_band_strength = 0.1
+shader_parameter/blue_band_glitch = 0.0
+shader_parameter/blue_band_distort_px = 1.2
+shader_parameter/bulge_intensity = 0.03000004892500007
 
 [node name="MainGame2" type="Control" unique_id=1089023773]
 layout_mode = 3
@@ -536,31 +570,30 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("4_2l77h")
 
-[node name="PauseButton" type="Button" parent="MarginContainer/HBoxContainer/MainArea" unique_id=1396354725]
+[node name="PauseAndAudioControls" type="VBoxContainer" parent="MarginContainer/HBoxContainer/MainArea" unique_id=938079153]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -54.0
-offset_top = 196.0
-offset_right = 10.0
-offset_bottom = 226.0
+offset_left = -58.0
+offset_top = 180.0
+offset_right = 9.0
+offset_bottom = 387.0
 grow_horizontal = 0
+
+[node name="PauseButton" type="Button" parent="MarginContainer/HBoxContainer/MainArea/PauseAndAudioControls" unique_id=1396354725]
+layout_mode = 2
 text = "Pause"
 script = ExtResource("9_5cypo")
 
-[node name="MusicToggle" type="CheckButton" parent="MarginContainer/HBoxContainer/MainArea" unique_id=127965470 node_paths=PackedStringArray("source")]
-layout_mode = 0
-offset_left = 800.0
-offset_top = 232.0
-offset_right = 864.0
-offset_bottom = 264.0
+[node name="MusicToggle" type="CheckButton" parent="MarginContainer/HBoxContainer/MainArea/PauseAndAudioControls" unique_id=127965470 node_paths=PackedStringArray("source")]
+layout_mode = 2
 theme_override_styles/pressed = SubResource("StyleBoxFlat_5wboo")
 button_pressed = true
 icon = SubResource("CompressedTexture2D_ibnub")
 expand_icon = true
 script = ExtResource("16_6de02")
-source = NodePath("../../../../MusicAudioStreamPlayer")
+source = NodePath("../../../../../MusicAudioStreamPlayer")
 
 [node name="UpgradeHoverUI" parent="." unique_id=747242511 instance=ExtResource("8_70vka")]
 z_index = 3
@@ -571,6 +604,7 @@ offset_right = 128.0
 offset_bottom = 160.0
 
 [node name="PauseMenu" type="Control" parent="." unique_id=402068010]
+visible = false
 top_level = true
 z_index = 9
 layout_mode = 1
@@ -679,7 +713,7 @@ layout_mode = 2
 [node name="ModifierPanel3" parent="ModifierMenu/MarginContainer/VBoxContainer/ModifierPanelList" unique_id=825438181 instance=ExtResource("14_8xp80")]
 layout_mode = 2
 
-[node name="GameOverMenu" type="Control" parent="." unique_id=1851980242 node_paths=PackedStringArray("lost_sfx")]
+[node name="GameOverMenu" type="Control" parent="." unique_id=1851980242 node_paths=PackedStringArray("lost_sfx", "total_time_label")]
 visible = false
 z_index = 10
 layout_mode = 1
@@ -690,6 +724,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("16_ihbck")
 lost_sfx = NodePath("AudioStreamPlayer")
+total_time_label = NodePath("VBoxContainer/VBoxContainer/TotalTimeLabel")
 
 [node name="ColorRect" type="ColorRect" parent="GameOverMenu" unique_id=1740364962]
 layout_mode = 1
@@ -698,7 +733,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.1898, 0.1898, 0.26, 0.5019608)
+color = Color(0.56, 0.14559999, 0.1801334, 0.34509805)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameOverMenu" unique_id=1659791297]
 layout_mode = 1
@@ -708,9 +743,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -342.0
-offset_top = -244.0
+offset_top = -275.0
 offset_right = 342.0
-offset_bottom = 129.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 32
@@ -724,6 +759,13 @@ horizontal_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameOverMenu/VBoxContainer" unique_id=1761744922]
 layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TotalTimeLabel" type="Label" parent="GameOverMenu/VBoxContainer/VBoxContainer" unique_id=1149466480]
+layout_mode = 2
+text = "Total Time: XX:XX:XX"
+label_settings = SubResource("LabelSettings_e1tu5")
+horizontal_alignment = 1
 
 [node name="RetryButton" type="Button" parent="GameOverMenu/VBoxContainer/VBoxContainer" unique_id=643403037]
 layout_mode = 2
@@ -735,6 +777,7 @@ stream = ExtResource("22_cybgu")
 volume_db = -8.0
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=2033946042]
+visible = false
 z_index = -9
 texture_filter = 1
 texture_repeat = 1
@@ -757,8 +800,20 @@ autoplay = true
 playback_type = 1
 parameters/looping = true
 
+[node name="CRTEffect" type="ColorRect" parent="." unique_id=1845806034]
+visible = false
+z_index = 999
+material = SubResource("ShaderMaterial_dcudo")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/Control/RerollButton" to="MarginContainer/HBoxContainer/MainArea/ShopPanel/MarginContainer/HBoxContainer/Control/RerollButton" method="_on_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/MainArea/PauseButton" to="MarginContainer/HBoxContainer/MainArea/PauseButton" method="_on_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MainArea/PauseAndAudioControls/PauseButton" to="MarginContainer/HBoxContainer/MainArea/PauseAndAudioControls/PauseButton" method="_on_pressed"]
 [connection signal="pressed" from="PauseMenu/ColorRect/VBoxContainer/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseMenu/ColorRect/VBoxContainer/NewRunButton" to="PauseMenu" method="_on_new_run_button_pressed"]
 [connection signal="pressed" from="GameOverMenu/VBoxContainer/VBoxContainer/RetryButton" to="GameOverMenu" method="_on_retry_button_pressed"]

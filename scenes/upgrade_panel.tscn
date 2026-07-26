@@ -181,13 +181,13 @@ offset_right = 128.0
 offset_bottom = 160.0
 mouse_filter = 1
 script = ExtResource("1_lev6e")
-name_label = NodePath("CenterContainer/PanelContainer/MarginContainer/NameLabel")
-description_label = NodePath("CenterContainer/PanelContainer/MarginContainer/DescLabel")
-cost_label = NodePath("CenterContainer/PanelContainer/MarginContainer/CostLabel")
-icon = NodePath("CenterContainer/PanelContainer/MarginContainer/Icon")
+name_label = NodePath("PanelContainer/MarginContainer/NameLabel")
+description_label = NodePath("PanelContainer/MarginContainer/DescLabel")
+cost_label = NodePath("PanelContainer/MarginContainer/CostLabel")
+icon = NodePath("PanelContainer/MarginContainer/Icon")
 durability = NodePath("DurabilityPanelContainer")
 durability_label = NodePath("DurabilityPanelContainer/DurabilityLabel")
-card_panel_container = NodePath("CenterContainer/PanelContainer")
+card_panel_container = NodePath("PanelContainer")
 status_stylebox = SubResource("StyleBoxFlat_nx88n")
 common_stylebox = SubResource("StyleBoxFlat_lev6e")
 uncommon_stylebox = SubResource("StyleBoxFlat_0ql3a")
@@ -195,28 +195,21 @@ rare_stylebox = SubResource("StyleBoxFlat_8kbbg")
 animation_player = NodePath("AnimationPlayer")
 sfx_player = NodePath("AudioStreamPlayer")
 
-[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1486266631]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(64, 80)
-
-[node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=1534264686]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1534264686]
 custom_minimum_size = Vector2(128, 160)
-layout_mode = 2
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 160.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_lev6e")
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer" unique_id=88854476]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=88854476]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 4
 
-[node name="NameLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=1933867341]
+[node name="NameLabel" type="Label" parent="PanelContainer/MarginContainer" unique_id=1933867341]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 size_flags_vertical = 0
@@ -226,7 +219,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="DescLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=1340976265]
+[node name="DescLabel" type="Label" parent="PanelContainer/MarginContainer" unique_id=1340976265]
 visible = false
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
@@ -237,7 +230,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="CostLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=1762509215]
+[node name="CostLabel" type="Label" parent="PanelContainer/MarginContainer" unique_id=1762509215]
 visible = false
 layout_mode = 2
 size_flags_vertical = 8
@@ -246,10 +239,20 @@ label_settings = SubResource("LabelSettings_4kik5")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Icon" type="Sprite2D" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=1150159840]
+[node name="Icon" type="Sprite2D" parent="PanelContainer/MarginContainer" unique_id=1150159840]
 position = Vector2(60, 90)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("2_0ql3a")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1486266631]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(64, 80)
 
 [node name="DurabilityPanelContainer" type="PanelContainer" parent="." unique_id=1961099163]
 layout_mode = 0
@@ -273,5 +276,5 @@ speed_scale = 1.5
 stream = ExtResource("3_8kbbg")
 volume_db = -7.0
 
-[connection signal="mouse_entered" from="CenterContainer/PanelContainer" to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CenterContainer/PanelContainer" to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="PanelContainer" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="PanelContainer" to="." method="_on_mouse_exited"]

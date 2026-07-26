@@ -22,6 +22,9 @@ enum Phase {
 var phase: Phase
 signal phase_changed()
 
+## Real time spent (Shown on endgame screen)
+var total_real_time: float = 0
+
 ## Current round number
 var round_number: int = 1
 
@@ -180,6 +183,7 @@ func game_over() -> void:
 func process(delta: float) -> void:
 	## Only tick down the timer when in countdown phase
 	if phase == Phase.COUNTDOWN:
+		total_real_time += delta
 		tick_timer -= delta
 		var iterations: int = 0
 		while tick_timer <= 0:
