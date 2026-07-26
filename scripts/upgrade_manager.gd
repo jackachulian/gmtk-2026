@@ -74,7 +74,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u = UpgradeDefinition.new()
 	u.id = "boosterI"
 	u.display_name = "Booster I"
-	u.description = "Each tick, [chance] chance of +3 seconds"
+	u.description = "Each tick, [chance]% chance of +3 seconds"
 	u.base_chance = 25
 	u.base_cost = 5
 	u.base_dur = 6
@@ -93,7 +93,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u = UpgradeDefinition.new()
 	u.id = "boosterII"
 	u.display_name = "Booster II"
-	u.description = "Each tick, [chance] chance of +15 seconds"
+	u.description = "Each tick, [chance]% chance of +15 seconds"
 	u.base_chance = 10
 	u.base_dur = 6
 	u.base_cost = 10
@@ -112,7 +112,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u = UpgradeDefinition.new()
 	u.id = "moneyI"
 	u.display_name = "Money I"
-	u.description = "Each tick, [chance] chance of +$2"
+	u.description = "Each tick, [chance]% chance of +$2"
 	u.base_chance = 25
 	u.base_cost = 5
 	u.base_dur = 6
@@ -130,7 +130,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u = UpgradeDefinition.new()
 	u.id = "moneyII"
 	u.display_name = "Money II"
-	u.description = "Each tick, [chance] chance of +$5"
+	u.description = "Each tick, [chance]% chance of +$5"
 	u.base_chance = 15
 	u.base_cost = 10
 	u.base_dur = 6
@@ -148,7 +148,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u = UpgradeDefinition.new()
 	u.id = "drainI"
 	u.display_name = "Money Drain I"
-	u.description = "Each tick, [chance] chance of -$5 and +20 seconds"
+	u.description = "Each tick, [chance]% chance of -$5 and +20 seconds"
 	u.base_chance = 10
 	u.base_cost = 3
 	u.base_dur = 10
@@ -168,7 +168,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u = UpgradeDefinition.new()
 	u.id = "drainII"
 	u.display_name = "Money Drain II"
-	u.description = "Each tick, [chance] chance of -$10 and +50 seconds"
+	u.description = "Each tick, [chance]% chance of -$10 and +50 seconds"
 	u.base_chance = 10
 	u.base_dur = 12
 	u.base_cost = 5
@@ -188,7 +188,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u = UpgradeDefinition.new()
 	u.id = "doubleI"
 	u.display_name = "Double Tick"
-	u.description = "Each tick, [chance] chance of +1 second and force additional tick"
+	u.description = "Each tick, [chance]% chance of +1 second and force additional tick"
 	u.base_chance = 10
 	u.base_cost = 8
 	u.base_dur = 8
@@ -207,7 +207,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u = UpgradeDefinition.new()
 	u.id = "doubleII"
 	u.display_name = "Triple Tick"
-	u.description = "Each tick, [chance] chance of +1 second and force 2 additional ticks"
+	u.description = "Each tick, [chance]% chance of +1 second and force 2 additional ticks"
 	u.base_chance = 10
 	u.base_cost = 16
 	u.base_dur = 8
@@ -243,7 +243,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u = UpgradeDefinition.new()
 	u.id = "battery"
 	u.display_name = "Battery"
-	u.description = "Each tick, [chance] chance of force-triggering 2 random upgrades"
+	u.description = "Each tick, [chance]% chance of force-triggering 2 random upgrades"
 	u.base_chance = 25
 	u.base_cost = 9
 	u.base_dur = 8
