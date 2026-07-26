@@ -454,6 +454,16 @@ func generate_modifier_definitions(node: Node) -> void:
 	add_debuff_definition(m)
 	
 	m = UpgradeDefinition.new()
+	m.id = "expensive2"
+	m.display_name = ""
+	m.description = "Increase cost mult by 1.0"
+	m.base_chance = 1
+	m.base_dur = -1
+	m.buy = func(run: Run, _upgrade: Upgrade):
+		run.cost_mult += 1.0
+	add_debuff_definition(m)
+	
+	m = UpgradeDefinition.new()
 	m.id = "lose_money"
 	m.display_name = ""
 	m.description = "-150$ at the end of each round"
