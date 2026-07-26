@@ -120,10 +120,20 @@ corner_detail = 5
 load_path = "res://.godot/imported/mus-toggle.png-21d4ffb3b786aaa375693af3e51db570.ctex"
 
 [sub_resource type="LabelSettings" id="LabelSettings_xl51n"]
-font_size = 32
+font_size = 64
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(4, 4)
 
 [sub_resource type="LabelSettings" id="LabelSettings_wjob3"]
 font_size = 64
+font_color = Color(0.27450982, 0.7019608, 0.5568628, 1)
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(3.75, 3.75)
+
+[sub_resource type="LabelSettings" id="LabelSettings_cybgu"]
+font_size = 64
+font_color = Color(0.8784314, 0.27450982, 0.27450982, 1)
 shadow_size = 0
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(3.75, 3.75)
@@ -477,7 +487,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("2_0rdsr")
 time_label = NodePath("PanelContainer/TimeLabel")
-danger_color = Color(0.99999624, 0.40764976, 0.3351669, 1)
+danger_color = Color(0.8784314, 0.27450982, 0.27450982, 1)
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/MainArea/Timer" unique_id=1039521358]
 custom_minimum_size = Vector2(320, 0)
@@ -561,7 +571,6 @@ offset_right = 128.0
 offset_bottom = 160.0
 
 [node name="PauseMenu" type="Control" parent="." unique_id=402068010]
-visible = false
 top_level = true
 z_index = 9
 layout_mode = 1
@@ -588,9 +597,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 436.0
-offset_top = -251.0
-offset_right = 568.0
+offset_left = 342.0
+offset_top = -311.0
+offset_right = 555.0
 offset_bottom = 96.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -603,10 +612,12 @@ horizontal_alignment = 1
 
 [node name="ResumeButton" type="Button" parent="PauseMenu/ColorRect/VBoxContainer" unique_id=1398356239]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Resume"
 
 [node name="NewRunButton" type="Button" parent="PauseMenu/ColorRect/VBoxContainer" unique_id=268485254]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "New Run"
 
 [node name="ModifierMenu" type="Control" parent="." unique_id=1777165444]
@@ -708,7 +719,7 @@ alignment = 1
 [node name="HeaderLabel" type="Label" parent="GameOverMenu/VBoxContainer" unique_id=519060309]
 layout_mode = 2
 text = "TIME OVER"
-label_settings = SubResource("LabelSettings_wjob3")
+label_settings = SubResource("LabelSettings_cybgu")
 horizontal_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameOverMenu/VBoxContainer" unique_id=1761744922]
