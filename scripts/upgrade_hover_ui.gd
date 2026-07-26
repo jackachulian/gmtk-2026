@@ -4,9 +4,12 @@ extends Control
 static var instance: UpgradeHoverUI
 
 @export var buy_button: Control
-@export var buy_cost_label: Control
+@export var buy_cost_label: Label
 @export var sell_button: Control
-@export var sell_cost_label: Control
+@export var sell_cost_label: Label
+
+@export var normal_color: Color = Color("#fcffde")
+@export var broke_color: Color = Color("#e04646")
 
 @export var buy_sfx: AudioStreamPlayer
 @export var sell_sfx: AudioStreamPlayer
@@ -34,11 +37,29 @@ func show_on_upgrade_panel(upgrade_panel: UpgradePanel) -> void:
 	if upgrade_panel.mode == UpgradePanel.Mode.SHOP:
 		buy_button.show()
 		buy_cost_label.text = "$%d" % upgrade_panel.upgrade.cost
+		var font_color := normal_color if RunManager.run.cash >= upgrade_panel.upgrade.cost else broke_color
+		buy_cost_label.label_settings.font_color = font_color
 	
 	elif upgrade_panel.mode == UpgradePanel.Mode.INVENTORY && upgrade_panel.upgrade.can_be_sold:
 		sell_button.show()
 		size *= 0.85 # (last minute bandaid fix)
 		sell_cost_label.text = "$%d" % upgrade_panel.upgrade.cost
+		sell_cost_label.label_settings.font_color = normal_color
+
+func _physics_process(delta: float) -> void:
+	if not upgrade_panel: return
+	
+	if upgrade_panel.mode == UpgradePanel.Mode.SHOP:
+		buy_button.show()
+		buy_cost_label.text = "$%d" % upgrade_panel.upgrade.cost
+		var font_color := normal_color if RunManager.run.cash >= upgrade_panel.upgrade.cost else broke_color
+		buy_cost_label.label_settings.font_color = font_color
+	
+	elif upgrade_panel.mode == UpgradePanel.Mode.INVENTORY && upgrade_panel.upgrade.can_be_sold:
+		sell_button.show()
+		size *= 0.85 # (last minute bandaid fix)
+		sell_cost_label.text = "$%d" % upgrade_panel.upgrade.cost
+		sell_cost_label.label_settings.font_color = normal_color
 
 func _on_buy_button_pressed() -> void:
 	if upgrade_panel.mode == UpgradePanel.Mode.SHOP:

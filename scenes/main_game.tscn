@@ -140,6 +140,7 @@ shadow_offset = Vector2(3.75, 3.75)
 
 [sub_resource type="LabelSettings" id="LabelSettings_e1tu5"]
 font_size = 24
+font_color = Color(0.9882353, 1, 0.87058824, 1)
 shadow_size = 0
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(1.4, 1.4)
@@ -296,6 +297,8 @@ show_percentage = false
 [node name="TickRateLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel/MarginContainer/VBoxContainer" unique_id=1664809658]
 layout_mode = 2
 size_flags_vertical = 10
+tooltip_text = "Ticks per real-world second"
+mouse_filter = 0
 text = "Tick Rate: 1 per second"
 label_settings = SubResource("LabelSettings_o6v7o")
 horizontal_alignment = 1
@@ -307,7 +310,9 @@ libraries/ = SubResource("AnimationLibrary_yu8cv")
 [node name="CostMultLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel/MarginContainer/VBoxContainer" unique_id=731557492]
 layout_mode = 2
 size_flags_vertical = 10
-text = "-2 Seconds per tick"
+tooltip_text = "Multiplier for shop prices"
+mouse_filter = 0
+text = "Cost Mult: 1.234x"
 label_settings = SubResource("LabelSettings_4kik5")
 horizontal_alignment = 1
 vertical_alignment = 2
@@ -315,6 +320,8 @@ vertical_alignment = 2
 [node name="DurModLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftArea/UpgradeShopPanel/MarginContainer/VBoxContainer/RoundInfoPanel/MarginContainer/VBoxContainer" unique_id=1029206153]
 layout_mode = 2
 size_flags_vertical = 10
+tooltip_text = "Fixed offset to durability of shop items"
+mouse_filter = 0
 text = "Durability Mod: +1"
 label_settings = SubResource("LabelSettings_5luka")
 horizontal_alignment = 1

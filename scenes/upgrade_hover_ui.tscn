@@ -5,17 +5,19 @@
 [ext_resource type="AudioStream" uid="uid://ccnwn26sdguic" path="res://audio/buy_new.mp3" id="3_rhi6w"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1tu5"]
-bg_color = Color(0.4751683, 0.39143732, 0.17404118, 1)
+bg_color = Color(0.6509804, 0.29803923, 0.42352942, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.27385768, 0.16483253, 0.027506122, 1)
+border_color = Color(0.34117648, 0.21568628, 0.32156864, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_xl51n"]
+font_color = Color(0.9882353, 1, 0.87058824, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_2l77h"]
 font_size = 24
+font_color = Color(0.9882353, 1, 0.87058824, 1)
 
 [node name="UpgradeHoverUI" type="Control" unique_id=747242511 node_paths=PackedStringArray("buy_button", "buy_cost_label", "sell_button", "sell_cost_label", "buy_sfx", "sell_sfx")]
 z_index = 1
