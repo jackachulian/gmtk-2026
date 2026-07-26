@@ -224,18 +224,18 @@ text = "+20 Seconds"
 label_settings = SubResource("LabelSettings_ruc6o")
 horizontal_alignment = 1
 vertical_alignment = 1
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="DescLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=1340976265]
 visible = false
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 size_flags_vertical = 0
-text = "+20 Seconds"
+text = "+20 Secondsdfgdfgdfgdfg"
 label_settings = SubResource("LabelSettings_ruc6o")
 horizontal_alignment = 1
 vertical_alignment = 1
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="CostLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=1762509215]
 visible = false
