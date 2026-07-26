@@ -211,7 +211,7 @@ tick_rate_animator = NodePath("../MarginContainer/HBoxContainer/LeftArea/Upgrade
 
 [node name="TickAudioPlayer" type="AudioStreamPlayer" parent="RunManager" unique_id=1044620363]
 stream = ExtResource("4_vnsdt")
-volume_db = -8.0
+volume_db = -9.5
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1891324063]
 layout_mode = 1

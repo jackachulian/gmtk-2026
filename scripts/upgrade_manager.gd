@@ -244,7 +244,7 @@ static func generate_upgrade_definitions(node: Node) -> void:
 	u.id = "battery"
 	u.display_name = "Battery"
 	u.description = "Each tick, [chance]% chance of force-triggering 2 random upgrades"
-	u.base_chance = 25
+	u.base_chance = 15
 	u.base_cost = 9
 	u.base_dur = 8
 	u.rarity = 1
@@ -407,12 +407,12 @@ func generate_modifier_definitions(node: Node) -> void:
 	m = UpgradeDefinition.new()
 	m.id = "charged"
 	m.display_name = "Supercharged"
-	m.description = "+[chance] to durability of Battery."
+	m.description = "+[chance] to base durability of Battery."
 	m.base_chance = 3
 	m.base_dur = -1
 	m.buy = func(run: Run, _upgrade: Upgrade):
 		print(UpgradeManager.upgrade_definitions["battery"].base_dur)
-		UpgradeManager.upgrade_definitions["battery"].base_dur = 8 + _upgrade.chance
+		run.battery_dur_mod = _upgrade.chance
 		print(UpgradeManager.upgrade_definitions["battery"].base_dur)
 	add_modifier_definition(m)
 	
